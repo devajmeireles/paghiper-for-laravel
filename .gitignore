@@ -1,5 +1,7 @@
 .idea
 .env
+.env.testing
+build/
 vendor/
 coverage/
 node_modules

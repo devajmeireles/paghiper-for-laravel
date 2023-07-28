@@ -14,10 +14,6 @@ class TestCase extends Orchestra
         parent::setUp();
 
         (new Provider)->register();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'DevAjMeireles\\PagHiper\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
     }
 
     protected function getPackageProviders($app): array
@@ -25,11 +21,5 @@ class TestCase extends Orchestra
         return [
             PagHiperServiceProvider::class,
         ];
-    }
-
-    public function getEnvironmentSetUp($app): void
-    {
-        $migration = include __DIR__.'/../database/migrations/create_billet_table.php.stub';
-        $migration->up();
     }
 }
