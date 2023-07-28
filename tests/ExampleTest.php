@@ -1,11 +1,10 @@
 <?php
 
+use DevAjMeireles\PagHiper\Billet;
 use DevAjMeireles\PagHiper\PagHiper;
 
 it('can test', function () {
-    $paghiper = PagHiper::factory()->create();
-
-    dd($paghiper);
+    $billet = Billet::factory()->create();
 
     expect(true)->toBeTrue();
 });

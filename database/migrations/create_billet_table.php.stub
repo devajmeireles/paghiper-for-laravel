@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('billet', function (Blueprint $table) {
+        Schema::create('billets', function (Blueprint $table) {
             $table->id();
             $table->morphs('billable');
             $table->string('transaction', 16);
@@ -27,5 +27,10 @@ return new class extends Migration
             $table->timestamps();
             $table->timestamp('duedate_at')->nullable();
         });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('billet');
     }
 };

@@ -29,9 +29,7 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app): void
     {
-        config()->set('database.default', 'testing');
-
-        $migration = include __DIR__.'/../database/migrations/create_paghiper_table.php.stub';
+        $migration = include __DIR__.'/../database/migrations/create_billet_table.php.stub';
         $migration->up();
     }
 }
