@@ -9,12 +9,12 @@ trait InteractWithCasts
 {
     protected Response $response;
 
-    protected function cast(): Response|Collection|array
+    protected function cast(string $index): Response|Collection|array
     {
         return (match ($this->cast) {
             'response' => fn () => $this->toResponse(),
-            'json'     => fn () => $this->toArray(),
-            'collect'  => fn () => $this->toCollect(),
+            'json'     => fn () => $this->toArray($index),
+            'collect'  => fn () => $this->toCollect($index),
         })();
     }
 
@@ -23,13 +23,13 @@ trait InteractWithCasts
         return $this->response;
     }
 
-    public function toArray(): array
+    public function toArray(string $index): array
     {
-        return $this->response->json('create_request');
+        return $this->response->json($index);
     }
 
-    public function toCollect(): Collection
+    public function toCollect(string $index): Collection
     {
-        return collect($this->toArray());
+        return collect($this->toArray($index));
     }
 }
