@@ -3,7 +3,6 @@
 namespace Tests;
 
 use DevAjMeireles\PagHiper\PagHiperServiceProvider;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use NunoMaduro\Collision\Provider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -13,7 +12,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        (new Provider)->register();
+        (new Provider())->register();
     }
 
     protected function getPackageProviders($app): array

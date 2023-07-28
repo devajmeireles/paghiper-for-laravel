@@ -14,9 +14,9 @@ class Request
         $client = Http::timeout(10)
             ->baseUrl(self::BASE_URL)
             ->withHeaders([
-                'Accept' => 'application/json',
+                'Accept'          => 'application/json',
                 'Accept-Encoding' => 'application/json',
-                'Content-Type' => 'application/json',
+                'Content-Type'    => 'application/json',
             ]);
 
         $params = collect($params)->merge([
@@ -25,5 +25,10 @@ class Request
         ])->toArray();
 
         return $client->post($endpoint, $params);
+    }
+
+    public static function url(string $path): string
+    {
+        return self::BASE_URL . $path;
     }
 }

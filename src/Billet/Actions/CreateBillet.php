@@ -4,13 +4,14 @@ namespace DevAjMeireles\PagHiper\Billet\Actions;
 
 use DevAjMeireles\PagHiper\Core\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\Core\Request\Request;
+use Illuminate\Http\Client\Response;
 
 class CreateBillet
 {
-    private const END_POINT = 'transaction/create/';
+    public const END_POINT = 'transaction/create/';
 
     /** @throws PagHiperRejectException */
-    public static function execute(array $data): array
+    public static function execute(array $data): Response
     {
         $response = Request::execute(self::END_POINT, $data);
 
@@ -18,6 +19,6 @@ class CreateBillet
             throw new PagHiperRejectException($response->json('response_message'));
         }
 
-        return $response->json();
+        return $response;
     }
 }
