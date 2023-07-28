@@ -20,6 +20,6 @@ class CreateBilletForModel
     /** @throws PagHiperRejectException */
     public function with(array $address, array $items)
     {
-        return CreateBillet::execute(collect($this->model->toArray())->merge([$address, $items])->toArray());
+        // return CreateBillet::execute(collect($this->model->toArray())->merge([$address, $items])->toArray());
     }
 }
