@@ -13,8 +13,8 @@ trait InteractWithCasts
     {
         return (match ($this->cast) {
             'response' => fn () => $this->toResponse(),
-            'json'     => fn () => $this->toArray($index),
-            'collect'  => fn () => $this->toCollect($index),
+            'json', 'array' => fn () => $this->toArray($index),
+            'collect', 'collection' => fn () => $this->toCollect($index),
         })();
     }
 

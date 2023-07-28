@@ -43,7 +43,7 @@ it('should be able to create billet casting to array', function () {
         ->toBe($result);
 });
 
-it('should be able to create billet casting to collection', function () {
+it('should be able to create billet casting to collection', function (string $cast) {
     $url         = 'https://www.paghiper.com/checkout/boleto/180068c7/HF97T5SH2ZQNLF6Z/30039';
     $transaction = 'HF97T5SH2ZQNLF6Z';
 
@@ -67,10 +67,10 @@ it('should be able to create billet casting to collection', function () {
             ]]),
     ]);
 
-    $billet = (new PagHiper())->billet(cast: 'collect')->create();
+    $billet = (new PagHiper())->billet($cast)->create();
 
     expect($billet)->toBeInstanceOf(Collection::class);
-});
+})->with(['collection', 'collect']);
 
 it('should be able to create billet casting to original response', function () {
     $url         = 'https://www.paghiper.com/checkout/boleto/180068c7/HF97T5SH2ZQNLF6Z/30039';

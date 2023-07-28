@@ -26,7 +26,8 @@ it('should be able to consult billet status casting to array', function () {
 
     Http::fake([
         Request::url(ConsultBilletStatus::END_POINT) => Http::response([
-            'status_request' => $result]),
+            'status_request' => $result,
+        ]),
     ]);
 
     $status = (new PagHiper())->billet()->status('BPV661O7AVLORCN5');
@@ -37,7 +38,7 @@ it('should be able to consult billet status casting to array', function () {
         ->toBe($result);
 });
 
-it('should be able to consult billet status casting to collection', function () {
+it('should be able to consult billet status casting to collection', function (string $cast) {
     $result = [
         'result'           => 'success',
         'response_message' => 'transacao encontrada',
@@ -58,10 +59,10 @@ it('should be able to consult billet status casting to collection', function () 
             'status_request' => $result]),
     ]);
 
-    $status = (new PagHiper())->billet(cast: 'collect')->status('BPV661O7AVLORCN5');
+    $status = (new PagHiper())->billet($cast)->status('BPV661O7AVLORCN5');
 
     expect($status)->toBeInstanceOf(Collection::class);
-});
+})->with(['collection', 'collect']);
 
 it('should be able to consult billet status casting to original response', function () {
     $result = [

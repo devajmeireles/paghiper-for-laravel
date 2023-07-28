@@ -2,7 +2,7 @@
 
 namespace DevAjMeireles\PagHiper\Billet;
 
-use DevAjMeireles\PagHiper\Billet\Actions\{ConsultBilletStatus, CreateBillet};
+use DevAjMeireles\PagHiper\Billet\Actions\{CancelBillet, ConsultBilletStatus, CreateBillet};
 use DevAjMeireles\PagHiper\Core\Exceptions\ResponseCastNotAllowed;
 use DevAjMeireles\PagHiper\Core\Traits\InteractWithCasts;
 use Illuminate\Http\Client\Response;
@@ -12,7 +12,7 @@ class Billet
 {
     use InteractWithCasts;
 
-    private const RESULTS = ['response', 'json', 'collect', 'collection'];
+    private const RESULTS = ['response', 'json', 'array', 'collect', 'collection'];
 
     /** @throws ResponseCastNotAllowed */
     public function __construct(
@@ -44,8 +44,10 @@ class Billet
         return $this->cast('status_request');
     }
 
-    public function cancel(string $transaction)
+    public function cancel(string $transaction): Response|Collection|array
     {
+        $this->response = CancelBillet::execute($transaction);
 
+        return $this->cast('cancellation_request');
     }
 }
