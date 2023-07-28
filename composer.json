@@ -1,0 +1,59 @@
+{
+    "name": "devajmeireles/paghiper",
+    "description": "PagHiper Integration for Laravel.",
+    "homepage": "https://github.com/devajmeireles/paghiper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "AJ Meireles",
+            "email": "alvaro.meireles@live.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.16"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^7.9",
+        "nunomaduro/larastan": "^2.0.1",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-arch": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "spatie/laravel-ray": "^1.26"
+    },
+    "autoload": {
+        "psr-4": {
+            "DevAjMeireles\\PagHiper\\": "src/",
+            "DevAjMeireles\\PagHiper\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "./vendor/bin/pest --parallel",
+        "format": "./vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DevAjMeireles\\PagHiper\\PagHiperServiceProvider"
+            ],
+            "aliases": {
+                "PagHiper": "DevAjMeireles\\PagHiper\\Facades\\PagHiper"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
