@@ -2,16 +2,21 @@
 
 namespace DevAjMeireles\PagHiper\Database\Factories;
 
-use DevAjMeireles\PagHiper\PagHiper;
+use DevAjMeireles\PagHiper\Billet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PagHiperFactory extends Factory
+class BilletFactory extends Factory
 {
-    protected $model = PagHiper::class;
+    protected $model = Billet::class;
 
     public function definition(): array
     {
         return [
+            'billable_id' => $this->faker->randomNumber(),
+            'billable_type' => $this->faker->randomElement([
+                'App\Models\User',
+                'App\Models\Company',
+            ]),
             'transaction' => $this->faker->numerify('##########'),
             'status' => $this->faker->randomElement([
                 'pending',

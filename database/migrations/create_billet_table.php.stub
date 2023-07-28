@@ -8,9 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('paghiper', function (Blueprint $table) {
+        Schema::create('billet', function (Blueprint $table) {
             $table->id();
-            $table->morphs('model')->nullable();
+            $table->morphs('billable');
             $table->string('transaction', 16);
             $table->enum('status', [
                 'pending',
