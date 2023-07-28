@@ -7,65 +7,68 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
-it('should be able to cancel billet casting to array', function () {
-    $transaction = 'BPV661O7AVLORCN5';
+describe('cancel billet', function () {
 
-    $result = [
-        'result'           => 'success',
-        'response_message' => "O Boleto $transaction foi cancelado com Sucesso",
-        'http_code'        => '200',
-    ];
+    it('should be able to cancel billet casting to array', function () {
+        $transaction = 'BPV661O7AVLORCN5';
 
-    Http::fake([
-        Request::url(CancelBillet::END_POINT) => Http::response([
-            'cancellation_request' => $result,
-        ]),
-    ]);
+        $result = [
+            'result'           => 'success',
+            'response_message' => "O Boleto $transaction foi cancelado com Sucesso",
+            'http_code'        => '200',
+        ];
 
-    $status = (new PagHiper())->billet()->cancel($transaction);
+        Http::fake([
+            Request::url(CancelBillet::END_POINT) => Http::response([
+                'cancellation_request' => $result,
+            ]),
+        ]);
 
-    expect($status)
-        ->toBeArray()
-        ->and($status)
-        ->toBe($result);
-});
+        $status = (new PagHiper())->billet()->cancel($transaction);
 
-it('should be able to cancel billet casting to collection', function (string $cast) {
-    $transaction = 'BPV661O7AVLORCN5';
+        expect($status)
+            ->toBeArray()
+            ->and($status)
+            ->toBe($result);
+    });
 
-    $result = [
-        'result'           => 'success',
-        'response_message' => "O Boleto $transaction foi cancelado com Sucesso",
-        'http_code'        => '200',
-    ];
+    it('should be able to cancel billet casting to collection', function (string $cast) {
+        $transaction = 'BPV661O7AVLORCN5';
 
-    Http::fake([
-        Request::url(CancelBillet::END_POINT) => Http::response([
-            'cancellation_request' => $result,
-        ]),
-    ]);
+        $result = [
+            'result'           => 'success',
+            'response_message' => "O Boleto $transaction foi cancelado com Sucesso",
+            'http_code'        => '200',
+        ];
 
-    $status = (new PagHiper())->billet($cast)->cancel($transaction);
+        Http::fake([
+            Request::url(CancelBillet::END_POINT) => Http::response([
+                'cancellation_request' => $result,
+            ]),
+        ]);
 
-    expect($status)->toBeInstanceOf(Collection::class);
-})->with(['collection', 'collect']);
+        $status = (new PagHiper())->billet($cast)->cancel($transaction);
 
-it('should be able to cancel billet casting to original response', function () {
-    $transaction = 'BPV661O7AVLORCN5';
+        expect($status)->toBeInstanceOf(Collection::class);
+    })->with(['collection', 'collect']);
 
-    $result = [
-        'result'           => 'success',
-        'response_message' => "O Boleto $transaction foi cancelado com Sucesso",
-        'http_code'        => '200',
-    ];
+    it('should be able to cancel billet casting to original response', function () {
+        $transaction = 'BPV661O7AVLORCN5';
 
-    Http::fake([
-        Request::url(CancelBillet::END_POINT) => Http::response([
-            'cancellation_request' => $result,
-        ]),
-    ]);
+        $result = [
+            'result'           => 'success',
+            'response_message' => "O Boleto $transaction foi cancelado com Sucesso",
+            'http_code'        => '200',
+        ];
 
-    $status = (new PagHiper())->billet(cast: 'response')->cancel($transaction);
+        Http::fake([
+            Request::url(CancelBillet::END_POINT) => Http::response([
+                'cancellation_request' => $result,
+            ]),
+        ]);
 
-    expect($status)->toBeInstanceOf(Response::class);
+        $status = (new PagHiper())->billet(cast: 'response')->cancel($transaction);
+
+        expect($status)->toBeInstanceOf(Response::class);
+    });
 });

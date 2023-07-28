@@ -11,9 +11,5 @@ class PagHiperServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/paghiper.php' => config_path('paghiper.php'),
         ], 'paghiper-config');
-
-        $this->publishes([
-            __DIR__ . '/../database/migrations/' => database_path('migrations'),
-        ], 'paghiper-migrations');
     }
 }

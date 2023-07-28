@@ -5,7 +5,7 @@ namespace DevAjMeireles\PagHiper\Core\Request;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
-class Request
+final class Request
 {
     private const BASE_URL = 'https://api.paghiper.com/';
 
