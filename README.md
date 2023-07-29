@@ -7,6 +7,7 @@
     - [Consultando Boleto Bancário](#consulting-billet)
     - [Cancelando Boleto Bancário](#cancelling-billet)
     - [Retorno Automático de Boleto Bancário](#billet-notification)
+- [A Fazeres](#todo)
 - [Contribuição](#contributing)
 - [License](#license)
 
@@ -15,11 +16,11 @@
 
 `PagHiper for Laravel` é um pacote que adiciona os principais recursos do PagHiper a aplicações Laravel de forma fácil e descomplicada. Com este pacote você poderá integarir com Boletos Bancários e PIX gerados pela PagHiper.
 
-**O pacote foi criado no mais alto padrão possível do PHP moderno, com cobertura de testes e fortemente tipado, garantindo estabilidade nas funcionalidades.**
+**O pacote foi criado para Laravel 10 e PHP 8.1, no mais alto padrão possível do PHP moderno, com cobertura de testes e fortemente tipado, garantindo estabilidade nas funcionalidades.**
 
 ---
 
-O pacote é mantido por mim, AJ Meireles. Você pode me encontrar em um dos canais abaixo:
+O pacote foi criado e é mantido por mim, AJ Meireles. Você pode me encontrar em um dos canais abaixo:
 
 - [LinkedIn](https://www.linkedin.com/in/devajmeireles/)
 - [Twitter](https://twitter.com/devajmeireles)
@@ -39,7 +40,7 @@ Após instalar, execute o comando `paghiper:install` para concluir a instalaçã
 php artisan paghiper:install
 ```
 
-Este comando irá apenas publicar o arquivo `config/paghiper.php` para sua aplicação. Este arquivo armazena as informações da sua conta na PagHiper para comunicação via API.
+Este comando irá apenas publicar o arquivo `config/paghiper.php` para sua aplicação. Este arquivo armazena as informações da sua conta na PagHiper para comunicação via API. **Recomendo que abra o arquivo e leia com atenção.**
 
 <a name="billet"></a>
 # Boleto Bancário
@@ -95,7 +96,7 @@ $billet = (new PagHiper())->billet()
     );
 ```
 
-**Para utilizar a abordagem acima**, seu modelador deve implementar a interface `PagHiperModelAbstraction`, a qual exigirá os seguintes métodos:
+**Para utilizar a abordagem acima**, seu modelador deve implementar a interface `PagHiperModelAbstraction`, a qual exigirá que os seguintes métodos sejam criados na classe do modelador:
 
 ```php
 namespace App\Models;
@@ -141,13 +142,11 @@ class User extends Model implements PagHiperModelAbstraction // 👈
 };
 ```
 
-**Isso facilita processos de formatações antes de enviar os dados à PagHiper, por exemplo.**
-
-Obs.: Se você tiver mais de um modelador que interaja com o pacote, abstraia os métodos para uma trait. 😉
+**Essa abordagem facilita processos de formatações antes de enviar os dados à PagHiper, por exemplo.** Se você tiver mais de um modelador que interaja com o pacote, abstraia os métodos acima para uma trait e aplique-os aos modeladores que implementam a interface.
 
 ---
 
-Para facilitar sua interação com a resposta da PagHiper, o pacote oferece "casts" diferentes, sendo eles:
+Para facilitar sua interação com a Facade, o pacote oferece "casts" diferentes, sendo eles:
 
 - `Response`: o objeto original da resposta
 - `Json` ou `Array`: a resposta convertida para um array
@@ -185,7 +184,7 @@ $billet = PagHiper::billet()->status(transaction: 'HF97T5SH2ZQNLF6Z');
 
 ---
 
-Você pode utilizar os casts para consultar um boleto bancário e transformar a resposta:
+Você também pode utilizar os casts na consulta de um boleto bancário:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -193,12 +192,14 @@ use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->status(transaction: 'HF97T5SH2ZQNLF6Z');
+
+$billet // passa a ser uma instância de Illuminate\Support\Collection
 ```
 
 <a name="cancelling-billet"></a>
 ### Cancelando Boleto Bancário
 
-Para consultar o status de um Boleto Bancário utilize o método `cancel`:
+Para cancelar um boleto bancário utilize o método `cancel`:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -209,7 +210,7 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
 
 ---
 
-Você pode utilizar os casts para cancelar um boleto bancário e transformar a resposta:
+Você também pode utilizar os casts no cancelamento de um boleto bancário:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -217,18 +218,18 @@ use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
+
+$billet // passa a ser uma instância de Illuminate\Support\Collection
 ```
 
 <a name="billet-notification"></a>
 ### Retorno Automático de Boleto Bancário
 
-O pacote oferece uma forma fácil de lidar com o retorno automático de boletos bancários. **O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notificationUrl`.** Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
+O pacote oferece uma forma fácil de lidar com o retorno automático de boletos bancários. **O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notificationUrl` na criação do boleto bancário.** Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
 
-Supondo que você possui uma URL nomeada como `paghiper.notification`, e que essa foi a URL enviada como `$notificationUrl` na classe de objeto `Basic` no momento da criação do boleto bancário:
+Supondo que você possui uma URL nomeada como `paghiper.notification`, e que essa foi a URL enviada como `$notificationUrl` na classe de objeto `Basic` no momento da criação do boleto bancário, então isso será suficiente:
 
 ```php
-// routes/web.php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -238,18 +239,14 @@ Route::get('/payment/notification', function (Request $request) {
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
     $status = PagHiper::notification(notification: $notification, transaction: $transaction)->consult();
-    
-    // $status será um array da resposta...
 })->name('payment.notification');
 ```
 
 ---
 
-Você pode utilizar os casts para lidar com a resposta da consulta:
+Você também pode utilizar os casts na consulta da notificação de um boleto bancário:
 
 ```php
-// routes/web.php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -289,7 +286,7 @@ Route::get('/payment/notification', function (Request $request) {
 })->name('payment.notification');
 ```
 
-O cast `Dto` irá interceptar a resposta, transformar em array e em seguida instanciar a classe `DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification`, que possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:
+O cast `Dto` irá interceptar a resposta, transformar em array e em seguida instanciar a classe `DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification`, que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
 
 - `transaction()`: retorna o ID da transação
 - `order()`: retorna o ID do pedido
@@ -302,14 +299,16 @@ O cast `Dto` irá interceptar a resposta, transformar em array e em seguida inst
 - `processing()`: retorna `true` se o status do boleto for `processing`
 - `refunded()`: retorna `true` se o status do boleto for `refunded`
 - `paidAt()`: retorna a data de pagamento do boleto como instância de `Illuminate\Support\Carbon`
-- `payer(bool $toCollection = false)`: retorna um array com os dados do pagador 
+- `payer()`: retorna um array com os dados do pagador 
   - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
-- `address(bool $toCollection = false)`: retorna um array com os dados do endereço 
+- `address()`: retorna um array com os dados do endereço 
   - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
 - `finalPrice()`: retorna o valor final do boleto, `value_cents`
 - `discount()`: retorna o valor do desconto do boleto, `discount_cents`
 - `bankSlipUrl()`: retorna um array com dados do boleto (URL, linha digitável...)
 - `dueDateAt()`: retorna a data de vencimento do boleto como instância de `Illuminate\Support\Carbon`
 - `numItems`(): retorna o número de itens do boleto
-- `items(bool $toCollection = false)`: retorna um array com os itens do array
+- `items()`: retorna um array com os itens do array
   - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
+
+**Uma excessão do tipo `UnallowedCastType` será lançada caso você tente utilizar o `Cast::Dto` em um método que não seja o `notification()`.**
