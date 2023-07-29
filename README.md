@@ -8,6 +8,7 @@
     - [Cancelando Boleto Bancário](#cancelling-billet)
     - [Retorno Automático de Boleto Bancário](#billet-notification)
     - [Tratamento de Erros](#billet-errors)
+- [Atualizações](CHANGELOG.md)
 - [A Fazeres](#todo)
 - [Contribuição](#contributing)
 - [Licença de Uso](#license)
