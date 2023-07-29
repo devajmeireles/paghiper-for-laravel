@@ -1,7 +1,7 @@
 <?php
 
-use DevAjMeireles\PagHiper\Billet\Actions\StatusBillet;
-use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, ResponseCastNotAllowed};
+use DevAjMeireles\PagHiper\Billet\Actions\Billet\StatusBillet;
+use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, UnauthorizedCastResponseException};
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
@@ -79,7 +79,7 @@ it('should be able to consult billet status casting to original response', funct
 });
 
 it('should not be able to cast response to unacceptable cast', function (string $cast) {
-    $this->expectException(ResponseCastNotAllowed::class);
+    $this->expectException(UnauthorizedCastResponseException::class);
     $this->expectExceptionMessage("The response cast: $cast is not allowed");
 
     $result = [

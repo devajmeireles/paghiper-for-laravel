@@ -1,7 +1,7 @@
 <?php
 
-use DevAjMeireles\PagHiper\Billet\Actions\CancelBillet;
-use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, ResponseCastNotAllowed};
+use DevAjMeireles\PagHiper\Billet\Actions\Billet\CancelBillet;
+use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, UnauthorizedCastResponseException};
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
@@ -58,7 +58,7 @@ it('should be able to cancel billet casting to original response', function () {
 });
 
 it('should not be able to cast response to unacceptable cast', function (string $cast) {
-    $this->expectException(ResponseCastNotAllowed::class);
+    $this->expectException(UnauthorizedCastResponseException::class);
     $this->expectExceptionMessage("The response cast: $cast is not allowed");
 
     $transaction = 'BPV661O7AVLORCN5';

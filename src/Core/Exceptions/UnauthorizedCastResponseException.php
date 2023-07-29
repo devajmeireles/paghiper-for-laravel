@@ -4,7 +4,7 @@ namespace DevAjMeireles\PagHiper\Core\Exceptions;
 
 use Exception;
 
-class ResponseCastNotAllowed extends Exception
+class UnauthorizedCastResponseException extends Exception
 {
     public function __construct(string $cast)
     {

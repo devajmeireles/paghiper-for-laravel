@@ -1,6 +1,6 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Billet\Actions;
+namespace DevAjMeireles\PagHiper\Billet\Actions\Billet;
 
 use DevAjMeireles\PagHiper\Core\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\Core\Request\Request;

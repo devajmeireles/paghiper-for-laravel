@@ -2,12 +2,7 @@
 
 namespace DevAjMeireles\PagHiper\Billet;
 
-use DevAjMeireles\PagHiper\Billet\Actions\{
-    CancelBillet,
-    CreateBillet,
-    StatusBillet
-};
-use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, ResponseCastNotAllowed};
+use DevAjMeireles\PagHiper\Billet\Actions\{Billet\CancelBillet, Billet\CreateBillet, Billet\StatusBillet};
 use DevAjMeireles\PagHiper\Core\Traits\InteractWithCasts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
@@ -17,18 +12,10 @@ class Billet
 {
     use InteractWithCasts;
 
-    private const RESULTS = ['response', 'json', 'array', 'collect', 'collection'];
-
-    /** @throws ResponseCastNotAllowed */
     public function __construct(
         private readonly string $cast = 'json'
     ) {
-        if (
-            !in_array($this->cast, self::RESULTS) &&
-            (is_string($this->cast) && !class_exists($this->cast))
-        ) {
-            throw new ResponseCastNotAllowed($this->cast);
-        }
+        //
     }
 
     public function create(array|Model $data, ...$parameters): Response|Collection|array

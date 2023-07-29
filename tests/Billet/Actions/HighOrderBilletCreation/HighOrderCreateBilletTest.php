@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\Billet\Actions\CreateBillet;
+use DevAjMeireles\PagHiper\Billet\Actions\Billet\CreateBillet;
 use DevAjMeireles\PagHiper\Core\Contracts\PagHiperModelAbstraction;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use Illuminate\Database\Eloquent\Model;

@@ -1,6 +1,7 @@
 <?php
 
 use DevAjMeireles\PagHiper\Billet\Billet;
+use DevAjMeireles\PagHiper\Billet\Notification;
 use DevAjMeireles\PagHiper\Core\Request\Request;
 use DevAjMeireles\PagHiper\Core\Traits\InteractWithCasts;
 use DevAjMeireles\PagHiper\PagHiper;
@@ -19,4 +20,7 @@ test('request class should be final')
 
 test('InteractWithCasts trait should be used only in Billet')
     ->expect(InteractWithCasts::class)
-    ->toOnlyBeUsedIn(Billet::class);
+    ->toOnlyBeUsedIn([
+        Billet::class,
+        Notification::class
+    ]);

@@ -1,8 +1,8 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Billet\Actions;
+namespace DevAjMeireles\PagHiper\Billet\Actions\Billet;
 
-use DevAjMeireles\PagHiper\Billet\Actions\HighOrderBilletCreation\HighOrderCreateBillet;
+use DevAjMeireles\PagHiper\Billet\Actions\Billet\HighOrderBilletCreation\HighOrderCreateBillet;
 use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, WrongModelSetUpException};
 use DevAjMeireles\PagHiper\Core\Request\Request;
 use Illuminate\Database\Eloquent\Model;

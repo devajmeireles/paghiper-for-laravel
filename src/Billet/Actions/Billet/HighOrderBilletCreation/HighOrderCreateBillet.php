@@ -1,6 +1,6 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Billet\Actions\HighOrderBilletCreation;
+namespace DevAjMeireles\PagHiper\Billet\Actions\Billet\HighOrderBilletCreation;
 
 use DevAjMeireles\PagHiper\Core\Contracts\PagHiperModelAbstraction;
 use DevAjMeireles\PagHiper\Core\Exceptions\WrongModelSetUpException;
@@ -8,14 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class HighOrderCreateBillet
 {
-    private const METHODS = [
-        'name'     => 'pagHiperName',
-        'email'    => 'pagHiperEmail',
-        'document' => 'pagHiperDocument',
-        'phone'    => 'pagHiperPhone',
-        'address'  => 'pagHiperAddress',
-    ];
-
     public function __construct(
         protected readonly Model $model
     ) {
