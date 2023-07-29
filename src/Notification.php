@@ -1,10 +1,10 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Billet;
+namespace DevAjMeireles\PagHiper;
 
-use DevAjMeireles\PagHiper\Billet\Actions\Notifications\ConsultNotification;
-use DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification;
-use DevAjMeireles\PagHiper\Core\Enums\Cast;
+use DevAjMeireles\PagHiper\Actions\Notifications\ConsultNotification;
+use DevAjMeireles\PagHiper\DTO\PagHiperNotification;
+use DevAjMeireles\PagHiper\Enums\Cast;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Core\Exceptions;
+namespace DevAjMeireles\PagHiper\Exceptions;
 
 use Exception;
 

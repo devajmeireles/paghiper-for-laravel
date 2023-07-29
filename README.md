@@ -39,7 +39,7 @@ Após instalar, execute o comando `paghiper:install` para concluir a instalaçã
 php artisan paghiper:install
 ```
 
-Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação, junto a criação de variáveis de ambiente para os seus arquivos: `.env` e `.env.example`. **Recomendo que abra o arquivo `config/paghiper.php` e leia com atenção.**
+Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação, junto a criação de variáveis de ambiente para os seus arquivos: `.env` e `.env.example`. **Recomendo que abra o arquivo `config/paghiper.php` e leia com atenção (traduza se necessário!)**
 
 <a name="billet"></a>
 # Boleto Bancário
@@ -58,11 +58,11 @@ $billet = PagHiper::billet()->create(/* ... */)
 Para uma melhor organização, a forma de interagir com o método `create` é enviar para ele quatro instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
 
 ```php
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Address; // 👈
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Basic;   // 👈
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Item;    // 👈
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Payer;   // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Address;use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\DTO\Objects\Payer;use DevAjMeireles\PagHiper\Facades\PagHiper;
+// 👈
+// 👈
+// 👈
+// 👈
 
 $billet = (new PagHiper())->billet()
     ->create(
@@ -80,11 +80,7 @@ $billet = (new PagHiper())->billet()
 Uma alternativa disponível e eficaz é enviar uma classe de um modelador do Laravel para o método `create`:
 
 ```php
-use App\Models\User; // 👈
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Address;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Basic;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Item;
+use App\Models\User;use DevAjMeireles\PagHiper\DTO\Objects\Address;use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\Facades\PagHiper; // 👈
 
 $billet = (new PagHiper())->billet()
     ->create(
@@ -100,8 +96,8 @@ $billet = (new PagHiper())->billet()
 ```php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use DevAjMeireles\PagHiper\Core\Contracts\PagHiperModelAbstraction; // 👈
+use DevAjMeireles\PagHiper\Contracts\PagHiperModelAbstraction;use Illuminate\Database\Eloquent\Model;
+// 👈
 
 class User extends Model implements PagHiperModelAbstraction // 👈
 {
@@ -148,11 +144,7 @@ class User extends Model implements PagHiperModelAbstraction // 👈
 Você também pode enviar um array de itens, para casos quais você crie o boleto bancário para mais de um item:
 
 ```php
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Address;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Basic;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Item;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Payer;
+use DevAjMeireles\PagHiper\DTO\Objects\Address;use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\DTO\Objects\Payer;use DevAjMeireles\PagHiper\Facades\PagHiper;
 
 $billet = (new PagHiper())->billet()
     ->create(
@@ -176,12 +168,8 @@ Para facilitar sua interação com a Facade, o pacote oferece "casts" diferentes
 - `Collect` ou `Collection`: a resposta convertida para uma instância de `Illuminate\Support\Collection`
 
 ```php
-use App\Models\User;
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Address;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Basic;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\Item;
-use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
+use App\Models\User;use DevAjMeireles\PagHiper\DTO\Objects\Address;use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;
+// 👈
 
 $billet = (new PagHiper())->billet(Cast::Collection) // 👈
     ->create(
@@ -210,8 +198,8 @@ $billet = PagHiper::billet()->status(transaction: 'HF97T5SH2ZQNLF6Z');
 Você também pode utilizar os casts na consulta de um boleto bancário:
 
 ```php
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
+use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;
+// 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->status(transaction: 'HF97T5SH2ZQNLF6Z');
@@ -236,8 +224,8 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
 Você também pode utilizar os casts no cancelamento de um boleto bancário:
 
 ```php
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
+use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;
+// 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
@@ -274,10 +262,8 @@ Você também pode utilizar os casts na consulta da notificação de um boleto b
 ```php
 // routes/web.php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
+use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;use Illuminate\Http\Request;use Illuminate\Support\Facades\Route;
+// 👈
 
 Route::get('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
@@ -298,10 +284,8 @@ Route::get('/payment/notification', function (Request $request) {
 ```php
 // routes/web.php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
+use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;use Illuminate\Http\Request;use Illuminate\Support\Facades\Route;
+// 👈
 
 Route::get('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
@@ -313,7 +297,7 @@ Route::get('/payment/notification', function (Request $request) {
 })->name('paghiper.notification');
 ```
 
-O cast `Dto` irá interceptar a resposta, transformar em array e em seguida instanciar a classe `DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification`, que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
+O cast `Dto` irá interceptar a resposta, transformar em array e em seguida instanciar a classe `DevAjMeireles\PagHiper\DTO\PagHiperNotification`, que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
 
 - `transaction()`: retorna o ID da transação
 - `order()`: retorna o ID do pedido
@@ -341,11 +325,11 @@ O cast `Dto` irá interceptar a resposta, transformar em array e em seguida inst
 <a name="billet-errors"></a>
 ## Tratamento de Erros
 
-- `DevAjMeireles\PagHiper\Core\Exceptions\PagHiperException` 
+- `DevAjMeireles\PagHiper\Exceptions\PagHiperException` 
   - erro genérico do PagHiper
-- `DevAjMeireles\PagHiper\Core\Exceptions\UnallowedCastType` 
-  - tentativa de uso indetivo do cast `DevAjMeireles\PagHiper\Core\Enums\Cast\Dto`
-- `DevAjMeireles\PagHiper\Core\Exceptions\WrongModelSetUpException` 
+- `DevAjMeireles\PagHiper\Exceptions\UnallowedCastType` 
+  - tentativa de uso indetivo do cast `DevAjMeireles\PagHiper\Enums\Cast\Dto`
+- `DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException` 
   - tentativa de criação de boleto usando um modelador sem que ele tenha sido preparado
 
 <a name="todo"></a>
@@ -362,6 +346,7 @@ Todo e qualquer PR será bem-vindo em favor de ajustes de bugs, melhorias ou apr
 - O PR ser criado em favor de algo que faça sentido ou relevância
 - O código do PR ser escrito em inglês, seguindo a [PSR12](https://www.php-fig.org/psr/psr-12/)
 - O código do PR ser formatado usando [Laravel Pint](https://laravel.com/docs/10.x/pint)
+- O código do PR ser analisando usando [LaraStan](https://github.com/nunomaduro/larastan)
 - O código do PR ser testado usando [PestPHP](https://pestphp.com/), inclusive adições ou modificações
 
 <a name="licensing"></a>

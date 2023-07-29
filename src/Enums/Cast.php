@@ -1,8 +1,8 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Core\Enums;
+namespace DevAjMeireles\PagHiper\Enums;
 
-use Exception;
+use DevAjMeireles\PagHiper\Exceptions\UnsupportedCastTypeExcetion;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 
@@ -15,14 +15,14 @@ enum Cast: string
     case Response   = 'response';
     case Dto        = 'dto';
 
-    /** @throws Exception */
+    /** @throws UnsupportedCastTypeExcetion */
     public function response(Response $response, string $index): Response|Collection|array
     {
         return (match ($this) {
             self::Response => fn () => $response,
             self::Array, self::Json => fn () => $this->toArray($response, $index),
             self::Collection, self::Collect => fn () => $this->toCollect($response, $index),
-            default => throw new Exception("Unsupported cast {$this->value}"),
+            default => throw new UnsupportedCastTypeExcetion("Unsupported cast {$this->value}"),
         })();
     }
 

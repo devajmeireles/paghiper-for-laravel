@@ -1,6 +1,6 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Core\DTO\Objects;
+namespace DevAjMeireles\PagHiper\DTO\Objects;
 
 use Illuminate\Contracts\Support\Arrayable;
 

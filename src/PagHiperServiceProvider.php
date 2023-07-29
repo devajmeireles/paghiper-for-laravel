@@ -2,6 +2,7 @@
 
 namespace DevAjMeireles\PagHiper;
 
+use DevAjMeireles\PagHiper\Console\InstallPagHiperCommand;
 use DevAjMeireles\PagHiper\Facades\PagHiper as PagHiperFacade;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
@@ -18,5 +19,9 @@ class PagHiperServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/paghiper.php' => config_path('paghiper.php'),
         ], 'paghiper-config');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([InstallPagHiperCommand::class]);
+        }
     }
 }

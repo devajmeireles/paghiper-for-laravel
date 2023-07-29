@@ -1,8 +1,8 @@
 <?php
 
-use DevAjMeireles\PagHiper\Billet\Actions\Notifications\ConsultNotification;
-use DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification;
-use DevAjMeireles\PagHiper\Core\Enums\Cast;
+use DevAjMeireles\PagHiper\Actions\Notifications\ConsultNotification;
+use DevAjMeireles\PagHiper\DTO\PagHiperNotification;
+use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Carbon;

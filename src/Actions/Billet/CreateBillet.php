@@ -1,12 +1,13 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Billet\Actions\Billet;
+namespace DevAjMeireles\PagHiper\Actions\Billet;
 
-use DevAjMeireles\PagHiper\Billet\Actions\Billet\HighOrderBilletCreation\HighOrderCreateBillet;
-use DevAjMeireles\PagHiper\Core\DTO\Objects\{Address, Basic, Item};
-use DevAjMeireles\PagHiper\Core\DTO\Objects\{Payer};
-use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, WrongModelSetUpException};
-use DevAjMeireles\PagHiper\Core\Request\Request;
+use DevAjMeireles\PagHiper\Actions\Billet\HighOrderBilletCreation\HighOrderCreateBillet;
+use DevAjMeireles\PagHiper\DTO\Objects\{Address, Basic};
+use DevAjMeireles\PagHiper\DTO\Objects\{Item};
+use DevAjMeireles\PagHiper\DTO\Objects\{Payer};
+use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException};
+use DevAjMeireles\PagHiper\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 

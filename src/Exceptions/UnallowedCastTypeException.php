@@ -1,10 +1,10 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Core\Exceptions;
+namespace DevAjMeireles\PagHiper\Exceptions;
 
 use Exception;
 
-class UnallowedCastType extends Exception
+class UnallowedCastTypeException extends Exception
 {
     public function __construct(string $cast)
     {

@@ -1,9 +1,9 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Billet\Actions\Notifications;
+namespace DevAjMeireles\PagHiper\Actions\Notifications;
 
-use DevAjMeireles\PagHiper\Core\Exceptions\PagHiperRejectException;
-use DevAjMeireles\PagHiper\Core\Request\Request;
+use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
+use DevAjMeireles\PagHiper\Request;
 use Illuminate\Http\Client\Response;
 
 class ConsultNotification

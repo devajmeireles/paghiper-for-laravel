@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\Billet\Actions\Billet\StatusBillet;
+use DevAjMeireles\PagHiper\Actions\Billet\StatusBillet;
 use DevAjMeireles\PagHiper\Facades\PagHiper as Facade;
 
 it('facade was bounded', function () {

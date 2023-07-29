@@ -1,8 +1,9 @@
 <?php
 
-use DevAjMeireles\PagHiper\Billet\Actions\Billet\CancelBillet;
-use DevAjMeireles\PagHiper\Core\Enums\Cast;
-use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, UnauthorizedCastResponseException};
+use DevAjMeireles\PagHiper\Actions\Billet\CancelBillet;
+use DevAjMeireles\PagHiper\Core\Exceptions\{UnauthorizedCastResponseException};
+use DevAjMeireles\PagHiper\Enums\Cast;
+use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;

@@ -1,8 +1,9 @@
 <?php
 
-use DevAjMeireles\PagHiper\Core\DTO\Objects\{Address, Basic, Item};
-use DevAjMeireles\PagHiper\Core\DTO\Objects\{Payer};
-use DevAjMeireles\PagHiper\Core\Request\Request;
+use DevAjMeireles\PagHiper\DTO\Objects\{Address, Basic};
+use DevAjMeireles\PagHiper\DTO\Objects\{Item};
+use DevAjMeireles\PagHiper\DTO\Objects\{Payer};
+use DevAjMeireles\PagHiper\Request;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 

@@ -1,8 +1,8 @@
 <?php
 
-use DevAjMeireles\PagHiper\Billet\Actions\Billet\CreateBillet;
-use DevAjMeireles\PagHiper\Core\Contracts\PagHiperModelAbstraction;
-use DevAjMeireles\PagHiper\Core\Enums\Cast;
+use DevAjMeireles\PagHiper\Actions\Billet\CreateBillet;
+use DevAjMeireles\PagHiper\Contracts\PagHiperModelAbstraction;
+use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;

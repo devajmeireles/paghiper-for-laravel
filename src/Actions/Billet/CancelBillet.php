@@ -1,9 +1,9 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Billet\Actions\Billet;
+namespace DevAjMeireles\PagHiper\Actions\Billet;
 
-use DevAjMeireles\PagHiper\Core\Exceptions\PagHiperRejectException;
-use DevAjMeireles\PagHiper\Core\Request\Request;
+use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
+use DevAjMeireles\PagHiper\Request;
 use Illuminate\Http\Client\Response;
 
 class CancelBillet

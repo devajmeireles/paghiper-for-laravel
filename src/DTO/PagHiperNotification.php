@@ -1,6 +1,6 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Core\DTO;
+namespace DevAjMeireles\PagHiper\DTO;
 
 use Illuminate\Support\{Carbon, Collection};
 

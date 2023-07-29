@@ -1,6 +1,6 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Core\Contracts;
+namespace DevAjMeireles\PagHiper\Contracts;
 
 interface PagHiperModelAbstraction
 {

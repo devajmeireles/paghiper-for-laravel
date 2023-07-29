@@ -2,9 +2,8 @@
 
 namespace DevAjMeireles\PagHiper;
 
-use DevAjMeireles\PagHiper\Billet\{Billet, Notification};
-use DevAjMeireles\PagHiper\Core\Enums\Cast;
-use DevAjMeireles\PagHiper\Core\Exceptions\UnallowedCastType;
+use DevAjMeireles\PagHiper\Enums\Cast;
+use DevAjMeireles\PagHiper\Exceptions\UnallowedCastTypeException;
 
 class PagHiper
 {
@@ -22,7 +21,7 @@ class PagHiper
         $cast = $this->cast ?? $cast;
 
         if ($cast === Cast::Dto) {
-            throw new UnallowedCastType("dto");
+            throw new UnallowedCastTypeException("dto");
         }
 
         return new Billet($this->cast ?? $cast);

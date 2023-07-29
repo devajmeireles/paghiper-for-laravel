@@ -1,9 +1,7 @@
 <?php
 
-use DevAjMeireles\PagHiper\Billet\{Billet, Notification};
-use DevAjMeireles\PagHiper\Core\Request\Request;
-use DevAjMeireles\PagHiper\Core\Traits\InteractWithCasts;
-use DevAjMeireles\PagHiper\PagHiper;
+use DevAjMeireles\PagHiper\Enums\Cast;
+use DevAjMeireles\PagHiper\{PagHiper, Request};
 
 test('will not debugging functions')
     ->expect(['dd', 'dump', 'ray'])
@@ -17,9 +15,15 @@ test('request class should be final')
     ->expect(Request::class)
     ->toBeFinal();
 
-test('InteractWithCasts trait should be used only in Billet')
-    ->expect(InteractWithCasts::class)
-    ->toOnlyBeUsedIn([
-        Billet::class,
-        Notification::class,
-    ]);
+test('exceptions should extends the default exception class')
+    ->expect([
+        DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException::class,
+        DevAjMeireles\PagHiper\Exceptions\UnsupportedCastTypeExcetion::class,
+        DevAjMeireles\PagHiper\Exceptions\UnallowedCastTypeException::class,
+        DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException::class,
+    ])->toExtend(Exception::class);
+
+test('enum should have all cases')
+    ->expect(Cast::class)
+    ->toBeEnum()
+    ->toBeEnums();

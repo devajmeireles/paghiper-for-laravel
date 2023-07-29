@@ -1,11 +1,13 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Billet;
+namespace DevAjMeireles\PagHiper;
 
-use DevAjMeireles\PagHiper\Billet\Actions\{Billet\CancelBillet, Billet\CreateBillet, Billet\StatusBillet};
-use DevAjMeireles\PagHiper\Core\DTO\Objects\{Address, Basic, Item};
-use DevAjMeireles\PagHiper\Core\DTO\Objects\{Payer};
-use DevAjMeireles\PagHiper\Core\Enums\Cast;
+use DevAjMeireles\PagHiper\Actions\Billet\{CreateBillet, StatusBillet};
+use DevAjMeireles\PagHiper\Actions\{Billet\CancelBillet};
+use DevAjMeireles\PagHiper\DTO\Objects\{Address, Basic};
+use DevAjMeireles\PagHiper\DTO\Objects\{Item};
+use DevAjMeireles\PagHiper\DTO\Objects\{Payer};
+use DevAjMeireles\PagHiper\Enums\Cast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;

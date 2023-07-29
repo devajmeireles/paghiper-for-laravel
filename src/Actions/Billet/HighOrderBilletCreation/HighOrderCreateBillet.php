@@ -1,9 +1,9 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Billet\Actions\Billet\HighOrderBilletCreation;
+namespace DevAjMeireles\PagHiper\Actions\Billet\HighOrderBilletCreation;
 
-use DevAjMeireles\PagHiper\Core\Contracts\PagHiperModelAbstraction;
-use DevAjMeireles\PagHiper\Core\Exceptions\WrongModelSetUpException;
+use DevAjMeireles\PagHiper\Contracts\PagHiperModelAbstraction;
+use DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException;
 use Illuminate\Database\Eloquent\Model;
 
 class HighOrderCreateBillet
