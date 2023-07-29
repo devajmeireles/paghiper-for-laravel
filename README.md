@@ -216,7 +216,7 @@ use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->status(transaction: 'HF97T5SH2ZQNLF6Z');
 
-$billet // passa a ser uma instância de Illuminate\Support\Collection
+// $billet passa a ser uma instância de Illuminate\Support\Collection
 ```
 
 <a name="cancelling-billet"></a>
@@ -242,7 +242,7 @@ use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
 
-$billet // passa a ser uma instância de Illuminate\Support\Collection
+// $billet passa a ser uma instância de Illuminate\Support\Collection
 ```
 
 <a name="billet-notification"></a>
@@ -287,7 +287,7 @@ Route::get('/payment/notification', function (Request $request) {
         ->notification(notification: $notification, transaction: $transaction)
         ->consult();
     
-    // $status passa a ser uma instância de \Illuminate\Support\Collection...
+// $status passa a ser uma instância de Illuminate\Support\Collection
 })->name('paghiper.notification');
 ```
 
