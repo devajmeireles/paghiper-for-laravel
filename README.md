@@ -358,10 +358,10 @@ O cast `Dto` irá interceptar a resposta, transformar em array e em seguida inst
 
 Todo e qualquer PR será bem-vindo em favor de ajustes de bugs, melhorias ou aprimoramentos desde que:
 - O PR ser criado de forma explicativa, mencionando inclusive o problema
-- O PR realmente faça algo útil ou relevante
-- O código seja escrito em inglês, seguindo a [PSR12](https://www.php-fig.org/psr/psr-12/)
-- O código seja formatado usando [Laravel Pint](https://laravel.com/docs/10.x/pint)
-- O código seja testado usando [PestPHP](https://pestphp.com/), inclusive adições ou modificações
+- O PR ser criado em favor de algo que faça sentido ou relevância
+- O código do PR ser escrito em inglês, seguindo a [PSR12](https://www.php-fig.org/psr/psr-12/)
+- O código do PR ser formatado usando [Laravel Pint](https://laravel.com/docs/10.x/pint)
+- O código do PR ser testado usando [PestPHP](https://pestphp.com/), inclusive adições ou modificações
 
 <a name="licensing"></a>
 ## Licença de Uso
