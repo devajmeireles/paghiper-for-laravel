@@ -2,6 +2,7 @@
 
 use DevAjMeireles\PagHiper\Billet\Actions\Notifications\ConsultNotification;
 use DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification;
+use DevAjMeireles\PagHiper\Core\Enums\Cast;
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Carbon;
@@ -108,7 +109,7 @@ it('should be able to consult notification casting to collection', function () {
 
     fakeBilletResponse(ConsultNotification::END_POINT, 'status_request', $result);
 
-    $notification = (new PagHiper())->cast('collection')
+    $notification = (new PagHiper())->cast(Cast::Collection)
         ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction)
         ->consult();
 
@@ -165,7 +166,7 @@ it('should be able to consult notification casting to original response', functi
 
     fakeBilletResponse(ConsultNotification::END_POINT, 'status_request', $result);
 
-    $notification = (new PagHiper())->cast('response')
+    $notification = (new PagHiper())->cast(Cast::Response)
         ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction)
         ->consult();
 
@@ -223,7 +224,7 @@ it('should be able to consult notification casting to notification dto', functio
     fakeBilletResponse(ConsultNotification::END_POINT, 'status_request', $result);
 
     $notification = (new PagHiper())
-        ->cast('dto')
+        ->cast(Cast::Dto)
         ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction)
         ->consult();
 

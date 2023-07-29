@@ -3,51 +3,35 @@
 namespace DevAjMeireles\PagHiper;
 
 use DevAjMeireles\PagHiper\Billet\{Billet, Notification};
-use DevAjMeireles\PagHiper\Core\Exceptions\UnauthorizedCastResponseException;
+use DevAjMeireles\PagHiper\Core\Enums\Cast;
+use DevAjMeireles\PagHiper\Core\Exceptions\UnallowedCastType;
 
 class PagHiper
 {
-    protected ?string $cast = null;
+    protected ?Cast $cast = null;
 
-    public function cast(string $cast = 'json'): self
+    public function cast(Cast $cast = Cast::Array): self
     {
         $this->cast = $cast;
 
         return $this;
     }
 
-    public function billet(string $cast = 'json'): Billet
+    public function billet(Cast $cast = Cast::Array): Billet
     {
         $cast = $this->cast ?? $cast;
 
-        $this->castable($cast);
+        if ($cast === Cast::Dto) {
+            throw new UnallowedCastType("dto");
+        }
 
         return new Billet($this->cast ?? $cast);
     }
 
     public function notification(string $notification, string $transaction): Notification
     {
-        $this->cast ??= 'json';
-
-        $this->castable($this->cast, true);
+        $this->cast ??= Cast::Array;
 
         return new Notification($notification, $transaction, $this->cast);
-    }
-
-    /** @throws UnauthorizedCastResponseException */
-    private function castable(string $cast, bool $notification = false): void
-    {
-        $defaults = ['response', 'json', 'array', 'collect', 'collection'];
-        $specials = ['dto'];
-
-        if (!$notification) {
-            if (!in_array($cast, $defaults)) {
-                throw new UnauthorizedCastResponseException($cast);
-            }
-        } else {
-            if (!in_array($cast, array_merge($defaults, $specials))) {
-                throw new UnauthorizedCastResponseException($cast);
-            }
-        }
     }
 }

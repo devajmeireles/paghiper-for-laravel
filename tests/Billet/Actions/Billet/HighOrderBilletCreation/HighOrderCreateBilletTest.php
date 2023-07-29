@@ -2,6 +2,7 @@
 
 use DevAjMeireles\PagHiper\Billet\Actions\Billet\CreateBillet;
 use DevAjMeireles\PagHiper\Core\Contracts\PagHiperModelAbstraction;
+use DevAjMeireles\PagHiper\Core\Enums\Cast;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
@@ -99,7 +100,7 @@ it('should be able to create billet for a model instance casting to collection',
 
     [$payer, $basic, $address, $items] = [...fakeBilletCreationBody()];
 
-    $billet = PagHiper::billet('collection')->create($model, $basic, $address, $items);
+    $billet = PagHiper::billet(Cast::Collection)->create($model, $basic, $address, $items);
 
     expect($billet)
         ->toBeInstanceOf(Collection::class)
@@ -133,7 +134,7 @@ it('should be able to create billet for a model instance casting to original res
 
     [$payer, $basic, $address, $items] = [...fakeBilletCreationBody()];
 
-    $billet = PagHiper::billet('response')->create($model, $basic, $address, $items);
+    $billet = PagHiper::billet(Cast::Response)->create($model, $basic, $address, $items);
 
     expect($billet)
         ->toBeInstanceOf(Response::class)

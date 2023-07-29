@@ -4,18 +4,16 @@ namespace DevAjMeireles\PagHiper\Billet;
 
 use DevAjMeireles\PagHiper\Billet\Actions\Notifications\ConsultNotification;
 use DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification;
-use DevAjMeireles\PagHiper\Core\Traits\InteractWithCasts;
+use DevAjMeireles\PagHiper\Core\Enums\Cast;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 
 class Notification
 {
-    use InteractWithCasts;
-
     public function __construct(
         private readonly string $notification,
         private readonly string $transaction,
-        private readonly string $cast = 'json',
+        private readonly Cast $cast = Cast::Array,
     ) {
         //
     }
@@ -24,12 +22,10 @@ class Notification
     {
         $response = ConsultNotification::execute($this->notification, $this->transaction);
 
-        if ($this->cast === 'dto') {
+        if ($this->cast === Cast::Dto) {
             return PagHiperNotification::fromResponse($response->json('status_request'));
         }
 
-        $this->response = $response;
-
-        return $this->cast('status_request');
+        return $this->cast->response($response, 'status_request');
     }
 }
