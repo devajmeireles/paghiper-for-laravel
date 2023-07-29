@@ -1,10 +1,15 @@
-name: run-tests
+name: PestPHP Tests
 
 on:
     push:
-        branches: [main]
+        branches:
+            - main
+            - develop
     pull_request:
-        branches: [main]
+        branches:
+            - main
+            - develop
+            - release/**
 
 jobs:
     test:
@@ -46,6 +51,9 @@ jobs:
 
             - name: List Installed Dependencies
               run: composer show -D
+
+            - name: Verifying pint
+              run: vendor/bin/pint --test
 
             - name: Execute tests
               run: vendor/bin/pest --ci --parallel
