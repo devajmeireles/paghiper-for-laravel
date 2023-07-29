@@ -2,9 +2,15 @@
 
 namespace DevAjMeireles\PagHiper\Billet;
 
-use DevAjMeireles\PagHiper\Billet\Actions\{CancelBillet, ConsultBilletStatus, CreateBillet};
-use DevAjMeireles\PagHiper\Core\Exceptions\ResponseCastNotAllowed;
+use DevAjMeireles\PagHiper\Billet\Actions\{
+    CancelBillet,
+    CreateBillet,
+    HighOrderInteraction\HighOrderCreateBillet,
+    StatusBillet
+};
+use DevAjMeireles\PagHiper\Core\Exceptions\{EmptyMandatoryDataException, PagHiperRejectException, ResponseCastNotAllowed};
 use DevAjMeireles\PagHiper\Core\Traits\InteractWithCasts;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 
@@ -26,20 +32,17 @@ class Billet
         }
     }
 
-    public function create(?array $data = [], string $return = 'json'): Response|Collection|array
+    /** @throws PagHiperRejectException */
+    public function create(array|Model $data, ...$parameters): Response|Collection|array
     {
-        if (empty($data)) {
-            //return new CreateBilletForModel();
-        }
-
-        $this->response = CreateBillet::execute($data);
+        $this->response = CreateBillet::execute($data, $parameters);
 
         return $this->cast('create_request');
     }
 
     public function status(string $transaction): Response|Collection|array
     {
-        $this->response = ConsultBilletStatus::execute($transaction);
+        $this->response = StatusBillet::execute($transaction);
 
         return $this->cast('status_request');
     }

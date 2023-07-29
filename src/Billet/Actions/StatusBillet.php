@@ -6,7 +6,7 @@ use DevAjMeireles\PagHiper\Core\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\Core\Request\Request;
 use Illuminate\Http\Client\Response;
 
-class ConsultBilletStatus
+class StatusBillet
 {
     public const END_POINT = 'transaction/status/';
 

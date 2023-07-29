@@ -1,11 +1,9 @@
 <?php
 
 use DevAjMeireles\PagHiper\Billet\Actions\CancelBillet;
-use DevAjMeireles\PagHiper\Core\Request\Request;
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Http;
 
 it('should be able to cancel billet casting to array', function () {
     $transaction = 'BPV661O7AVLORCN5';
@@ -16,11 +14,7 @@ it('should be able to cancel billet casting to array', function () {
         'http_code'        => '200',
     ];
 
-    Http::fake([
-        Request::url(CancelBillet::END_POINT) => Http::response([
-            'cancellation_request' => $result,
-        ]),
-    ]);
+    fakeBilletResponse(CancelBillet::END_POINT, 'cancellation_request', $result);
 
     $status = (new PagHiper())->billet()->cancel($transaction);
 
@@ -39,11 +33,7 @@ it('should be able to cancel billet casting to collection', function (string $ca
         'http_code'        => '200',
     ];
 
-    Http::fake([
-        Request::url(CancelBillet::END_POINT) => Http::response([
-            'cancellation_request' => $result,
-        ]),
-    ]);
+    fakeBilletResponse(CancelBillet::END_POINT, 'cancellation_request', $result);
 
     $status = (new PagHiper())->billet($cast)->cancel($transaction);
 
@@ -59,11 +49,7 @@ it('should be able to cancel billet casting to original response', function () {
         'http_code'        => '200',
     ];
 
-    Http::fake([
-        Request::url(CancelBillet::END_POINT) => Http::response([
-            'cancellation_request' => $result,
-        ]),
-    ]);
+    fakeBilletResponse(CancelBillet::END_POINT, 'cancellation_request', $result);
 
     $status = (new PagHiper())->billet(cast: 'response')->cancel($transaction);
 

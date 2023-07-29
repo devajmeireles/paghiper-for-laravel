@@ -1,12 +1,10 @@
 <?php
 
-use DevAjMeireles\PagHiper\Billet\Actions\ConsultBilletStatus;
+use DevAjMeireles\PagHiper\Billet\Actions\StatusBillet;
 use DevAjMeireles\PagHiper\Core\Exceptions\PagHiperRejectException;
-use DevAjMeireles\PagHiper\Core\Request\Request;
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Http;
 
 it('should be able to consult billet status casting to array', function () {
     $result = [
@@ -24,11 +22,7 @@ it('should be able to consult billet status casting to array', function () {
         'http_code' => '201',
     ];
 
-    Http::fake([
-        Request::url(ConsultBilletStatus::END_POINT) => Http::response([
-            'status_request' => $result,
-        ]),
-    ]);
+    fakeBilletResponse(StatusBillet::END_POINT, 'status_request', $result);
 
     $status = (new PagHiper())->billet()->status('BPV661O7AVLORCN5');
 
@@ -54,10 +48,7 @@ it('should be able to consult billet status casting to collection', function (st
         'http_code' => '201',
     ];
 
-    Http::fake([
-        Request::url(ConsultBilletStatus::END_POINT) => Http::response([
-            'status_request' => $result]),
-    ]);
+    fakeBilletResponse(StatusBillet::END_POINT, 'status_request', $result);
 
     $status = (new PagHiper())->billet($cast)->status('BPV661O7AVLORCN5');
 
@@ -80,10 +71,7 @@ it('should be able to consult billet status casting to original response', funct
         'http_code' => '201',
     ];
 
-    Http::fake([
-        Request::url(ConsultBilletStatus::END_POINT) => Http::response([
-            'status_request' => $result]),
-    ]);
+    fakeBilletResponse(StatusBillet::END_POINT, 'status_request', $result);
 
     $status = (new PagHiper())->billet(cast: 'response')->status('BPV661O7AVLORCN5');
 
@@ -94,13 +82,12 @@ it('should be able to throw exception due response reject', function () {
     $this->expectException(PagHiperRejectException::class);
     $this->expectExceptionMessage("token ou apiKey inválidos");
 
-    Http::fake([
-        Request::url(ConsultBilletStatus::END_POINT) => Http::response([
-            'status_request' => [
-                'result'           => 'reject',
-                'response_message' => 'token ou apiKey inválidos',
-            ]]),
-    ]);
+    $result = [
+        'result'           => 'reject',
+        'response_message' => 'token ou apiKey inválidos',
+    ];
+
+    fakeBilletResponse(StatusBillet::END_POINT, 'status_request', $result);
 
     (new PagHiper())->billet()->status('BPV661O7AVLORCN5');
 });
