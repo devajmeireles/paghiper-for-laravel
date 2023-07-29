@@ -3,6 +3,7 @@
 namespace DevAjMeireles\PagHiper\Billet;
 
 use DevAjMeireles\PagHiper\Billet\Actions\Notifications\ConsultNotification;
+use DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification;
 use DevAjMeireles\PagHiper\Core\Traits\InteractWithCasts;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
@@ -19,9 +20,15 @@ class Notification
         //
     }
 
-    public function consult(): Response|Collection|array
+    public function consult(): Response|PagHiperNotification|Collection|array
     {
-        $this->response = ConsultNotification::execute($this->notification, $this->transaction);
+        $response = ConsultNotification::execute($this->notification, $this->transaction);
+
+        if ($this->cast === 'dto') {
+            return PagHiperNotification::fromResponse($response->json('status_request'));
+        }
+
+        $this->response = $response;
 
         return $this->cast('status_request');
     }

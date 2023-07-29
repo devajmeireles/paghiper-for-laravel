@@ -29,22 +29,25 @@ class PagHiper
     {
         $this->cast ??= 'json';
 
-        $this->castable($this->cast);
+        $this->castable($this->cast, true);
 
         return new Notification($notification, $transaction, $this->cast);
     }
 
     /** @throws UnauthorizedCastResponseException */
-    private function castable(string $cast)
+    private function castable(string $cast, bool $notification = false): void
     {
-        if (!in_array($cast, [
-            'response',
-            'json',
-            'array',
-            'collect',
-            'collection',
-        ])) {
-            throw new UnauthorizedCastResponseException($cast);
+        $defaults = ['response', 'json', 'array', 'collect', 'collection'];
+        $specials = ['dto'];
+
+        if (!$notification) {
+            if (!in_array($cast, $defaults)) {
+                throw new UnauthorizedCastResponseException($cast);
+            }
+        } else {
+            if (!in_array($cast, array_merge($defaults, $specials))) {
+                throw new UnauthorizedCastResponseException($cast);
+            }
         }
     }
 }
