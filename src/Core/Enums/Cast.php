@@ -18,7 +18,6 @@ enum Cast: string
     /** @throws Exception */
     public function response(Response $response, string $index): Response|Collection|array
     {
-        /** @phpstan-ignore-next-line */
         return (match ($this) {
             self::Response => fn () => $response,
             self::Array, self::Json => fn () => $this->toArray($response, $index),
