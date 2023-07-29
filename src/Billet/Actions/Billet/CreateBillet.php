@@ -14,7 +14,7 @@ class CreateBillet
 {
     public const END_POINT = 'transaction/create/';
 
-    /** @throws PagHiperRejectException|WrongModelSetUpException */
+    /** @throws PagHiperRejectException */
     public static function execute(Payer|Model $payer, Basic $basic, Address $address, array|Item $items): Response
     {
         $response = Request::execute(self::END_POINT, (new self())->parse($payer, $basic, $address, $items));

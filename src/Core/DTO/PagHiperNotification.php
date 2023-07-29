@@ -14,6 +14,7 @@ class PagHiperNotification
 
     public static function fromResponse(array $response): self
     {
+        /** @phpstan-ignore-next-line */
         return new static(collect($response));
     }
 

@@ -3,11 +3,10 @@
 namespace DevAjMeireles\PagHiper;
 
 use DevAjMeireles\PagHiper\Facades\PagHiper as PagHiperFacade;
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
-class PagHiperServiceProvider extends ServiceProvider implements DeferrableProvider
+class PagHiperServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

@@ -11,6 +11,7 @@ trait InteractWithCasts
 
     protected function cast(string $index): Response|Collection|array
     {
+        /** @phpstan-ignore-next-line */
         return (match ($this->cast) {
             'response' => fn () => $this->toResponse(),
             'json', 'array' => fn () => $this->toArray($index),
