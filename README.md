@@ -7,6 +7,7 @@
     - [Consultando Boleto Bancário](#consulting-billet)
     - [Cancelando Boleto Bancário](#cancelling-billet)
     - [Retorno Automático de Boleto Bancário](#billet-notification)
+    - [Tratamento de Erros](#billet-errors)
 - [A Fazeres](#todo)
 - [Contribuição](#contributing)
 - [Licença de Uso](#license)
@@ -40,7 +41,7 @@ Após instalar, execute o comando `paghiper:install` para concluir a instalaçã
 php artisan paghiper:install
 ```
 
-Este comando irá apenas publicar o arquivo `config/paghiper.php` para sua aplicação. Este arquivo armazena as informações da sua conta na PagHiper para comunicação via API. **Recomendo que abra o arquivo e leia com atenção.**
+Este comando irá apenas publicar o arquivo `config/paghiper.php` para sua aplicação, junto a variáveis de ambiente para os seus arquivos: `.env` e `.env.example`. Este arquivo armazena as informações da sua conta na PagHiper para comunicação via API. **Recomendo que abra o arquivo e leia com atenção.**
 
 <a name="billet"></a>
 # Boleto Bancário
@@ -56,7 +57,7 @@ use DevAjMeireles\PagHiper\Facades\PagHiper;
 $billet = PagHiper::billet()->create(/* ... */)
 ```
 
-Para uma melhor organização, a forma de interagir com o método `create` é enviando para ele quatro instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
+Para uma melhor organização, a forma de interagir com o método `create` é enviar para ele quatro instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -68,7 +69,7 @@ use DevAjMeireles\PagHiper\Core\DTO\Objects\Payer;   // 👈
 $billet = (new PagHiper())->billet()
     ->create(
         new Payer(name: 'Foo Bar', email: 'foo.bar@gmail.com', document: '123.456.789-00', phone: '1199999999'),
-        new Basic(orderId: 12, notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
+        new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
         new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
         new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000)
     );
@@ -90,7 +91,7 @@ use DevAjMeireles\PagHiper\Core\DTO\Objects\Item;
 $billet = (new PagHiper())->billet()
     ->create(
         User::first(), // 👈
-        new Basic(orderId: 12, notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
+        new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
         new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
         new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000)
     );
@@ -158,7 +159,7 @@ use DevAjMeireles\PagHiper\Core\DTO\Objects\Payer;
 $billet = (new PagHiper())->billet()
     ->create(
         new Payer(name: 'Foo Bar', email: 'foo.bar@gmail.com', document: '123.456.789-00', phone: '1199999999'),
-        new Basic(orderId: 12, notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
+        new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
         new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
         [
             new Item(id: 12, description: 'Foo Bar 12', quantity: 1, price: 1200),
@@ -187,7 +188,7 @@ use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
 $billet = (new PagHiper())->billet(Cast::Collection) // 👈
     ->create(
         User::first(),
-        new Basic(orderId: 12, notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
+        new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
         new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
         new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000)
     );
@@ -254,6 +255,8 @@ O pacote oferece uma forma fácil de lidar com o retorno automático de boletos 
 Supondo que você possui uma URL nomeada como `paghiper.notification`, e que essa foi a URL enviada como `$notificationUrl` na classe de objeto `Basic` no momento da criação do boleto bancário, então isso será suficiente:
 
 ```php
+// routes/web.php
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -263,7 +266,7 @@ Route::get('/payment/notification', function (Request $request) {
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
     $status = PagHiper::notification(notification: $notification, transaction: $transaction)->consult();
-})->name('payment.notification');
+})->name('paghiper.notification');
 ```
 
 ---
@@ -271,6 +274,8 @@ Route::get('/payment/notification', function (Request $request) {
 Você também pode utilizar os casts na consulta da notificação de um boleto bancário:
 
 ```php
+// routes/web.php
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -284,8 +289,8 @@ Route::get('/payment/notification', function (Request $request) {
         ->notification(notification: $notification, transaction: $transaction)
         ->consult();
     
-    // $status será uma instância de \Illuminate\Support\Collection...
-})->name('payment.notification');
+    // $status passa a ser uma instância de \Illuminate\Support\Collection...
+})->name('paghiper.notification');
 ```
 
 ---
@@ -307,7 +312,7 @@ Route::get('/payment/notification', function (Request $request) {
     $status = PagHiper::cast(Cast::Dto)
         ->notification(notification: $notification, transaction: $transaction)
         ->consult();
-})->name('payment.notification');
+})->name('paghiper.notification');
 ```
 
 O cast `Dto` irá interceptar a resposta, transformar em array e em seguida instanciar a classe `DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification`, que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
@@ -335,4 +340,34 @@ O cast `Dto` irá interceptar a resposta, transformar em array e em seguida inst
 - `items()`: retorna um array com os itens do array
   - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
 
-**Uma excessão do tipo `UnallowedCastType` será lançada caso você tente utilizar o `Cast::Dto` em um método que não seja o `notification()`.**
+<a name="billet-errors"></a>
+## Tratamento de Erros
+
+- `DevAjMeireles\PagHiper\Core\Exceptions\PagHiperException`: 
+  - erro genérico do PagHiper
+- `DevAjMeireles\PagHiper\Core\Exceptions\UnallowedCastType`: 
+  - tentativa de uso indetivo do cast `DevAjMeireles\PagHiper\Core\Enums\Cast\Dto`
+- `DevAjMeireles\PagHiper\Core\Exceptions\WrongModelSetUpException`: 
+  - tentativa de criação de boleto usando um modelador sem que ele tenha sido preparado
+
+<a name="todo"></a>
+## A Fazeres
+
+- Integração com [PIX do PagHiper](https://dev.paghiper.com/reference/emissao-de-pix-paghiper)
+- Suporte a API de [Contas Bancárias](https://dev.paghiper.com/reference/solicitacao-saque)
+
+<a name="contributing"></a>
+## Contribuição
+
+Todo e qualquer PR será bem-vindo em favor de ajustes de bugs, melhorias ou aprimoramentos desde que:
+- O PR será criado de forma explicativa, mencionando inclusive o problema
+- O PR realmente faça algo útil ou relevante
+- O código seja escrito em inglês, seguindo a [PSR12](https://www.php-fig.org/psr/psr-12/)
+- O código seja formatado usando [Laravel Pint](https://laravel.com/docs/10.x/pint)
+- O código seja testado usando [PestPHP](https://pestphp.com/)
+
+
+<a name="licensing"></a>
+## Licença de Uso
+
+`PagHiper for Laravel` é um projeto open-source sobre a licença [MIT](LICENSE.md).
