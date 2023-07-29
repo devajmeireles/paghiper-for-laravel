@@ -253,13 +253,15 @@ Você pode utilizar os casts para lidar com a resposta da consulta:
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Core\Enums\Cast;
+use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
 
 Route::get('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
-    $status = PagHiper::cast(Cast::Collection)->notification(notification: $notification, transaction: $transaction)->consult();
+    $status = PagHiper::cast(Cast::Collection)
+        ->notification(notification: $notification, transaction: $transaction)
+        ->consult();
     
     // $status será uma instância de \Illuminate\Support\Collection...
 })->name('payment.notification');
@@ -267,7 +269,7 @@ Route::get('/payment/notification', function (Request $request) {
 
 ---
 
-**De forma especial para o retorno automático, o pacote oferece um cast diferente: `dto`:**
+**De forma especial para o retorno automático, o pacote oferece um cast diferente: `Dto`:**
 
 ```php
 // routes/web.php
@@ -275,14 +277,39 @@ Route::get('/payment/notification', function (Request $request) {
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Core\Enums\Cast;
+use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
 
 Route::get('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
-    $status = PagHiper::cast(Cast::Dto)->notification(notification: $notification, transaction: $transaction)->consult();
+    $status = PagHiper::cast(Cast::Dto)
+        ->notification(notification: $notification, transaction: $transaction)
+        ->consult();
 })->name('payment.notification');
 ```
 
 O cast `Dto` irá interceptar a resposta, transformar em array e em seguida instanciar a classe `DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification`, que possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:
+
+- `transaction()`: retorna o ID da transação
+- `order()`: retorna o ID do pedido
+- `createdAt()`: retorna a data de criação do boleto como instância de `Illuminate\Support\Carbon`
+- `pending()`: retorna `true` se o status do boleto for `pending`
+- `reserved()`: retorna `true` se o status do boleto for `reserved`
+- `canceled()`: retorna `true` se o status do boleto for `canceled`
+- `completed()`: retorna `true` se o status do boleto for `completed`
+- `paid()`: retorna `true` se o status do boleto for `paid`
+- `processing()`: retorna `true` se o status do boleto for `processing`
+- `refunded()`: retorna `true` se o status do boleto for `refunded`
+- `paidAt()`: retorna a data de pagamento do boleto como instância de `Illuminate\Support\Carbon`
+- `payer(bool $toCollection = false)`: retorna um array com os dados do pagador 
+  - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
+- `address(bool $toCollection = false)`: retorna um array com os dados do endereço 
+  - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
+- `finalPrice()`: retorna o valor final do boleto, `value_cents`
+- `discount()`: retorna o valor do desconto do boleto, `discount_cents`
+- `bankSlipUrl()`: retorna um array com dados do boleto (URL, linha digitável...)
+- `dueDateAt()`: retorna a data de vencimento do boleto como instância de `Illuminate\Support\Carbon`
+- `numItems`(): retorna o número de itens do boleto
+- `items(bool $toCollection = false)`: retorna um array com os itens do array
+  - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
