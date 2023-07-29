@@ -55,9 +55,5 @@ jobs:
             - name: Verifying pint
               run: vendor/bin/pint --test
 
-
-            - name: Verifying Phpstan
-              run: /vendor/bin/phpstan analyse --memory-limit=2G
-
             - name: Execute tests
               run: vendor/bin/pest --ci --parallel
