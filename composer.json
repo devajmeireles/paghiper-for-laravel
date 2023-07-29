@@ -1,7 +1,7 @@
 {
     "name": "devajmeireles/paghiper-for-laravel",
     "description": "PagHiper for Laravel.",
-    "homepage": "https://github.com/devajmeireles/paghiper",
+    "homepage": "https://github.com/devajmeireles/paghiper-for-laravel",
     "license": "MIT",
     "authors": [
         {
@@ -26,8 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DevAjMeireles\\PagHiper\\": "src/",
-            "DevAjMeireles\\PagHiper\\Database\\Factories\\": "database/factories/"
+            "DevAjMeireles\\PagHiper\\": "src/"
         }
     },
     "autoload-dev": {
@@ -57,6 +56,6 @@
             }
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

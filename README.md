@@ -1,4 +1,4 @@
-<p align="center"><img src="./art/cover.png" alt="Laravel Folio Package Logo"></p>
+<p align="center"><img src="./art/cover.png" alt="PagHiper for Laravel"></p>
 
 - [Introdução](#introduction)
 - [Instalação](#installation)
@@ -21,10 +21,7 @@
 
 ---
 
-O pacote foi criado e é mantido por mim, AJ Meireles. Você pode me encontrar em um dos canais abaixo:
-
-- [LinkedIn](https://www.linkedin.com/in/devajmeireles/)
-- [Twitter](https://twitter.com/devajmeireles)
+O pacote foi criado e é mantido por mim, [AJ Meireles](https://www.linkedin.com/in/devajmeireles/). Sou desenvolvedor de software há 12 anos, dos quais há 9 trabalho exclusivamente com PHP, inclusive como fundador da comunidade [EuSeiPHP](https://www.youtube.com/@euseiphp), um canal para compartilhamento de conteúdos sobre PHP e Laravel.
 
 <a name="installation"></a>
 # Instalação
@@ -32,7 +29,7 @@ O pacote foi criado e é mantido por mim, AJ Meireles. Você pode me encontrar e
 Para instalar o pacote, execute o comando abaixo:
 
 ```bash
-composer require devajmeireles/paghiper-laravel
+composer require devajmeireles/paghiper-for-laravel
 ```
 
 Após instalar, execute o comando `paghiper:install` para concluir a instalação:
@@ -41,7 +38,7 @@ Após instalar, execute o comando `paghiper:install` para concluir a instalaçã
 php artisan paghiper:install
 ```
 
-Este comando irá apenas publicar o arquivo `config/paghiper.php` para sua aplicação, junto a variáveis de ambiente para os seus arquivos: `.env` e `.env.example`. Este arquivo armazena as informações da sua conta na PagHiper para comunicação via API. **Recomendo que abra o arquivo e leia com atenção.**
+Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação, junto a criação de variáveis de ambiente para os seus arquivos: `.env` e `.env.example`. **Recomendo que abra o arquivo `config/paghiper.php` e leia com atenção.**
 
 <a name="billet"></a>
 # Boleto Bancário
@@ -343,29 +340,28 @@ O cast `Dto` irá interceptar a resposta, transformar em array e em seguida inst
 <a name="billet-errors"></a>
 ## Tratamento de Erros
 
-- `DevAjMeireles\PagHiper\Core\Exceptions\PagHiperException`: 
+- `DevAjMeireles\PagHiper\Core\Exceptions\PagHiperException` 
   - erro genérico do PagHiper
-- `DevAjMeireles\PagHiper\Core\Exceptions\UnallowedCastType`: 
+- `DevAjMeireles\PagHiper\Core\Exceptions\UnallowedCastType` 
   - tentativa de uso indetivo do cast `DevAjMeireles\PagHiper\Core\Enums\Cast\Dto`
-- `DevAjMeireles\PagHiper\Core\Exceptions\WrongModelSetUpException`: 
+- `DevAjMeireles\PagHiper\Core\Exceptions\WrongModelSetUpException` 
   - tentativa de criação de boleto usando um modelador sem que ele tenha sido preparado
 
 <a name="todo"></a>
 ## A Fazeres
 
 - Integração com [PIX do PagHiper](https://dev.paghiper.com/reference/emissao-de-pix-paghiper)
-- Suporte a API de [Contas Bancárias](https://dev.paghiper.com/reference/solicitacao-saque)
+- Integração com [Contas Bancárias](https://dev.paghiper.com/reference/solicitacao-saque)
 
 <a name="contributing"></a>
 ## Contribuição
 
 Todo e qualquer PR será bem-vindo em favor de ajustes de bugs, melhorias ou aprimoramentos desde que:
-- O PR será criado de forma explicativa, mencionando inclusive o problema
+- O PR ser criado de forma explicativa, mencionando inclusive o problema
 - O PR realmente faça algo útil ou relevante
 - O código seja escrito em inglês, seguindo a [PSR12](https://www.php-fig.org/psr/psr-12/)
 - O código seja formatado usando [Laravel Pint](https://laravel.com/docs/10.x/pint)
-- O código seja testado usando [PestPHP](https://pestphp.com/)
-
+- O código seja testado usando [PestPHP](https://pestphp.com/), inclusive adições ou modificações
 
 <a name="licensing"></a>
 ## Licença de Uso
