@@ -4,8 +4,7 @@ namespace DevAjMeireles\PagHiper\Actions\Billet;
 
 use DevAjMeireles\PagHiper\Actions\Billet\HighOrderBilletCreation\HighOrderCreateBillet;
 use DevAjMeireles\PagHiper\DTO\Objects\{Address, Basic};
-use DevAjMeireles\PagHiper\DTO\Objects\{Item};
-use DevAjMeireles\PagHiper\DTO\Objects\{Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException};
 use DevAjMeireles\PagHiper\Request;
 use Illuminate\Database\Eloquent\Model;

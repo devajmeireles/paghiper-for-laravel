@@ -2,11 +2,9 @@
 
 namespace DevAjMeireles\PagHiper;
 
-use DevAjMeireles\PagHiper\Actions\Billet\{CreateBillet, StatusBillet};
-use DevAjMeireles\PagHiper\Actions\{Billet\CancelBillet};
+use DevAjMeireles\PagHiper\Actions\Billet\{CancelBillet, CreateBillet, StatusBillet};
 use DevAjMeireles\PagHiper\DTO\Objects\{Address, Basic};
-use DevAjMeireles\PagHiper\DTO\Objects\{Item};
-use DevAjMeireles\PagHiper\DTO\Objects\{Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;

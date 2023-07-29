@@ -1,7 +1,6 @@
 <?php
 
 use DevAjMeireles\PagHiper\Actions\Billet\StatusBillet;
-use DevAjMeireles\PagHiper\Core\Exceptions\{UnauthorizedCastResponseException};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\PagHiper;

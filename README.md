@@ -329,6 +329,8 @@ O cast `Dto` irá interceptar a resposta, transformar em array e em seguida inst
   - erro genérico do PagHiper
 - `DevAjMeireles\PagHiper\Exceptions\UnallowedCastType` 
   - tentativa de uso indetivo do cast `DevAjMeireles\PagHiper\Enums\Cast\Dto`
+- `DevAjMeireles\PagHiper\Exceptions\UnsupportedCastTypeExcetion` 
+  - tentativa de uso de um cast inexistente
 - `DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException` 
   - tentativa de criação de boleto usando um modelador sem que ele tenha sido preparado
 
