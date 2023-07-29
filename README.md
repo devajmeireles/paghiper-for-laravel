@@ -9,7 +9,7 @@
     - [Retorno Automático de Boleto Bancário](#billet-notification)
 - [A Fazeres](#todo)
 - [Contribuição](#contributing)
-- [License](#license)
+- [Licença de Uso](#license)
 
 <a name="introduction"></a>
 # Introdução
@@ -68,9 +68,9 @@ use DevAjMeireles\PagHiper\Core\DTO\Objects\Payer;   // 👈
 $billet = (new PagHiper())->billet()
     ->create(
         new Payer(name: 'Foo Bar', email: 'foo.bar@gmail.com', document: '123.456.789-00', phone: '1199999999'),
-        new Basic(orderId: fake()->randomDigit(), notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
+        new Basic(orderId: 12, notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
         new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
-        new Item(id: fake()->randomDigit(), description: 'Foo Bar', quantity: 1, price: 1000)
+        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000)
     );
 ```
 
@@ -78,7 +78,7 @@ $billet = (new PagHiper())->billet()
 
 ---
 
-Uma alternativa disponível é enviar uma classe de modelador do Laravel para o método `create`:
+Uma alternativa disponível e eficaz é enviar uma classe de um modelador do Laravel para o método `create`:
 
 ```php
 use App\Models\User; // 👈
@@ -90,9 +90,9 @@ use DevAjMeireles\PagHiper\Core\DTO\Objects\Item;
 $billet = (new PagHiper())->billet()
     ->create(
         User::first(), // 👈
-        new Basic(orderId: fake()->randomDigit(), notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
+        new Basic(orderId: 12, notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
         new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
-        new Item(id: fake()->randomDigit(), description: 'Foo Bar', quantity: 1, price: 1000)
+        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000)
     );
 ```
 
@@ -146,6 +146,30 @@ class User extends Model implements PagHiperModelAbstraction // 👈
 
 ---
 
+Você também pode enviar um array de itens, para casos quais você crie o boleto bancário para mais de um item:
+
+```php
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\Core\DTO\Objects\Address;
+use DevAjMeireles\PagHiper\Core\DTO\Objects\Basic;
+use DevAjMeireles\PagHiper\Core\DTO\Objects\Item;
+use DevAjMeireles\PagHiper\Core\DTO\Objects\Payer;
+
+$billet = (new PagHiper())->billet()
+    ->create(
+        new Payer(name: 'Foo Bar', email: 'foo.bar@gmail.com', document: '123.456.789-00', phone: '1199999999'),
+        new Basic(orderId: 12, notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
+        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
+        [
+            new Item(id: 12, description: 'Foo Bar 12', quantity: 1, price: 1200),
+            new Item(id: 13, description: 'Foo Bar 13', quantity: 1, price: 1300),
+            new Item(id: 14, description: 'Foo Bar 14', quantity: 1, price: 1400),
+        ]
+    );
+```
+
+---
+
 Para facilitar sua interação com a Facade, o pacote oferece "casts" diferentes, sendo eles:
 
 - `Response`: o objeto original da resposta
@@ -163,9 +187,9 @@ use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
 $billet = (new PagHiper())->billet(Cast::Collection) // 👈
     ->create(
         User::first(),
-        new Basic(orderId: fake()->randomDigit(), notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
+        new Basic(orderId: 12, notificationUrl: 'https://my-app/paghiper/notification/callback', daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
         new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
-        new Item(id: fake()->randomDigit(), description: 'Foo Bar', quantity: 1, price: 1000)
+        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000)
     );
 ```
 
