@@ -63,12 +63,16 @@ it('should be able to create billet for a model instance casting to array', func
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    $billet = PagHiper::billet()->create($model, ...fakeBilletCreationBody(false, false));
+    [$payer, $basic, $address, $items] = [...fakeBilletCreationBody()];
+
+    $billet = PagHiper::billet()->create($model, $basic, $address, $items);
 
     expect($billet)
         ->toBeArray()
         ->and($billet)
-        ->toBe($result);
+        ->toBe($result)
+        ->and($billet['transaction_id'])
+        ->toBe($transaction);
 });
 
 it('should be able to create billet for a model instance casting to collection', function () use ($model) {
@@ -93,12 +97,16 @@ it('should be able to create billet for a model instance casting to collection',
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    $billet = PagHiper::billet('collection')->create($model, ...fakeBilletCreationBody(false, false));
+    [$payer, $basic, $address, $items] = [...fakeBilletCreationBody()];
+
+    $billet = PagHiper::billet('collection')->create($model, $basic, $address, $items);
 
     expect($billet)
         ->toBeInstanceOf(Collection::class)
         ->and($billet->get('transaction_id'))
-        ->toBe($transaction);
+        ->toBe($transaction)
+        ->and($billet->toArray())
+        ->toBe($result);
 });
 
 it('should be able to create billet for a model instance casting to original response', function () use ($model) {
@@ -123,10 +131,14 @@ it('should be able to create billet for a model instance casting to original res
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    $billet = PagHiper::billet('response')->create($model, ...fakeBilletCreationBody(false, false));
+    [$payer, $basic, $address, $items] = [...fakeBilletCreationBody()];
+
+    $billet = PagHiper::billet('response')->create($model, $basic, $address, $items);
 
     expect($billet)
         ->toBeInstanceOf(Response::class)
         ->and($billet->json('create_request.transaction_id'))
-        ->toBe($transaction);
+        ->toBe($transaction)
+        ->and($billet->json('create_request'))
+        ->toBe($result);
 });

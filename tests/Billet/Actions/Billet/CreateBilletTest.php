@@ -1,10 +1,46 @@
 <?php
 
 use DevAjMeireles\PagHiper\Billet\Actions\Billet\CreateBillet;
+use DevAjMeireles\PagHiper\Core\Contracts\PagHiperModelAbstraction;
 use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, UnauthorizedCastResponseException};
 use DevAjMeireles\PagHiper\PagHiper;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
+
+$model = new class () extends Model implements PagHiperModelAbstraction {
+    public function pagHiperName(): string
+    {
+        return 'John Doe';
+    }
+
+    public function pagHiperEmail(): string
+    {
+        return 'jhon.doe@gmail.com';
+    }
+
+    public function pagHiperDocument(): string
+    {
+        return '123.456.789-00';
+    }
+
+    public function pagHiperPhone(): string
+    {
+        return '1199999999';
+    }
+
+    public function pagHiperAddress(): array
+    {
+        return [
+            'street'     => 'Foo Street',
+            'number'     => 123,
+            'complement' => 'Home',
+            'district'   => 'Bar District',
+            'city'       => 'Foo City',
+            'zip_code'   => '12345-678',
+        ];
+    }
+};
 
 it('should be able to create billet casting to array', function () {
     $result = [
@@ -26,7 +62,7 @@ it('should be able to create billet casting to array', function () {
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    $billet = (new PagHiper())->billet()->create(fakeBilletCreationBody());
+    $billet = (new PagHiper())->billet()->create(...fakeBilletCreationBody());
 
     expect($billet)
         ->toBeArray()
@@ -54,7 +90,7 @@ it('should be able to create billet casting to collection', function (string $ca
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    $billet = (new PagHiper())->billet($cast)->create(fakeBilletCreationBody());
+    $billet = (new PagHiper())->billet($cast)->create(...fakeBilletCreationBody());
 
     expect($billet)->toBeInstanceOf(Collection::class);
 })->with(['collection', 'collect']);
@@ -79,7 +115,7 @@ it('should be able to create billet casting to original response', function () {
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    $billet = (new PagHiper())->billet(cast: 'response')->create(fakeBilletCreationBody());
+    $billet = (new PagHiper())->billet(cast: 'response')->create(...fakeBilletCreationBody());
 
     expect($billet)->toBeInstanceOf(Response::class);
 });
@@ -107,7 +143,7 @@ it('should not be able to cast response to unacceptable cast', function (string 
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    (new PagHiper())->billet(cast: $cast)->create(fakeBilletCreationBody());
+    (new PagHiper())->billet(cast: $cast)->create(...fakeBilletCreationBody());
 })->with([
     ['foobar'],
     ['blabla'],
@@ -125,5 +161,5 @@ it('should be able to throw exception due response reject', function () {
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    (new PagHiper())->billet()->create(fakeBilletCreationBody());
+    (new PagHiper())->billet()->create(...fakeBilletCreationBody());
 });

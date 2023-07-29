@@ -3,6 +3,8 @@
 namespace DevAjMeireles\PagHiper\Billet;
 
 use DevAjMeireles\PagHiper\Billet\Actions\{Billet\CancelBillet, Billet\CreateBillet, Billet\StatusBillet};
+use DevAjMeireles\PagHiper\Core\DTO\Objects\{Address, Basic, Item};
+use DevAjMeireles\PagHiper\Core\DTO\Objects\{Payer};
 use DevAjMeireles\PagHiper\Core\Traits\InteractWithCasts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
@@ -18,9 +20,9 @@ class Billet
         //
     }
 
-    public function create(array|Model $data, ...$parameters): Response|Collection|array
+    public function create(Payer|Model $payer, Basic $basic, Address $address, array|Item $items): Response|Collection|array
     {
-        $this->response = CreateBillet::execute($data, $parameters);
+        $this->response = CreateBillet::execute($payer, $basic, $address, $items);
 
         return $this->cast('create_request');
     }
