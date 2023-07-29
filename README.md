@@ -22,7 +22,7 @@
 
 ---
 
-O pacote foi criado e é mantido por mim, [AJ Meireles](https://www.linkedin.com/in/devajmeireles/). Sou desenvolvedor de software há 12 anos, dos quais há 9 trabalho exclusivamente com PHP, inclusive como fundador da comunidade [EuSeiPHP](https://www.youtube.com/@euseiphp), um canal para compartilhamento de conteúdos sobre PHP e Laravel.
+O pacote foi criado e é mantido por mim, [AJ Meireles](https://www.linkedin.com/in/devajmeireles/). Sou desenvolvedor de software há 12 anos, dos quais há 9 trabalho exclusivamente com PHP, inclusive como fundador da comunidade [EuSeiPhp](https://www.youtube.com/@euseiphp), um canal para compartilhamento de conteúdos sobre PHP e Laravel.
 
 <a name="installation"></a>
 # Instalação
@@ -39,7 +39,7 @@ Após instalar, execute o comando `paghiper:install` para concluir a instalaçã
 php artisan paghiper:install
 ```
 
-Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação, junto a criação de variáveis de ambiente para os seus arquivos: `.env` e `.env.example`. **Recomendo que abra o arquivo `config/paghiper.php` e leia com atenção (traduza se necessário!)**
+Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação, junto a criação de variáveis de ambiente para os seus arquivos: `.env`. **Recomendo que abra o arquivo `config/paghiper.php` e leia com atenção (traduza se necessário!)**
 
 <a name="billet"></a>
 # Boleto Bancário
@@ -58,11 +58,11 @@ $billet = PagHiper::billet()->create(/* ... */)
 Para uma melhor organização, a forma de interagir com o método `create` é enviar para ele quatro instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
 
 ```php
-use DevAjMeireles\PagHiper\DTO\Objects\Address;use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\DTO\Objects\Payer;use DevAjMeireles\PagHiper\Facades\PagHiper;
-// 👈
-// 👈
-// 👈
-// 👈
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\DTO\Objects\Address; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Basic; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Item; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Payer; // 👈
 
 $billet = (new PagHiper())->billet()
     ->create(
@@ -80,7 +80,11 @@ $billet = (new PagHiper())->billet()
 Uma alternativa disponível e eficaz é enviar uma classe de um modelador do Laravel para o método `create`:
 
 ```php
-use App\Models\User;use DevAjMeireles\PagHiper\DTO\Objects\Address;use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\Facades\PagHiper; // 👈
+use App\Models\User; // 👈
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\DTO\Objects\Address;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
 
 $billet = (new PagHiper())->billet()
     ->create(
@@ -96,8 +100,8 @@ $billet = (new PagHiper())->billet()
 ```php
 namespace App\Models;
 
-use DevAjMeireles\PagHiper\Contracts\PagHiperModelAbstraction;use Illuminate\Database\Eloquent\Model;
-// 👈
+use DevAjMeireles\PagHiper\Contracts\PagHiperModelAbstraction; // 👈
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Model implements PagHiperModelAbstraction // 👈
 {
@@ -144,7 +148,11 @@ class User extends Model implements PagHiperModelAbstraction // 👈
 Você também pode enviar um array de itens, para casos quais você crie o boleto bancário para mais de um item:
 
 ```php
-use DevAjMeireles\PagHiper\DTO\Objects\Address;use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\DTO\Objects\Payer;use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\DTO\Objects\Address;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
+use DevAjMeireles\PagHiper\DTO\Objects\Payer;
 
 $billet = (new PagHiper())->billet()
     ->create(
@@ -161,15 +169,19 @@ $billet = (new PagHiper())->billet()
 
 ---
 
-Para facilitar sua interação com a Facade, o pacote oferece "casts" diferentes, sendo eles:
+Para facilitar sua interação com a Facade, o pacote oferece casts diferentes, sendo eles:
 
 - `Response`: o objeto original da resposta
 - `Json` ou `Array`: a resposta convertida para um array
 - `Collect` ou `Collection`: a resposta convertida para uma instância de `Illuminate\Support\Collection`
 
 ```php
-use App\Models\User;use DevAjMeireles\PagHiper\DTO\Objects\Address;use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;
-// 👈
+use App\Models\User;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\DTO\Objects\Address;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
+use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
 $billet = (new PagHiper())->billet(Cast::Collection) // 👈
     ->create(
@@ -198,8 +210,8 @@ $billet = PagHiper::billet()->status(transaction: 'HF97T5SH2ZQNLF6Z');
 Você também pode utilizar os casts na consulta de um boleto bancário:
 
 ```php
-use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;
-// 👈
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->status(transaction: 'HF97T5SH2ZQNLF6Z');
@@ -224,8 +236,8 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
 Você também pode utilizar os casts no cancelamento de um boleto bancário:
 
 ```php
-use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;
-// 👈
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
@@ -262,8 +274,10 @@ Você também pode utilizar os casts na consulta da notificação de um boleto b
 ```php
 // routes/web.php
 
-use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;use Illuminate\Http\Request;use Illuminate\Support\Facades\Route;
-// 👈
+use Illuminate\Http\Request;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use Illuminate\Support\Facades\Route;
+use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
 Route::get('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
@@ -284,14 +298,16 @@ Route::get('/payment/notification', function (Request $request) {
 ```php
 // routes/web.php
 
-use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;use Illuminate\Http\Request;use Illuminate\Support\Facades\Route;
-// 👈
+use Illuminate\Http\Request;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use Illuminate\Support\Facades\Route;
+use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
 Route::get('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
-    $status = PagHiper::cast(Cast::Dto)
+    $status = PagHiper::cast(Cast::Dto) // 👈
         ->notification(notification: $notification, transaction: $transaction)
         ->consult();
 })->name('paghiper.notification');
