@@ -223,8 +223,7 @@ it('should be able to consult notification casting to notification dto', functio
 
     fakeBilletResponse(ConsultNotification::END_POINT, 'status_request', $result);
 
-    $notification = (new PagHiper())
-        ->cast(Cast::Dto)
+    $notification = (new PagHiper())->cast(Cast::Dto)
         ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction)
         ->consult();
 

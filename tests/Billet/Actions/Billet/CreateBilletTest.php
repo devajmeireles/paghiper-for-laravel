@@ -3,7 +3,7 @@
 use DevAjMeireles\PagHiper\Billet\Actions\Billet\CreateBillet;
 use DevAjMeireles\PagHiper\Core\Contracts\PagHiperModelAbstraction;
 use DevAjMeireles\PagHiper\Core\Enums\Cast;
-use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, UnauthorizedCastResponseException};
+use DevAjMeireles\PagHiper\Core\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;

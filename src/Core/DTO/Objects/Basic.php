@@ -8,48 +8,48 @@ use Illuminate\Support\Carbon;
 class Basic implements Arrayable
 {
     public function __construct(
-        private readonly string $id,
-        private readonly string $notification,
-        private readonly int|Carbon $dueDate = 2,
-        private readonly ?string $type = 'boletoA4',
-        private readonly ?int $discount = 0,
+        private readonly string $orderId,
+        private readonly string $notificationUrl,
+        private readonly int|Carbon $daysDueDate = 2,
+        private readonly ?string $typeBankSlip = 'boletoA4',
+        private readonly ?int $discountCents = 0,
     ) {
         //
     }
 
-    public function id(): string
+    public function orderId(): string
     {
-        return $this->id;
+        return $this->orderId;
     }
 
-    public function dueDate(): int|Carbon
+    public function daysDueDate(): int|Carbon
     {
-        return $this->dueDate;
+        return $this->daysDueDate;
     }
 
-    public function type(): string
+    public function typeBankSlip(): string
     {
-        return $this->type;
+        return $this->typeBankSlip;
     }
 
-    public function notification(): string
+    public function notificationUrl(): string
     {
-        return $this->notification;
+        return $this->notificationUrl;
     }
 
-    public function discount(): int
+    public function discountCents(): int
     {
-        return $this->discount;
+        return $this->discountCents;
     }
 
     public function toArray(): array
     {
         return [
-            'order_id'         => $this->id(),
-            'days_due_date'    => $this->dueDate(),
-            'type_bank_slip'   => $this->type(),
-            'notification_url' => $this->notification(),
-            'discount_cents'   => $this->discount(),
+            'order_id'         => $this->orderId(),
+            'days_due_date'    => $this->daysDueDate(),
+            'type_bank_slip'   => $this->typeBankSlip(),
+            'notification_url' => $this->notificationUrl(),
+            'discount_cents'   => $this->discountCents(),
         ];
     }
 }

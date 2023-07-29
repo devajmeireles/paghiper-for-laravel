@@ -1,6 +1,6 @@
 {
-    "name": "devajmeireles/paghiper",
-    "description": "PagHiper Integration for Laravel.",
+    "name": "devajmeireles/paghiper-for-laravel",
+    "description": "PagHiper for Laravel.",
     "homepage": "https://github.com/devajmeireles/paghiper",
     "license": "MIT",
     "authors": [
