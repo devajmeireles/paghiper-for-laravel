@@ -2,8 +2,7 @@
 
 namespace DevAjMeireles\PagHiper;
 
-use DevAjMeireles\PagHiper\Billet\Billet;
-use DevAjMeireles\PagHiper\Billet\Notification;
+use DevAjMeireles\PagHiper\Billet\{Billet, Notification};
 use DevAjMeireles\PagHiper\Core\Exceptions\UnauthorizedCastResponseException;
 
 class PagHiper
@@ -32,14 +31,19 @@ class PagHiper
 
         $this->castable($this->cast);
 
-        return new Notification($notification, $transaction);
+        return new Notification($notification, $transaction, $this->cast);
     }
 
     /** @throws UnauthorizedCastResponseException */
-    private function castable(string $cast) {
-        $allowed = ['response', 'json', 'array', 'collect', 'collection'];
-
-        if (!in_array($cast, $allowed)) {
+    private function castable(string $cast)
+    {
+        if (!in_array($cast, [
+            'response',
+            'json',
+            'array',
+            'collect',
+            'collection',
+        ])) {
             throw new UnauthorizedCastResponseException($cast);
         }
     }

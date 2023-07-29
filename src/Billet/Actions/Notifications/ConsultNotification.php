@@ -6,7 +6,7 @@ use DevAjMeireles\PagHiper\Core\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\Core\Request\Request;
 use Illuminate\Http\Client\Response;
 
-class VerifyNotification
+class ConsultNotification
 {
     public const END_POINT = 'transaction/notification/';
 
@@ -15,7 +15,7 @@ class VerifyNotification
     {
         $response = Request::execute(self::END_POINT, [
             'notification_id' => $notification,
-            'transaction_id' => $transaction,
+            'transaction_id'  => $transaction,
         ]);
 
         if ($response->json('status_request.result') === 'reject') {
