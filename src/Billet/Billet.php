@@ -5,10 +5,9 @@ namespace DevAjMeireles\PagHiper\Billet;
 use DevAjMeireles\PagHiper\Billet\Actions\{
     CancelBillet,
     CreateBillet,
-    HighOrderInteraction\HighOrderCreateBillet,
     StatusBillet
 };
-use DevAjMeireles\PagHiper\Core\Exceptions\{EmptyMandatoryDataException, PagHiperRejectException, ResponseCastNotAllowed};
+use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, ResponseCastNotAllowed};
 use DevAjMeireles\PagHiper\Core\Traits\InteractWithCasts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
@@ -32,7 +31,6 @@ class Billet
         }
     }
 
-    /** @throws PagHiperRejectException */
     public function create(array|Model $data, ...$parameters): Response|Collection|array
     {
         $this->response = CreateBillet::execute($data, $parameters);

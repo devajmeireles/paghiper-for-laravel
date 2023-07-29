@@ -4,7 +4,7 @@ namespace DevAjMeireles\PagHiper\Core\Exceptions;
 
 use Exception;
 
-class BadModelPreparationException extends Exception
+class WrongModelSetUpException extends Exception
 {
     public function __construct(string $model)
     {

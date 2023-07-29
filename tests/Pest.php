@@ -6,29 +6,42 @@ use Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);
 
-function fakeBilletCreationBody(): array
+function fakeBilletCreationBody(bool $payer = true, bool $address = true): array
 {
     $fake = fake('pt_BR');
 
+    $payerInformation = [];
+    $payerAddress     = [];
+
+    if ($payer) {
+        $payerInformation = [
+            'payer_email'    => $fake->email(),
+            'payer_name'     => $fake->name(),
+            'payer_cpf_cnpj' => $fake->cpf(false),
+            'payer_phone'    => $fake->cellphone(false),
+        ];
+    }
+
+    if ($address) {
+        $payerAddress = [
+            'payer_street'     => $fake->streetName(),
+            'payer_number'     => $fake->randomDigit(),
+            'payer_complement' => 'Home',
+            'payer_district'   => $fake->word(),
+            'payer_city'       => $fake->city(),
+            'payer_zip_code'   => $fake->postcode(),
+        ];
+    }
+
     return [
+        ...$payerInformation,
+        ...$payerAddress,
         'apiKey'           => $fake->uuid(),
         'order_id'         => $fake->randomDigit(),
-        'payer_email'      => $fake->email(),
-        'payer_name'       => $fake->name(),
-        'payer_cpf_cnpj'   => $fake->cpf(false),
-        'payer_phone'      => $fake->cellphone(false),
         'notification_url' => $fake->url(),
         'days_due_date'    => $fake->numberBetween(3, 10),
         'type_bank_slip'   => 'boletoA4',
-        // address
-        'payer_street'     => $fake->streetName(),
-        'payer_number'     => $fake->randomDigit(),
-        'payer_complement' => 'Home',
-        'payer_district'   => $fake->word(),
-        'payer_city'       => $fake->city(),
-        'payer_zip_code'   => $fake->postcode(),
-        // item
-        'items' => [
+        'items'            => [
             [
                 'description' => $fake->sentence(),
                 'quantity'    => 1,

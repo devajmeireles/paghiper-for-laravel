@@ -2,8 +2,8 @@
 
 namespace DevAjMeireles\PagHiper\Billet\Actions;
 
-use DevAjMeireles\PagHiper\Billet\Actions\HighOrderInteraction\HighOrderCreateBillet;
-use DevAjMeireles\PagHiper\Core\Exceptions\PagHiperRejectException;
+use DevAjMeireles\PagHiper\Billet\Actions\HighOrderBilletCreation\HighOrderCreateBillet;
+use DevAjMeireles\PagHiper\Core\Exceptions\{PagHiperRejectException, WrongModelSetUpException};
 use DevAjMeireles\PagHiper\Core\Request\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
@@ -12,7 +12,7 @@ class CreateBillet
 {
     public const END_POINT = 'transaction/create/';
 
-    /** @throws PagHiperRejectException */
+    /** @throws PagHiperRejectException|WrongModelSetUpException */
     public static function execute(array|Model $data, array $parameters = []): Response
     {
         $data = $data instanceof Model

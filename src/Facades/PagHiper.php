@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @see \DevAjMeireles\PagHiper\PagHiper
+ * @mixin \DevAjMeireles\PagHiper\PagHiper
  */
 class PagHiper extends Facade
 {
