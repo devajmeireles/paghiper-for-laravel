@@ -33,7 +33,7 @@ Para instalar o pacote, execute o comando abaixo:
 composer require devajmeireles/paghiper-laravel
 ```
 
-Após instalar o pacote execute o comando `paghiper:install` para concluir a instalação do pacote em sua aplicação:
+Após instalar, execute o comando `paghiper:install` para concluir a instalação:
 
 ```bash
 php artisan paghiper:install
@@ -172,7 +172,7 @@ Tendo feito isso, `$billet` será uma instância de `Illuminate\Support\Collecti
 <a name="consulting-billet"></a>
 ### Consultando Boleto Bancário
 
-Para consultar o status de um Boleto Bancário utilize o seguinte método:
+Para consultar o status de um Boleto Bancário utilize o método `status`:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -182,214 +182,36 @@ $billet = PagHiper::billet()->status(transaction: 'HF97T5SH2ZQNLF6Z');
 
 ---
 
-Assim como na criação de Boleto Bancário, você também pode utilizar os casts para consultar um Boleto Bancário e transformar a resposta:
+Você pode utilizar os casts para consultar um boleto bancário e transformar a resposta:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
 
-$billet = PagHiper::billet(Cast::Collection)
+$billet = PagHiper::billet(Cast::Collection) // 👈
     ->status(transaction: 'HF97T5SH2ZQNLF6Z');
 ```
 
 <a name="cancelling-billet"></a>
 ### Cancelando Boleto Bancário
 
-<a name="index-routes"></a>
-### Index Routes
-
-Sometimes, you may wish to make a given page the "index" of a directory. By placing an `index.blade.php` template within a Folio directory, any requests to the root of that directory will be routed to that page:
-
-```bash
-php artisan make:folio index
-# pages/index.blade.php → /
-
-php artisan make:folio users/index
-# pages/users/index.blade.php → /users
-```
-
-<a name="route-parameters"></a>
-## Route Parameters
-
-Often, you will need to have segments of the incoming request's URL injected into your page so that you can interact with them. For example, you may need to access the "ID" of the user whose profile is being displayed. To accomplish this, you may encapsulate a segment of the page's filename in square brackets:
-
-```bash
-php artisan make:folio "users/[id]"
-
-# pages/users/[id].blade.php → /users/1
-```
-
-Captured segments can be accessed as variables within your Blade template:
-
-```html
-<div>
-    User {{ $id }}
-</div>
-```
-
-To capture multiple segments, you can prefix the encapsulated segment with three dots `...`:
-
-```bash
-php artisan make:folio "users/[...ids]"
-
-# pages/users/[...ids].blade.php → /users/1/2/3
-```
-
-When capturing multiple segments, the captured segments will be injected into the page as an array:
-
-```html
-<ul>
-    @foreach ($ids as $id)
-        <li>User {{ $id }}</li>
-    @endforeach
-</ul>
-```
-
-<a name="route-model-binding"></a>
-## Route Model Binding
-
-If a wildcard segment of your page template's filename corresponds one of your application's Eloquent models, Folio will automatically take advantage of Laravel's route model binding capabilities and attempt to inject the resolved model instance into your page:
-
-```bash
-php artisan make:folio "users/[User]"
-
-# pages/users/[User].blade.php → /users/1
-```
-
-Captured models can be accessed as variables within your Blade template. The model's variable name will be converted to "camel case":
-
-```html
-<div>
-    User {{ $user->id }}
-</div>
-```
-
-#### Customizing The Key
-
-Sometimes you may wish to resolve bound Eloquent models using a column other than `id`. To do so, you may specify the column in the page's filename. For example, a page with the filename `[Post:slug].blade.php` will attempt to resolve the bound model via the `slug` column instead of the `id` column.
-
-#### Model Location
-
-By default, Folio will search for your model within your application's `app/Models` directory. However, if needed, you may specify the fully-qualified model class name in your template's filename:
-
-```bash
-php artisan make:folio "users/[.App.Models.User]"
-
-# pages/users/[.App.Models.User].blade.php → /users/1
-```
-
-<a name="soft-deleted-models"></a>
-### Soft Deleted Models
-
-By default, models that have been soft deleted are not retrieved when resolving implicit model bindings. However, if you wish, you can instruct Folio to retrieve soft deleted models by invoking the `withTrashed` function within the page's template:
+Para consultar o status de um Boleto Bancário utilize o método `cancel`:
 
 ```php
-<?php
+use DevAjMeireles\PagHiper\Facades\PagHiper;
 
-use function Laravel\Folio\{withTrashed};
-
-withTrashed();
-
-?>
-
-<div>
-    User {{ $user->id }}
-</div>
+$billet = PagHiper::billet(Cast::Collection) // 👈
+    ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
 ```
 
-<a name="middleware"></a>
-## Middleware
+---
 
-You can apply middleware to a specific page by invoking the `middleware` function within the page's template:
+Você pode utilizar os casts para cancelar um boleto bancário e transformar a resposta:
 
 ```php
-<?php
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
 
-use function Laravel\Folio\{middleware};
-
-middleware(['auth']);
-
-?>
-
-<div>
-    Dashboard
-</div>
+$billet = PagHiper::billet(Cast::Collection) // 👈
+    ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
 ```
-
-Or, to assign middleware to a group of pages, you may provide the `middleware` argument when invoking the `Folio::route` method.
-
-To specify which pages the middleware should be applied to, the array of middleware may be keyed using the corresponding URL patterns of the pages they should be applied to. The `*` character may be utilized as a wildcard character:
-
-```php
-use Laravel\Folio\Folio;
-
-Folio::route(resource_path('views/pages'), middleware: [
-    'chirps/*' => [
-        'auth',
-        // ...
-    ],
-]);
-```
-
-You may include closures in the array of middleware to define inline, anonymous middleware:
-
-```php
-use Closure;
-use Illuminate\Http\Request;
-use Laravel\Folio\Folio;
-
-Folio::route(resource_path('views/pages'), middleware: [
-    'chirps/*' => [
-        'auth',
-
-        function (Request $request, Closure $next) {
-            // ...
-
-            return $next($request);
-        },
-    ],
-]);
-```
-
-<a name="php-blocks"></a>
-## PHP Blocks
-
-When using Folio, the `<?php` and `?>` tags are reserved for the Folio page definition functions such as `middleware` and `withTrashed`.
-
-Therefore, if you need to write PHP code that should be executed within your Blade template, you should use the `@php` Blade directive:
-
-```php
-@php
-    if (! Auth::user()->can('view-posts', $user)) {
-        abort(403);
-    }
-
-    $posts = $user->posts;
-@endphp
-
-@foreach ($posts as $post)
-    <div>
-        {{ $post->title }}
-    </div>
-@endforeach
-```
-
-## Contributing
-<a name="contributing"></a>
-
-Thank you for considering contributing to Folio! You can read the contribution guide [here](.github/CONTRIBUTING.md).
-
-## Code of Conduct
-<a name="code-of-conduct"></a>
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-<a name="security-vulnerabilities"></a>
-
-Please review [our security policy](https://github.com/laravel/folio/security/policy) on how to report security vulnerabilities.
-
-## License
-<a name="license"></a>
-
-Laravel Folio is open-sourced software licensed under the [MIT license](LICENSE.md).
