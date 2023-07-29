@@ -6,7 +6,7 @@
     - [Criando Boleto Bancário](#creating-billet)
     - [Consultando Boleto Bancário](#consulting-billet)
     - [Cancelando Boleto Bancário](#cancelling-billet)
-    - [Retorno Automático](#billet-notification)
+    - [Retorno Automático de Boleto Bancário](#billet-notification)
 - [Contribuição](#contributing)
 - [License](#license)
 
@@ -100,9 +100,10 @@ $billet = (new PagHiper())->billet()
 ```php
 namespace App\Models;
 
-use DevAjMeireles\PagHiper\Core\Contracts\PagHiperModelAbstraction;
+use Illuminate\Database\Eloquent\Model;
+use DevAjMeireles\PagHiper\Core\Contracts\PagHiperModelAbstraction; // 👈
 
-class User extends Model implements PagHiperModelAbstraction
+class User extends Model implements PagHiperModelAbstraction // 👈
 {
     // ...
 
@@ -140,7 +141,9 @@ class User extends Model implements PagHiperModelAbstraction
 };
 ```
 
-Isso facilitará formatações antes de enviar os dados à PagHiper, por exemplo.
+**Isso facilita processos de formatações antes de enviar os dados à PagHiper, por exemplo.**
+
+Obs.: Se você tiver mais de um modelador que interaja com o pacote, abstraia os métodos para uma trait. 😉
 
 ---
 
@@ -215,3 +218,71 @@ use DevAjMeireles\PagHiper\Core\Enums\Cast; // 👈
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
 ```
+
+<a name="billet-notification"></a>
+### Retorno Automático de Boleto Bancário
+
+O pacote oferece uma forma fácil de lidar com o retorno automático de boletos bancários. **O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notificationUrl`.** Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
+
+Supondo que você possui uma URL nomeada como `paghiper.notification`, e que essa foi a URL enviada como `$notificationUrl` na classe de objeto `Basic` no momento da criação do boleto bancário:
+
+```php
+// routes/web.php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+
+Route::get('/payment/notification', function (Request $request) {
+    $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
+    $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
+
+    $status = PagHiper::notification(notification: $notification, transaction: $transaction)->consult();
+    
+    // $status será um array da resposta...
+})->name('payment.notification');
+```
+
+---
+
+Você pode utilizar os casts para lidar com a resposta da consulta:
+
+```php
+// routes/web.php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\Core\Enums\Cast;
+
+Route::get('/payment/notification', function (Request $request) {
+    $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
+    $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
+
+    $status = PagHiper::cast(Cast::Collection)->notification(notification: $notification, transaction: $transaction)->consult();
+    
+    // $status será uma instância de \Illuminate\Support\Collection...
+})->name('payment.notification');
+```
+
+---
+
+**De forma especial para o retorno automático, o pacote oferece um cast diferente: `dto`:**
+
+```php
+// routes/web.php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\Core\Enums\Cast;
+
+Route::get('/payment/notification', function (Request $request) {
+    $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
+    $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
+
+    $status = PagHiper::cast(Cast::Dto)->notification(notification: $notification, transaction: $transaction)->consult();
+})->name('payment.notification');
+```
+
+O cast `Dto` irá interceptar a resposta, transformar em array e em seguida instanciar a classe `DevAjMeireles\PagHiper\Core\DTO\PagHiperNotification`, que possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:
