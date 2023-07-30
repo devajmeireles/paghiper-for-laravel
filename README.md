@@ -81,12 +81,12 @@ use DevAjMeireles\PagHiper\DTO\Objects\Basic; // 👈
 use DevAjMeireles\PagHiper\DTO\Objects\Item; // 👈
 use DevAjMeireles\PagHiper\DTO\Objects\Payer; // 👈
 
-$billet = (new PagHiper())->billet()
+$billet = PagHiper::billet()
     ->create(
-        new Payer(name: 'Foo Bar', email: 'foo.bar@gmail.com', document: '123.456.789-00', phone: '1199999999'),
         new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
-        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
-        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000)
+        new Payer(name: 'Foo Bar', email: 'foo.bar@gmail.com', document: '123.456.789-00', phone: '1199999999'),
+        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000),
+        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678')
     );
 ```
 
@@ -111,9 +111,11 @@ return [
 **Caso você não defina esta configuração**, `Paghiper for Laravel` espera que você informe a URL através do parametro `notificationUrl` da classe `Basic`:
 
 ```php
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+
 // ...
 
-$billet = (new PagHiper())->billet()
+$billet = PagHiper::billet()
     ->create(
         // ...
         new Basic(orderId: 12, notificationUrl: 'https://retorno-automático.com/paghiper/notification', ...), // 👈
@@ -132,14 +134,16 @@ use DevAjMeireles\PagHiper\DTO\Objects\Address;
 use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 use DevAjMeireles\PagHiper\DTO\Objects\Item;
 
-$billet = (new PagHiper())->billet()
+$billet = PagHiper::billet()
     ->create(
-        User::first(), // 👈
         new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
-        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
-        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000)
+        User::first(), // 👈
+        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000),
+        // ❌ new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678')
     );
 ```
+
+Como todos os dados necessários virão do modelador, então `Adress` se torna desnecessário neste modelo de uso. 
 
 **Para utilizar a abordagem acima**, seu modelador deve implementar a interface `PagHiperModelAbstraction`, a qual exigirá que os seguintes métodos sejam criados na classe do modelador:
 
@@ -200,16 +204,16 @@ use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 use DevAjMeireles\PagHiper\DTO\Objects\Item;
 use DevAjMeireles\PagHiper\DTO\Objects\Payer;
 
-$billet = (new PagHiper())->billet()
+$billet = PagHiper::billet()
     ->create(
-        new Payer(name: 'Foo Bar', email: 'foo.bar@gmail.com', document: '123.456.789-00', phone: '1199999999'),
         new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
-        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
+        new Payer(name: 'Foo Bar', email: 'foo.bar@gmail.com', document: '123.456.789-00', phone: '1199999999'),
         [
             new Item(id: 12, description: 'Foo Bar 12', quantity: 1, price: 1200),
             new Item(id: 13, description: 'Foo Bar 13', quantity: 1, price: 1300),
             new Item(id: 14, description: 'Foo Bar 14', quantity: 1, price: 1400),
-        ]
+        ],
+        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
     );
 ```
 
@@ -229,12 +233,12 @@ use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 use DevAjMeireles\PagHiper\DTO\Objects\Item;
 use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
-$billet = (new PagHiper())->billet(Cast::Collection) // 👈
+$billet = PagHiper::billet(Cast::Collection) // 👈
     ->create(
-        User::first(),
         new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
-        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
-        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000)
+        User::first(),
+        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000),
+        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678')
     );
 ```
 
@@ -244,7 +248,7 @@ Tendo feito isso, `$billet` será uma instância de `Illuminate\Support\Collecti
 
 As classes `Basic`, `Payer`, `Address` e `Item`, acima mencionadas, oferecem duas formas de serem instanciadas:
 
-1. Via `new`:
+1. Via método comum de PHP, `new`:
 
 ```php
 use DevAjMeireles\PagHiper\DTO\Objects\Basic;
@@ -254,7 +258,7 @@ $basic = new Basic(orderId: 12, notificationUrl: route('paghiper.notification'),
 // ...
 ```
 
-2. Via `make`:
+2. Via padrão Laravel, `make`:
 
 ```php
 use DevAjMeireles\PagHiper\DTO\Objects\Basic;
@@ -371,6 +375,8 @@ Route::get('/payment/notification', function (Request $request) {
 
 ---
 
+### Cast Especial: `DevAjMeireles\PagHiper\DTO\PagHiperNotification`
+
 **De forma especial para o retorno automático, `Paghiper for Laravel` oferece um cast diferente: `Dto`:**
 
 ```php
@@ -391,7 +397,7 @@ Route::get('/payment/notification', function (Request $request) {
 })->name('paghiper.notification');
 ```
 
-O cast `Dto` irá interceptar a resposta, transformar em array e em seguida instanciar a classe `DevAjMeireles\PagHiper\DTO\PagHiperNotification`, que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
+O cast `Dto` irá interceptar a resposta, transformar em array e em seguida instanciar a classe `PagHiperNotification`, que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
 
 - `transaction()`: retorna o ID da transação
 - `order()`: retorna o ID do pedido
@@ -416,17 +422,66 @@ O cast `Dto` irá interceptar a resposta, transformar em array e em seguida inst
 - `items()`: retorna um array com os itens do array
   - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
 
+### Método Especial: `modelable`
+
+De forma estratégica, ao passar uma instância de modelador como `Payer` do boleto bancário, o `order_id` na PagHiper receberá uma referência da classe e ID do modelador, para que posteriormente no retorno automático você possa utilizar o método `modelable` para obter o modelador facilmente.
+
+Essa abordagem fará com que o `order_id` do boleto bancário fique, por exemplo, da seguinte maneira na PagHiper: `11|App\Model\User:1`, onde `11` é o número do `$orderId` que você especificou na criação da classe `Basic`. Não há preocupação enquanto a este formato, uma vez que o `order_id` do boleto bancário é para uso interno, e não é exibido ao cliente.
+
+Dessa forma você então poderá utilizar o método `modelable`:
+
+```php
+// routes/web.php
+
+use App\Models\User;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\DTO\Objects\Address;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
+
+// criando o boleto usando o modelador User:1 👇
+
+$billet = PagHiper::billet()
+    ->create(
+        new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
+        User::first(), // 👈 User:1
+        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000),
+        // ❌ new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678')
+    );
+
+// retorno automático 👇
+
+use Illuminate\Http\Request;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use Illuminate\Support\Facades\Route;
+use DevAjMeireles\PagHiper\Enums\Cast;
+
+Route::get('/payment/notification', function (Request $request) {
+    $notification = $request->input('notification_id');
+    $transaction  = $request->input('transaction_id');
+
+    $status = PagHiper::cast(Cast::Dto)
+        ->notification(notification: $notification, transaction: $transaction)
+        ->consult();
+        
+    $status->modelable(); // 👈 retornará uma instância de App\Models\User:1
+})->name('paghiper.notification');
+```
+
 <a name="billet-errors"></a>
 ## Tratamento de Erros
 
 - `DevAjMeireles\PagHiper\Exceptions\PagHiperException` 
   - erro genérico do PagHiper
 - `DevAjMeireles\PagHiper\Exceptions\UnallowedCastType` 
-  - tentativa de uso indetivo do cast `DevAjMeireles\PagHiper\Enums\Cast\Dto`
+  - tentativa de uso indetivo do cast `DevAjMeireles\PagHiper\Enums\Cast::Dto`
 - `DevAjMeireles\PagHiper\Exceptions\UnsupportedCastTypeExcetion` 
   - tentativa de uso de um cast inexistente
 - `DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException` 
   - tentativa de criação de boleto usando um modelador sem que ele tenha sido preparado
+  - tentativa de uso de um cast inexistente
+- `DevAjMeireles\PagHiper\Exceptions\NotificationModelNotFoundException` 
+  - não foi possível recuperar o model ao usar o método `modelable` no retorno automático
 
 <a name="todo"></a>
 ## A Fazeres
