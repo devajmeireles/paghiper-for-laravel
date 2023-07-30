@@ -207,19 +207,6 @@ $billet = PagHiper::billet()->status(transaction: 'HF97T5SH2ZQNLF6Z');
 
 ---
 
-De forma auxiliar, o método `status` aceita instâncias de modeladores. Dessa forma, você pode fazer:
-
-```php
-use App\Models\Billet; // 👈 
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-
-$billet = PagHiper::billet()->status(Billet::first()); // 👈
-```
-
-O pacote irá procurar pelas propriedades `$transaction` ou `$transactionId` no modelador e utilizará o valor encontrado para consultar o status do boleto bancário.
-
----
-
 Você também pode utilizar os casts na consulta de um boleto bancário:
 
 ```php
@@ -243,19 +230,6 @@ use DevAjMeireles\PagHiper\Facades\PagHiper;
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
 ```
-
----
-
-De forma auxiliar, o método `cancel` aceita instâncias de modeladores. Dessa forma, você pode fazer:
-
-```php
-use App\Models\Billet; // 👈 
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-
-$billet = PagHiper::billet()->cancel(Billet::first()); // 👈
-```
-
-O pacote irá procurar pelas propriedades `$transaction` ou `$transactionId` no modelador e utilizará o valor encontrado para consultar o status do boleto bancário.
 
 ---
 

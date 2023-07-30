@@ -14,28 +14,12 @@ class StatusBillet
     /** @throws PagHiperRejectException */
     public static function execute(string|Model $transaction): Response
     {
-        $transaction = (new StatusBillet())->parse($transaction);
-        $response    = Request::execute(self::END_POINT, ['transaction_id' => $transaction]);
+        $response = Request::execute(self::END_POINT, ['transaction_id' => $transaction]);
 
         if ($response->json('status_request.result') === 'reject') {
             throw new PagHiperRejectException($response->json('status_request.response_message'));
         }
 
         return $response;
-    }
-
-    private function parse(string|Model $transaction): string
-    {
-        if ($transaction instanceof Model) {
-            if (property_exists($transaction, 'transaction_id')) {
-                return $transaction->transaction_id;
-            }
-
-            if (property_exists($transaction, 'transaction')) {
-                return $transaction->transaction;
-            }
-        }
-
-        return $transaction;
     }
 }
