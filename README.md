@@ -1,8 +1,8 @@
 <p align="center"><img src="./art/cover.png" alt="PagHiper for Laravel"></p>
 
 - [Introdução](#introduction)
-- [Instalação](#installation)
 - [Detalhes Técnicos](#technical-details)
+- [Instalação](#installation)
 - [Boleto Bancário](#billet)
     - [Criando Boleto Bancário](#creating-billet)
     - [Consultando Boleto Bancário](#consulting-billet)
