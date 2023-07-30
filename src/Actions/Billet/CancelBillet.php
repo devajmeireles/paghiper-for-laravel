@@ -4,6 +4,7 @@ namespace DevAjMeireles\PagHiper\Actions\Billet;
 
 use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\Request;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 
 class CancelBillet
@@ -11,9 +12,10 @@ class CancelBillet
     public const END_POINT = 'transaction/cancel/';
 
     /** @throws PagHiperRejectException */
-    public static function execute(string $transaction): Response
+    public static function execute(string|Model $transaction): Response
     {
-        $response = Request::execute(self::END_POINT, [
+        $transaction = (new CancelBillet())->parse($transaction);
+        $response    = Request::execute(self::END_POINT, [
             'status'         => 'canceled',
             'transaction_id' => $transaction,
         ]);
@@ -23,5 +25,20 @@ class CancelBillet
         }
 
         return $response;
+    }
+
+    private function parse(string|Model $transaction): string
+    {
+        if ($transaction instanceof Model) {
+            if (property_exists($transaction, 'transaction_id')) {
+                return $transaction->transaction_id;
+            }
+
+            if (property_exists($transaction, 'transaction')) {
+                return $transaction->transaction;
+            }
+        }
+
+        return $transaction;
     }
 }

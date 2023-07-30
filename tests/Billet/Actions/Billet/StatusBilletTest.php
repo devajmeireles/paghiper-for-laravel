@@ -4,8 +4,13 @@ use DevAjMeireles\PagHiper\Actions\Billet\StatusBillet;
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\PagHiper;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
+
+$model = new class () extends Model {
+    protected string $transaction = 'BPV661O7AVLORCN5';
+};
 
 it('should be able to consult billet status casting to array', function () {
     $result = [
@@ -77,6 +82,32 @@ it('should be able to consult billet status casting to original response', funct
     $status = (new PagHiper())->billet(Cast::Response)->status('BPV661O7AVLORCN5');
 
     expect($status)->toBeInstanceOf(Response::class);
+});
+
+it('should be able to consult billet status using model object', function () use ($model) {
+    $result = [
+        'result'           => 'success',
+        'response_message' => 'transacao encontrada',
+        'status'           => 'pending',
+        'status_date'      => '2017-07-14 21:21:02',
+        'due_date'         => '2017-07-12',
+        'value_cents'      => '2000',
+        'bank_slip'        => [
+            'digitable_line' => '34191.76106 04487.160246 61514.190000 3 72180000002000',
+            'url_slip'       => 'https://www.paghiper.com/checkout/boleto/ XXXXXXXXXXXXXXX',
+            'url_slip_pdf'   => 'https://www.paghiper.com/checkout/boleto/XXXXXXXXXXXXXXX/pdf',
+        ],
+        'http_code' => '201',
+    ];
+
+    fakeBilletResponse(StatusBillet::END_POINT, 'status_request', $result);
+
+    $status = (new PagHiper())->billet(Cast::Response)->status($model);
+
+    expect($status)
+        ->toBeInstanceOf(Response::class)
+        ->and($status->json('status_request.transaction_id'))
+        ->toBe($model->transaction);
 });
 
 it('should be able to throw exception due response reject', function () {
