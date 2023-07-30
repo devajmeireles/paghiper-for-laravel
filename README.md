@@ -72,7 +72,7 @@ Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação,
 <a name="creating-billet"></a>
 ### Criando Boleto Bancário
 
-Para uma melhor organização, a forma de interagir com o método `create` é enviar para ele três (3) instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
+Para uma melhor organização, a forma de interagir com o método `create` é enviar para ele quatro (4) instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -83,19 +83,19 @@ use DevAjMeireles\PagHiper\DTO\Objects\Payer; // 👈
 
 $billet = PagHiper::billet()
     ->create(
-        new Basic(
+        new Basic( // 👈
             order_id: 1433, 
             notification_url: route('paghiper.notification'), 
             days_due_date: 2, 
             type_bank_slip: 'boletoA4', 
             discount_cents: 0,
         ),
-        new Payer(
+        new Payer( // 👈
             name: 'Joao Inácio da Silva', 
             email: 'joao.inacio@gmail.com', 
             cpf_cnpj: '123.456.789-00', 
             phone: '11985850505'
-            new Address(
+            new Address( // 👈
                 street: 'Rua Alameda Barão de Limeira',
                 number: 102,
                 complement: 'Casa',
@@ -105,7 +105,7 @@ $billet = PagHiper::billet()
                 zip_code: '13332251'
             )
         ),
-        new Item(
+        new Item( // 👈
             item_id: 12, 
             description: 'Kit de Malas de Viagem', 
             quantity: 1, 
@@ -139,6 +139,7 @@ return [
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 
 // ...
 
@@ -221,7 +222,7 @@ class User extends Model implements PagHiperModelAbstraction // 👈
     public function pagHiperAddress(): array
     {
         return [
-            'street'     => 'Rua Alameda Barão de Limeira'
+            'street'     => 'Rua Alameda Barão de Limeira',
             'number'     => 102,
             'complement' => 'Casa',
             'district'   => 'São Vicente',
@@ -282,9 +283,9 @@ $billet = PagHiper::billet()
 Para facilitar sua interação com as respostas, `Paghiper for Laravel` oferece casts diferentes, sendo eles:
 
 - `Response`: o objeto original da resposta
-- `Array`: a resposta convertida para um `array`
-- `Json`: a resposta convertida para um `json`
-- `Collect` ou `Collection`: a resposta convertida para uma instância de `Illuminate\Support\Collection`
+- `Array`: resposta convertida para um `array`
+- `Json`: resposta convertida para um `json`
+- `Collect` ou `Collection`: resposta convertida para uma instância de `Illuminate\Support\Collection`
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -363,7 +364,7 @@ $basic = Basic::make(12, route('paghiper.notification'), 2, 'boletoA4', 0);
 ```
 
 <a name="consulting-billet"></a>
-### Consultando Boleto Bancário
+## Consultando Boleto Bancário
 
 Para consultar o status de um Boleto Bancário utilize o método `status`:
 
@@ -388,7 +389,7 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
 ```
 
 <a name="cancelling-billet"></a>
-### Cancelando Boleto Bancário
+## Cancelando Boleto Bancário
 
 Para cancelar um boleto bancário utilize o método `cancel`:
 
@@ -414,7 +415,7 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
 ```
 
 <a name="billet-notification"></a>
-### Retorno Automático de Boleto Bancário
+## Retorno Automático de Boleto Bancário
 
 `Paghiper for Laravel` oferece uma forma fácil de lidar com o retorno automático de boletos bancários. 
 
