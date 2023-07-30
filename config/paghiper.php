@@ -46,4 +46,16 @@ return [
     |
     */
     'url' => 'https://api.paghiper.com/',
+
+    /*
+    |--------------------------------------------------------------------------
+    | PagHiper Callback Notification URL
+    |--------------------------------------------------------------------------
+    |
+    | You can optionally set a URL to be PagHiper's automatic return URL. To use,
+    | simply uncomment the line and enter the desired URL. If you don't use this,
+    | you must specify the URL whenever you create a billet. Read the documentation to learn more.
+    |
+    */
+    // 'notification_url' => 'https://my-app.com/paghiper/notification',
 ];

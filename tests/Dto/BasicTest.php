@@ -6,6 +6,9 @@ it('should return valid basic instance using make with array', function () {
     expect(Basic::make([
         'orderId'         => '12345678901',
         'notificationUrl' => $url = fake()->url(),
+        'daysDueDate'     => 2,
+        'typeBankSlip'    => 'boletoA4',
+        'discountCents'   => 0,
     ])
         ->toArray())
         ->toBeArray()

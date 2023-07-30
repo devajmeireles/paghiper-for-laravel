@@ -17,7 +17,7 @@
 <a name="introduction"></a>
 # Introdução
 
-`PagHiper for Laravel` é um pacote que adiciona os principais recursos do PagHiper a aplicações Laravel de forma fácil e descomplicada. Com este pacote você poderá integarir com Boletos Bancários e PIX gerados pela PagHiper.
+`PagHiper for Laravel` é um pacote que adiciona os principais recursos do PagHiper a aplicações Laravel de forma fácil e descomplicada. Com este pacote você poderá interagir com Boletos Bancários e PIX gerados pela PagHiper.
 
 **`Paghiper for Laravel` foi criado para Laravel 10 e PHP 8.1, no mais alto padrão possível do PHP moderno, com cobertura de testes e fortemente tipado, garantindo estabilidade nas funcionalidades.**
 
@@ -35,7 +35,7 @@
 
 #### Facade
 
-`Paghiper for Laravel` oferece uma [Facade](https://laravel.com/docs/10.x/facades) para interação com a API do PagHiper:
+`Paghiper for Laravel` oferece uma [Facade](https://laravel.com/docs/10.x/facades) para interação com a classe principal do pacote:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -94,7 +94,7 @@ $billet = (new PagHiper())->billet()
 
 ### Url Padrão de Retorno Automático
 
-Se a sua aplicação possuir uma URL específica e fixa de retorno automático, você pode definir uma nova chave no arquivo `config/paghiper.php` com essa URL:
+Se a sua aplicação possuir uma URL fixa para o [retorno automático do PagHiper](#billet-notification), você pode definir uma nova chave no arquivo `config/paghiper.php` com essa URL:
 
 ```php
 // config/paghiper.php
@@ -239,6 +239,38 @@ $billet = (new PagHiper())->billet(Cast::Collection) // 👈
 ```
 
 Tendo feito isso, `$billet` será uma instância de `Illuminate\Support\Collection` contendo a resposta da PagHiper. **Por padrão, as respostas de todos os métodos de interação com `Paghiper for Laravel` utilizam o cast `Cast::Array`, que transforma a resposta em `array`**
+
+### Alternativa de Construção das Classes de Objeto
+
+As classes `Basic`, `Payer`, `Address` e `Item`, acima mencionadas, oferecem duas formas de serem instanciadas:
+
+1. Via `new`:
+
+```php
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+
+$basic = new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0);
+
+// ...
+```
+
+2. Via `make`:
+
+```php
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+
+$basic = Basic::make([
+    'orderId'         => '12345678901',
+    'notificationUrl' => $url = fake()->url(),
+    'daysDueDate'     => 2,
+    'typeBankSlip'    => 'boletoA4',
+    'discountCents'   => 0,
+]);
+
+// ou ...
+
+$basic = Basic::make(12, route('paghiper.notification'), 2, 'boletoA4', 0);
+```
 
 <a name="consulting-billet"></a>
 ### Consultando Boleto Bancário
@@ -412,6 +444,33 @@ Todo e qualquer PR será bem-vindo em favor de ajustes de bugs, melhorias ou apr
 - O código do PR ser formatado usando [Laravel Pint](https://laravel.com/docs/10.x/pint)
 - O código do PR ser analisando usando [LaraStan](https://github.com/nunomaduro/larastan)
 - O código do PR ser testado usando [PestPHP](https://pestphp.com/), inclusive adições ou modificações
+
+### Ambiente de Desenvolvimento
+
+1. Crie um fork do repositório
+2. Clone o repositório:
+
+```bash
+git clone <url_do_repositório>
+```
+
+3. Instale as dependências:
+
+```bash
+cd pahiper-for-laravel && composer install
+```
+
+4. Execute testes:
+
+```bash
+composer test
+```
+
+5. Analise a integridade do código: 
+
+```bash
+composer analyse
+```
 
 <a name="licensing"></a>
 ## Licença de Uso
