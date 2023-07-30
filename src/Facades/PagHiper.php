@@ -2,9 +2,8 @@
 
 namespace DevAjMeireles\PagHiper\Facades;
 
-use DevAjMeireles\PagHiper\Billet;
 use DevAjMeireles\PagHiper\Enums\Cast;
-use DevAjMeireles\PagHiper\Notification;
+use DevAjMeireles\PagHiper\{Billet, Notification};
 use Illuminate\Support\Facades\Facade;
 
 /**
