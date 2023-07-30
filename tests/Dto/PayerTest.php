@@ -6,7 +6,7 @@ it('should return valid payer instance using make with array', function () {
     expect(Payer::make([
         'name'     => 'John Doe',
         'email'    => 'jhon.doe@gmail.com',
-        'document' => '12345678901',
+        'cpf_cnpj' => '12345678901',
         'phone'    => '11999999999',
         'address'  => $address = new Address('Jhon Street', 123, 'House', 'Bah', 'Nashville', 'US', '12345678'),
     ])

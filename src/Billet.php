@@ -17,21 +17,21 @@ class Billet
         //
     }
 
-    public function create(Basic $basic, Payer|Model $payer, array|Item $items): Response|Collection|array
+    public function create(Basic $basic, Payer|Model $payer, array|Item $items): Response|Collection|array|string
     {
         $response = CreateBillet::execute($basic, $payer, $items);
 
         return $this->cast->response($response, 'create_request');
     }
 
-    public function status(string $transaction): Response|Collection|array
+    public function status(string $transaction): Response|Collection|array|string
     {
         $response = StatusBillet::execute($transaction);
 
         return $this->cast->response($response, 'status_request');
     }
 
-    public function cancel(string $transaction): Response|Collection|array
+    public function cancel(string $transaction): Response|Collection|array|string
     {
         $response = CancelBillet::execute($transaction);
 

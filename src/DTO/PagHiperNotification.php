@@ -81,7 +81,7 @@ class PagHiperNotification
         return Payer::make([
             'name'     => $this->notification->get('payer_name'),
             'email'    => $this->notification->get('payer_email'),
-            'document' => $this->notification->get('payer_cpf_cnpj'),
+            'cpf_cnpj' => $this->notification->get('payer_cpf_cnpj'),
             'phone'    => $this->notification->get('payer_phone'),
             'address'  => Address::make([
                 'street'     => $this->notification->get('payer_street'),
@@ -126,12 +126,7 @@ class PagHiperNotification
         $items    = $this->notification->get('items');
 
         foreach ($items as $item) {
-            $response[] = Item::make([
-                'id'          => $item['item_id'],
-                'description' => $item['description'],
-                'quantity'    => $item['quantity'],
-                'price'       => $item['price_cents'],
-            ]);
+            $response[] = Item::make([...$item]);
         }
 
         if (count($response) === 1) {
@@ -142,12 +137,16 @@ class PagHiperNotification
     }
 
     /** @throws NotificationModelNotFoundException|ModelNotFoundException */
-    public function modelable(): Model
+    public function modelable(bool $exception = true): Model|null
     {
         $order = $this->order();
 
         if (!str($order)->contains('|') && !str($order)->contains(':')) {
-            throw new NotificationModelNotFoundException();
+            if ($exception) {
+                throw new NotificationModelNotFoundException();
+            }
+
+            return null;
         }
 
         $unparsed = explode('|', $order);
@@ -157,9 +156,17 @@ class PagHiperNotification
         $id    = $parsed[1];
 
         if (!class_exists($model)) {
-            throw new NotificationModelNotFoundException();
+            if ($exception) {
+                throw new NotificationModelNotFoundException();
+            }
+
+            return null;
         }
 
-        return (new $model())->findOrFail($id);
+        if ($exception) {
+            return (new $model())->findOrFail($id);
+        }
+
+        return (new $model())->find($id);
     }
 }

@@ -16,7 +16,7 @@ enum Cast: string
     case Dto        = 'dto';
 
     /** @throws UnsupportedCastTypeExcetion */
-    public function response(Response $response, string $index): Response|Collection|array
+    public function response(Response $response, string $index): Response|Collection|array|string
     {
         return (match ($this) {
             self::Response => fn () => $response,

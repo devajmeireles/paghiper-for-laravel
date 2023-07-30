@@ -26,6 +26,25 @@ it('should be able to cancel billet casting to array', function () {
         ->toBe($result);
 });
 
+it('should be able to cancel billet casting to json', function () {
+    $transaction = 'BPV661O7AVLORCN5';
+
+    $result = [
+        'result'           => 'success',
+        'response_message' => "O Boleto $transaction foi cancelado com Sucesso",
+        'http_code'        => '200',
+    ];
+
+    fakeBilletResponse(CancelBillet::END_POINT, 'cancellation_request', $result);
+
+    $status = (new PagHiper())->billet(Cast::Json)->cancel($transaction);
+
+    expect($status)
+        ->toBeJson()
+        ->and($status)
+        ->toBe(collect($result)->toJson());
+});
+
 it('should be able to cancel billet casting to collection', function (string $cast) {
     $transaction = 'BPV661O7AVLORCN5';
 

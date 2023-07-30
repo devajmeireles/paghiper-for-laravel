@@ -18,7 +18,7 @@ class Notification
         //
     }
 
-    public function consult(): PagHiperNotification|Collection|Response|array
+    public function consult(): PagHiperNotification|Collection|Response|array|string
     {
         $response = ConsultNotification::execute($this->notification, $this->transaction);
 
