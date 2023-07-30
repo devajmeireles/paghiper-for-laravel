@@ -10,7 +10,7 @@
     - [Retorno Automático de Boleto Bancário](#billet-notification)
     - [Tratamento de Erros](#billet-errors)
 - [Atualizações](CHANGELOG.md)
-- [A Fazeres](#todo)
+- [Pendências](#todo)
 - [Contribuição](#contributing)
 - [Licença de Uso](#license)
 
@@ -28,8 +28,8 @@
 <a name="technical-details"></a>
 ### Detalhes Técnicos
 
-- Versão do Laravel Exigida: **10.x**
-- Versão do PHP Exigida: **8.1**
+- Versão do PHP: **8.1**
+- Versão do Laravel: **10.x**
 
 ---
 
@@ -143,7 +143,7 @@ $billet = PagHiper::billet()
     );
 ```
 
-Como todos os dados necessários virão do modelador, então `Adress` se torna desnecessário neste modelo de uso. 
+Como todos os dados necessários virão do modelador, então `Address` se torna desnecessário neste modelo de uso. 
 
 **Para utilizar a abordagem acima**, seu modelador deve implementar a interface `PagHiperModelAbstraction`, a qual exigirá que os seguintes métodos sejam criados na classe do modelador:
 
@@ -191,7 +191,7 @@ class User extends Model implements PagHiperModelAbstraction // 👈
 };
 ```
 
-**Essa abordagem facilita processos de formatações antes de enviar os dados à PagHiper, por exemplo.** Se você tiver mais de um modelador que interaja com `Paghiper for Laravel`, abstraia os métodos acima para uma trait e aplique-os aos modeladores que implementam a interface.
+**Essa abordagem facilita processos de formatações antes de enviar os dados à PagHiper, por exemplo.**
 
 ---
 
@@ -240,9 +240,11 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
         new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000),
         new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678')
     );
+
+// $billet será uma instância de Illuminate\Support\Collection
 ```
 
-Tendo feito isso, `$billet` será uma instância de `Illuminate\Support\Collection` contendo a resposta da PagHiper. **Por padrão, as respostas de todos os métodos de interação com `Paghiper for Laravel` utilizam o cast `Cast::Array`, que transforma a resposta em `array`**
+**Por padrão, as respostas de todos os métodos de interação com `Paghiper for Laravel` utilizam o cast `Cast::Array`, que transforma a resposta em `array`**
 
 ### Alternativa de Construção das Classes de Objeto
 
@@ -365,7 +367,7 @@ Route::get('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
-    $status = PagHiper::cast(Cast::Collection)
+    $status = PagHiper::cast(Cast::Collection) // 👈
         ->notification(notification: $notification, transaction: $transaction)
         ->consult();
     
@@ -375,9 +377,9 @@ Route::get('/payment/notification', function (Request $request) {
 
 ---
 
-### Cast Especial: `DevAjMeireles\PagHiper\DTO\PagHiperNotification`
+### Cast Especial: `PagHiperNotification`
 
-**De forma especial para o retorno automático, `Paghiper for Laravel` oferece um cast diferente: `Dto`:**
+**De forma especial para o retorno automático, `Paghiper for Laravel` oferece um cast diferente, `Dto`:**
 
 ```php
 // routes/web.php
@@ -397,7 +399,7 @@ Route::get('/payment/notification', function (Request $request) {
 })->name('paghiper.notification');
 ```
 
-O cast `Dto` irá interceptar a resposta, transformar em array e em seguida instanciar a classe `PagHiperNotification`, que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
+O cast `Dto` irá interceptar a resposta da PagHiper e transformá-la em uma instância da classe `PagHiperNotification` que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
 
 - `transaction()`: retorna o ID da transação
 - `order()`: retorna o ID do pedido
@@ -484,10 +486,11 @@ Route::get('/payment/notification', function (Request $request) {
   - não foi possível recuperar o model ao usar o método `modelable` no retorno automático
 
 <a name="todo"></a>
-## A Fazeres
+## Pendências
 
 - Integração com [PIX do PagHiper](https://dev.paghiper.com/reference/emissao-de-pix-paghiper)
 - Integração com [Contas Bancárias](https://dev.paghiper.com/reference/solicitacao-saque)
+- Integração com [Listas de Transações](https://dev.paghiper.com/reference/listar-transacoes-via-api-exemplo)
 
 <a name="contributing"></a>
 ## Contribuição
