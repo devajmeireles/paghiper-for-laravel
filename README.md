@@ -19,16 +19,40 @@
 
 `PagHiper for Laravel` é um pacote que adiciona os principais recursos do PagHiper a aplicações Laravel de forma fácil e descomplicada. Com este pacote você poderá integarir com Boletos Bancários e PIX gerados pela PagHiper.
 
-**O pacote foi criado para Laravel 10 e PHP 8.1, no mais alto padrão possível do PHP moderno, com cobertura de testes e fortemente tipado, garantindo estabilidade nas funcionalidades.**
+**`Paghiper for Laravel` foi criado para Laravel 10 e PHP 8.1, no mais alto padrão possível do PHP moderno, com cobertura de testes e fortemente tipado, garantindo estabilidade nas funcionalidades.**
 
 ---
 
-O pacote foi criado e é mantido por mim, [AJ Meireles](https://www.linkedin.com/in/devajmeireles/). Sou desenvolvedor de software há 12 anos, dos quais há 9 trabalho exclusivamente com PHP, inclusive como fundador da comunidade [EuSeiPhp](https://www.youtube.com/@euseiphp), um canal para compartilhamento de conteúdos sobre PHP e Laravel.
+`Paghiper for Laravel` foi criado e é mantido por mim, [AJ Meireles](https://www.linkedin.com/in/devajmeireles/). Sou desenvolvedor de software há 12 anos, dos quais há 9 trabalho exclusivamente com PHP, inclusive como fundador da comunidade [EuSeiPhp](https://www.youtube.com/@euseiphp), um canal para compartilhamento de conteúdos sobre PHP e Laravel.
+
+<a name="technical-details"></a>
+### Detalhes Técnicos
+
+- Versão do Laravel Exigida: **10.x**
+- Versão do PHP Exigida: **8.1**
+
+---
+
+#### Facade
+
+`Paghiper for Laravel` oferece uma [Facade](https://laravel.com/docs/10.x/facades) para interação com a API do PagHiper:
+
+```php
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+
+$billet = PagHiper::billet()->create(/* ... */)
+```
+
+---
+
+#### Cliente HTTP
+
+Por trás dos panos, `Paghiper for Laravel` utiliza o poder do [cliente de HTTP do Laravel](https://laravel.com/docs/10.x/http-client). Com isso, caso você precise escrever testes automatizados, você deve seguir o esquema de testes do Laravel.
 
 <a name="installation"></a>
 # Instalação
 
-Para instalar o pacote, execute o comando abaixo:
+Para instalar `Paghiper for Laravel`, execute o comando abaixo:
 
 ```bash
 composer require devajmeireles/paghiper-for-laravel
@@ -44,30 +68,6 @@ Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação,
 
 <a name="billet"></a>
 # Boleto Bancário
-
-<a name="technical-details"></a>
-### Detalhes Técnicos
-
-- Versão do Laravel Exigida: **10.x**
-- Versão do PHP Exigida: **8.1**
-
----
-
-#### Facade
-
-O pacote `Paghiper for Laravel` oferece uma [Facade](https://laravel.com/docs/10.x/facades) para interação com a API do PagHiper:
-
-```php
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-
-$billet = PagHiper::billet()->create(/* ... */)
-```
-
----
-
-#### Cliente HTTP
-
-Por trás dos panos, o pacote utiliza o poder do [cliente de HTTP do Laravel](https://laravel.com/docs/10.x/http-client). Com isso, caso você precise escrever testes automatizados, você deve seguir o esquema de testes do Laravel.
 
 <a name="creating-billet"></a>
 ### Criando Boleto Bancário
@@ -108,7 +108,7 @@ return [
 ];
 ```
 
-**Caso você não defina esta configuração**, o pacote espera que você informe a URL através do parametro `notificationUrl` da classe `Basic`:
+**Caso você não defina esta configuração**, `Paghiper for Laravel` espera que você informe a URL através do parametro `notificationUrl` da classe `Basic`:
 
 ```php
 // ...
@@ -187,7 +187,7 @@ class User extends Model implements PagHiperModelAbstraction // 👈
 };
 ```
 
-**Essa abordagem facilita processos de formatações antes de enviar os dados à PagHiper, por exemplo.** Se você tiver mais de um modelador que interaja com o pacote, abstraia os métodos acima para uma trait e aplique-os aos modeladores que implementam a interface.
+**Essa abordagem facilita processos de formatações antes de enviar os dados à PagHiper, por exemplo.** Se você tiver mais de um modelador que interaja com `Paghiper for Laravel`, abstraia os métodos acima para uma trait e aplique-os aos modeladores que implementam a interface.
 
 ---
 
@@ -215,7 +215,7 @@ $billet = (new PagHiper())->billet()
 
 ---
 
-Para facilitar sua interação com a Facade, o pacote oferece casts diferentes, sendo eles:
+Para facilitar sua interação com a Facade, `Paghiper for Laravel` oferece casts diferentes, sendo eles:
 
 - `Response`: o objeto original da resposta
 - `Json` ou `Array`: a resposta convertida para um array
@@ -238,7 +238,7 @@ $billet = (new PagHiper())->billet(Cast::Collection) // 👈
     );
 ```
 
-Tendo feito isso, `$billet` será uma instância de `Illuminate\Support\Collection` contendo a resposta da PagHiper. **Por padrão, as respostas de todos os métodos de interação com o pacote utilizam o cast `Cast::Array`, que transforma a resposta em `array`**
+Tendo feito isso, `$billet` será uma instância de `Illuminate\Support\Collection` contendo a resposta da PagHiper. **Por padrão, as respostas de todos os métodos de interação com `Paghiper for Laravel` utilizam o cast `Cast::Array`, que transforma a resposta em `array`**
 
 <a name="consulting-billet"></a>
 ### Consultando Boleto Bancário
@@ -294,7 +294,7 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
 <a name="billet-notification"></a>
 ### Retorno Automático de Boleto Bancário
 
-O pacote oferece uma forma fácil de lidar com o retorno automático de boletos bancários. **O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notificationUrl` na criação do boleto bancário.** Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
+`Paghiper for Laravel` oferece uma forma fácil de lidar com o retorno automático de boletos bancários. **O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notificationUrl` na criação do boleto bancário.** Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
 
 Supondo que você possui uma URL nomeada como `paghiper.notification`, e que essa foi a URL enviada como `$notificationUrl` na classe de objeto `Basic` no momento da criação do boleto bancário, então isso será suficiente:
 
@@ -339,7 +339,7 @@ Route::get('/payment/notification', function (Request $request) {
 
 ---
 
-**De forma especial para o retorno automático, o pacote oferece um cast diferente: `Dto`:**
+**De forma especial para o retorno automático, `Paghiper for Laravel` oferece um cast diferente: `Dto`:**
 
 ```php
 // routes/web.php
