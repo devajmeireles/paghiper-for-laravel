@@ -28,18 +28,24 @@ class CreateBillet
 
     private function parse(Payer|Model $payer, Basic $basic, Address $address, array|Item $items): array
     {
+        $model = $payer instanceof Model;
+
         $billet          = $basic->toArray();
         $billet['items'] = [];
 
-        $billet += $payer instanceof Model
+        $billet += $model
             ? (new HighOrderCreateBillet($payer))->execute()
             : array_merge($payer->toArray(), $address->toArray());
+
+        $billet['order_id'] = $model ?
+            sprintf('%s|%s:%s', $billet['order_id'], get_class($payer), $payer->id)
+            : $billet['order_id'];
 
         if ($items instanceof Item) {
             $billet['items'] += [[...$items->toArray()]];
         } else {
             foreach ($items as $item) {
-                $billet['items'][] = [...$item->toArray()]; //TODO: Test
+                $billet['items'][] = [...$item->toArray()];
             }
         }
 
