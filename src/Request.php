@@ -12,7 +12,7 @@ final class Request
     public static function execute(string $endpoint, array $params = []): Response
     {
         $client = Http::timeout(10)
-            ->baseUrl((config('paghiper.url') ?? self::BASE_URL))
+            ->baseUrl(config('paghiper.url') ?? self::BASE_URL)
             ->withHeaders([
                 'Accept'          => 'application/json',
                 'Accept-Encoding' => 'application/json',
@@ -20,7 +20,7 @@ final class Request
             ]);
 
         $params = collect($params)->merge([
-            'apiKey' => config('paghiper.apiKey'),
+            'apiKey' => config('paghiper.api'),
             'token'  => config('paghiper.token'),
         ])->toArray();
 

@@ -4,6 +4,7 @@ namespace DevAjMeireles\PagHiper\DTO\Objects;
 
 use Illuminate\Contracts\Support\Arrayable;
 
+//TODO: Test
 class Payer implements Arrayable
 {
     public function __construct(
@@ -40,7 +41,7 @@ class Payer implements Arrayable
         return [
             'payer_name'     => $this->name(),
             'payer_email'    => $this->email(),
-            'payer_document' => $this->document(),
+            'payer_cpf_cnpj' => $this->document(),
             'payer_phone'    => $this->phone(),
         ];
     }

@@ -4,6 +4,7 @@ namespace DevAjMeireles\PagHiper\DTO\Objects;
 
 use Illuminate\Contracts\Support\Arrayable;
 
+//TODO: Test
 class Address implements Arrayable
 {
     public function __construct(

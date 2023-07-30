@@ -39,7 +39,7 @@ class CreateBillet
             $billet['items'] += [[...$items->toArray()]];
         } else {
             foreach ($items as $item) {
-                $billet['items'] += [[...$item->toArray()]];
+                $billet['items'][] = [...$item->toArray()]; //TODO: Test
             }
         }
 

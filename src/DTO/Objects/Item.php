@@ -4,6 +4,7 @@ namespace DevAjMeireles\PagHiper\DTO\Objects;
 
 use Illuminate\Contracts\Support\Arrayable;
 
+//TODO: Test
 class Item implements Arrayable
 {
     public function __construct(
@@ -38,10 +39,10 @@ class Item implements Arrayable
     public function toArray(): array
     {
         return [
-            'id'          => $this->id(),
+            'item_id'     => $this->id(),
             'description' => $this->description(),
             'quantity'    => $this->quantity(),
-            'price'       => $this->price(),
+            'price_cents' => $this->price(),
         ];
     }
 }

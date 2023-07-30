@@ -5,6 +5,7 @@ namespace DevAjMeireles\PagHiper\DTO\Objects;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Carbon;
 
+//TODO: Test
 class Basic implements Arrayable
 {
     public function __construct(
