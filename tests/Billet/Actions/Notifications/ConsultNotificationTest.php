@@ -264,5 +264,9 @@ it('should be able to consult notification casting to notification dto', functio
         ->and($notification->finalPrice())
         ->toBe("17012")
         ->and($notification->discount())
-        ->toBe("1100");
+        ->toBe("1100")
+        ->and($notification->original())
+        ->toBeInstanceOf(Response::class)
+        ->and($notification->status())
+        ->toBe("paid");
 });

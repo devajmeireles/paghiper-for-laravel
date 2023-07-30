@@ -491,6 +491,7 @@ O cast `Dto` irá interceptar a resposta da PagHiper e transformá-la em uma ins
 - `transaction()`: ID da transação
 - `order()`: ID do pedido
 - `createdAt()`: data de criação do boleto como instância de `Illuminate\Support\Carbon`
+- `status()`: status do boleto como string
 - `pending()`: `true` se o status do boleto for `pending`
 - `reserved()`: `true` se o status do boleto for `reserved`
 - `canceled()`: `true` se o status do boleto for `canceled`
@@ -505,6 +506,7 @@ O cast `Dto` irá interceptar a resposta da PagHiper e transformá-la em uma ins
 - `bankSlip()`: array com dados do boleto (URL, linha digitável...)
 - `dueDateAt()`: data de vencimento do boleto como instância de `Illuminate\Support\Carbon`
 - `numItems`(): número de itens do boleto
+- `original()`: resposta original da PagHiper como instância de `Illuminate\Http\Client\Response`
 - `items()`: instância da clase `Payer` mapeada
   - **se um item**, será uma instância de `Payer`
   - **se mais de um item**, será um array de instâncias de `Payer`
@@ -571,7 +573,7 @@ De forma opcional, você pode definir o único parâmetro de `modelable()` como 
 ## Tratamento de Erros
 
 - `DevAjMeireles\PagHiper\Exceptions\PagHiperException` 
-  - erro genérico do PagHiper
+  - erro genérico do PagHiper, para todo caso onde `result` é `reject`
 - `DevAjMeireles\PagHiper\Exceptions\UnallowedCastType` 
   - tentativa de uso indetivo do cast `DevAjMeireles\PagHiper\Enums\Cast::Dto`
 - `DevAjMeireles\PagHiper\Exceptions\UnsupportedCastTypeExcetion` 

@@ -23,7 +23,7 @@ class Notification
         $response = ConsultNotification::execute($this->notification, $this->transaction);
 
         if ($this->cast === Cast::Dto) {
-            return PagHiperNotification::fromResponse($response->json('status_request'));
+            return PagHiperNotification::make($response);
         }
 
         return $this->cast->response($response, 'status_request');

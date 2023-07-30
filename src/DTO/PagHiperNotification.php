@@ -5,20 +5,22 @@ namespace DevAjMeireles\PagHiper\DTO;
 use DevAjMeireles\PagHiper\DTO\Objects\{Address, Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\NotificationModelNotFoundException;
 use Illuminate\Database\Eloquent\{Model, ModelNotFoundException};
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\{Carbon, Collection};
 
 class PagHiperNotification
 {
     public function __construct(
-        private readonly Collection $notification
+        private readonly Response $response,
+        private readonly ?Collection $notification = null
     ) {
         //
     }
 
-    public static function fromResponse(array $response): self
+    public static function make(Response $response): self
     {
         /** @phpstan-ignore-next-line */
-        return new static(collect($response));
+        return new static($response, collect($response->json('status_request')));
     }
 
     public function transaction(): string
@@ -34,6 +36,11 @@ class PagHiperNotification
     public function createdAt(): Carbon
     {
         return Carbon::parse($this->notification->get('created_date'));
+    }
+
+    public function status(): string
+    {
+        return $this->notification->get('status');
     }
 
     public function pending(): bool
@@ -134,6 +141,11 @@ class PagHiperNotification
         }
 
         return $response;
+    }
+
+    public function original(): Response
+    {
+        return $this->response;
     }
 
     /** @throws NotificationModelNotFoundException|ModelNotFoundException */
