@@ -37,8 +37,8 @@ class CreateBillet
             ? (new HighOrderCreateBillet($payer))->execute()
             : array_merge($payer->toArray(), $address->toArray());
 
-        $billet['order_id'] = $model ?
-            sprintf('%s|%s:%s', $billet['order_id'], get_class($payer), $payer->id)
+        $billet['order_id'] = $model
+            ? sprintf('%s|%s:%s', $billet['order_id'], get_class($payer), $payer->id)
             : $billet['order_id'];
 
         if ($items instanceof Item) {
