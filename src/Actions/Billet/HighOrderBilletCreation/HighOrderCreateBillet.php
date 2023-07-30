@@ -24,7 +24,7 @@ class HighOrderCreateBillet
 
         $collection->put('name', $this->model->pagHiperName());
         $collection->put('email', $this->model->pagHiperEmail());
-        $collection->put('document', $this->model->pagHiperDocument());
+        $collection->put('document', $this->model->pagHiperCpfCnpj());
         $collection->put('phone', $this->model->pagHiperPhone());
         $collection->put('address', $this->model->pagHiperAddress());
 

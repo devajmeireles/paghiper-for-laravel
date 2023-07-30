@@ -10,17 +10,17 @@ class Item implements Arrayable
     use MakeableObject;
 
     public function __construct(
-        private readonly int|string $id,
+        private readonly int|string $item_id,
         private readonly string $description,
         private readonly int $quantity,
-        private readonly int $price,
+        private readonly int $price_cents,
     ) {
         //
     }
 
     public function id(): string
     {
-        return (string) $this->id;
+        return (string) $this->item_id;
     }
 
     public function description(): string
@@ -35,7 +35,7 @@ class Item implements Arrayable
 
     public function price(): int
     {
-        return $this->price;
+        return $this->price_cents;
     }
 
     public function toArray(): array

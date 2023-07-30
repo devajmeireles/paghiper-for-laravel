@@ -10,38 +10,38 @@ class Basic implements Arrayable
     use MakeableObject;
 
     public function __construct(
-        private readonly string|int $orderId,
-        private readonly ?string $notificationUrl = null,
-        private readonly int $daysDueDate = 2,
-        private readonly ?string $typeBankSlip = 'boletoA4',
-        private readonly ?int $discountCents = 0,
+        private readonly string|int $order_id,
+        private readonly ?string $notification_url = null,
+        private readonly int $days_due_date = 2,
+        private readonly ?string $type_bank_slip = 'boletoA4',
+        private readonly ?int $discount_cents = 0,
     ) {
         //
     }
 
     public function orderId(): string
     {
-        return (string) $this->orderId;
+        return (string) $this->order_id;
     }
 
     public function daysDueDate(): int
     {
-        return $this->daysDueDate;
+        return $this->days_due_date;
     }
 
     public function typeBankSlip(): string
     {
-        return $this->typeBankSlip;
+        return $this->type_bank_slip;
     }
 
     public function notificationUrl(): string
     {
-        return config('paghiper.notification_url') ?? $this->notificationUrl;
+        return config('paghiper.notification_url') ?? $this->notification_url;
     }
 
     public function discountCents(): int
     {
-        return (int) $this->discountCents;
+        return (int) $this->discount_cents;
     }
 
     public function toArray(): array

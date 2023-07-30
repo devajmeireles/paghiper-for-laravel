@@ -12,7 +12,7 @@ class Payer implements Arrayable
     public function __construct(
         private readonly string $name,
         private readonly string $email,
-        private readonly string $document,
+        private readonly string $cpf_cnpj,
         private readonly string $phone,
         private readonly Address $address,
     ) {
@@ -31,7 +31,7 @@ class Payer implements Arrayable
 
     public function document(): string
     {
-        return $this->document;
+        return $this->cpf_cnpj;
     }
 
     public function phone(): string

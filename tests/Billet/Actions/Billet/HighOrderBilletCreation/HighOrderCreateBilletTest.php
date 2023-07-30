@@ -19,7 +19,7 @@ $model = new class () extends Model implements PagHiperModelAbstraction {
         return 'jhon.doe@gmail.com';
     }
 
-    public function pagHiperDocument(): string
+    public function pagHiperCpfCnpj(): string
     {
         return '123.456.789-00';
     }

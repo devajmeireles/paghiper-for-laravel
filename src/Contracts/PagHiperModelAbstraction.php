@@ -10,7 +10,7 @@ interface PagHiperModelAbstraction
 
     public function pagHiperPhone(): string;
 
-    public function pagHiperDocument(): string;
+    public function pagHiperCpfCnpj(): string;
 
     public function pagHiperAddress(): array;
 }

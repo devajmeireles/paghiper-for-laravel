@@ -4,11 +4,11 @@ use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 
 it('should return valid basic instance using make with array', function () {
     expect(Basic::make([
-        'orderId'         => '12345678901',
-        'notificationUrl' => $url = fake()->url(),
-        'daysDueDate'     => 2,
-        'typeBankSlip'    => 'boletoA4',
-        'discountCents'   => 0,
+        'order_id'         => '12345678901',
+        'notification_url' => $url = fake()->url(),
+        'days_due_date'     => 2,
+        'type_bank_slip'    => 'boletoA4',
+        'discount_cents'   => 0,
     ])
         ->toArray())
         ->toBeArray()
