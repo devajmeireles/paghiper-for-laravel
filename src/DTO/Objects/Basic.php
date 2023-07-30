@@ -2,16 +2,17 @@
 
 namespace DevAjMeireles\PagHiper\DTO\Objects;
 
+use DevAjMeireles\PagHiper\Traits\MakeableObject;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Carbon;
 
-//TODO: Test
 class Basic implements Arrayable
 {
+    use MakeableObject;
+
     public function __construct(
-        private readonly string $orderId,
+        private readonly string|int $orderId,
         private readonly string $notificationUrl,
-        private readonly int|Carbon $daysDueDate = 2,
+        private readonly int $daysDueDate = 2,
         private readonly ?string $typeBankSlip = 'boletoA4',
         private readonly ?int $discountCents = 0,
     ) {
@@ -20,10 +21,10 @@ class Basic implements Arrayable
 
     public function orderId(): string
     {
-        return $this->orderId;
+        return (string) $this->orderId;
     }
 
-    public function daysDueDate(): int|Carbon
+    public function daysDueDate(): int
     {
         return $this->daysDueDate;
     }
@@ -40,7 +41,7 @@ class Basic implements Arrayable
 
     public function discountCents(): int
     {
-        return $this->discountCents;
+        return (int) $this->discountCents;
     }
 
     public function toArray(): array

@@ -2,11 +2,13 @@
 
 namespace DevAjMeireles\PagHiper\DTO\Objects;
 
+use DevAjMeireles\PagHiper\Traits\MakeableObject;
 use Illuminate\Contracts\Support\Arrayable;
 
-//TODO: Test
 class Address implements Arrayable
 {
+    use MakeableObject;
+
     public function __construct(
         private readonly string $street,
         private readonly string $number,

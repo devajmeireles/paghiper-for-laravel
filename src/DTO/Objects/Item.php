@@ -2,13 +2,15 @@
 
 namespace DevAjMeireles\PagHiper\DTO\Objects;
 
+use DevAjMeireles\PagHiper\Traits\MakeableObject;
 use Illuminate\Contracts\Support\Arrayable;
 
-//TODO: Test
 class Item implements Arrayable
 {
+    use MakeableObject;
+
     public function __construct(
-        private readonly int $id,
+        private readonly int|string $id,
         private readonly string $description,
         private readonly int $quantity,
         private readonly int $price,
@@ -16,9 +18,9 @@ class Item implements Arrayable
         //
     }
 
-    public function id(): int
+    public function id(): string
     {
-        return $this->id;
+        return (string) $this->id;
     }
 
     public function description(): string
