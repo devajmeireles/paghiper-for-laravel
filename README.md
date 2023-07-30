@@ -72,7 +72,7 @@ Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação,
 <a name="creating-billet"></a>
 ### Criando Boleto Bancário
 
-Para uma melhor organização, a forma de interagir com o método `create` é enviar para ele quatro instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
+Para uma melhor organização, a forma de interagir com o método `create` é enviar para ele três (3) instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -83,14 +83,41 @@ use DevAjMeireles\PagHiper\DTO\Objects\Payer; // 👈
 
 $billet = PagHiper::billet()
     ->create(
-        new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
-        new Payer(name: 'Foo Bar', email: 'foo.bar@gmail.com', document: '123.456.789-00', phone: '1199999999'),
-        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000),
-        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678')
+        new Basic(
+            order_id: 1433, 
+            notification_url: route('paghiper.notification'), 
+            days_due_date: 2, 
+            type_bank_slip: 'boletoA4', 
+            discount_cents: 0,
+        ),
+        new Payer(
+            name: 'Joao Inácio da Silva', 
+            email: 'joao.inacio@gmail.com', 
+            cpf_cnpj: '123.456.789-00', 
+            phone: '11985850505'
+            new Address(
+                street: 'Rua Alameda Barão de Limeira',
+                number: 102,
+                complement: 'Casa',
+                district: 'São Vicente',
+                city: 'São Paulo',
+                state: 'São Paulo',
+                zip_code: '13332251'
+            )
+        ),
+        new Item(
+            item_id: 12, 
+            description: 'Kit de Malas de Viagem', 
+            quantity: 1, 
+            price_cents: 25000
+        ),
     );
 ```
 
-**Observe que no exemplo acima todos os parâmetros das classes: `Payer`, `Basic`, `Address` e `Item` foram nomeados apenas para fins de instrução. Você pode optar por utilizar dessa forma ou não.**
+**Algumas observações:**
+
+1. Por mais que pareça confuso, dessa forma você tem uma declaração exata do que está sendo enviado para o boleto bancário.
+2. No exemplo acima os parâmetros foram nomeados para fins de instrução. Você pode optar por utilizar dessa forma ou não.
 
 ### Url Padrão de Retorno Automático
 
@@ -108,7 +135,7 @@ return [
 ];
 ```
 
-**Caso você não defina esta configuração**, `Paghiper for Laravel` espera que você informe a URL através do parametro `notificationUrl` da classe `Basic`:
+**Caso você não defina esta configuração**, `Paghiper for Laravel` espera que você informe a URL através do parametro `$notification_url` da classe `Basic`:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -118,7 +145,13 @@ use DevAjMeireles\PagHiper\Facades\PagHiper;
 $billet = PagHiper::billet()
     ->create(
         // ...
-        new Basic(orderId: 12, notificationUrl: 'https://retorno-automático.com/paghiper/notification', ...), // 👈
+        new Basic(
+            order_id: 1433, 
+            notification_url: 'https://minha-aplicacão.com.br/paghiper/notification', // 👈 
+            days_due_date: 2, 
+            type_bank_slip: 'boletoA4', 
+            discount_cents: 0,
+        ),
         // ...
     );
 ```
@@ -136,14 +169,22 @@ use DevAjMeireles\PagHiper\DTO\Objects\Item;
 
 $billet = PagHiper::billet()
     ->create(
-        new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
+        new Basic(
+            order_id: 1433, 
+            notification_url: route('paghiper.notification'), 
+            days_due_date: 2, 
+            type_bank_slip: 'boletoA4', 
+            discount_cents: 0,
+        ),
         User::first(), // 👈
-        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000),
-        // ❌ new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678')
+        new Item(
+            item_id: 12, 
+            description: 'Kit de Malas de Viagem', 
+            quantity: 1, 
+            price_cents: 25000
+        ),
     );
 ```
-
-Como todos os dados necessários virão do modelador, então `Address` se torna desnecessário neste modelo de uso. 
 
 **Para utilizar a abordagem acima**, seu modelador deve implementar a interface `PagHiperModelAbstraction`, a qual exigirá que os seguintes métodos sejam criados na classe do modelador:
 
@@ -159,39 +200,39 @@ class User extends Model implements PagHiperModelAbstraction // 👈
 
     public function pagHiperName(): string
     {
-        return 'Foo bar';
+        return 'Joao Inácio da Silva';
     }
 
     public function pagHiperEmail(): string
     {
-        return 'foo.bar@gmail.com';
+        return 'joao.inacio@gmail.com';
     }
 
-    public function pagHiperDocument(): string
+    public function pagHiperCpfCnpj(): string
     {
         return '123.456.789-00';
     }
 
     public function pagHiperPhone(): string
     {
-        return '1199999999';
+        return '11985850505';
     }
 
     public function pagHiperAddress(): array
     {
         return [
-            'street'     => 'Foo Street',
-            'number'     => 123,
-            'complement' => 'Home',
-            'district'   => 'Bar District',
-            'city'       => 'Foo City',
-            'zip_code'   => '12345-678',
+            'street'     => 'Rua Alameda Barão de Limeira'
+            'number'     => 102,
+            'complement' => 'Casa',
+            'district'   => 'São Vicente',
+            'city'       => 'São Paulo',
+            'zip_code'   => '13332251',
         ];
     }
 };
 ```
 
-**Essa abordagem facilita processos de formatações antes de enviar os dados à PagHiper, por exemplo.**
+**Essa abordagem facilita processos de formatações antes de enviar os dados a PagHiper, por exemplo.**
 
 ---
 
@@ -206,27 +247,46 @@ use DevAjMeireles\PagHiper\DTO\Objects\Payer;
 
 $billet = PagHiper::billet()
     ->create(
-        new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
-        new Payer(name: 'Foo Bar', email: 'foo.bar@gmail.com', document: '123.456.789-00', phone: '1199999999'),
+        new Basic(
+            order_id: 1433, 
+            notification_url: route('paghiper.notification'), 
+            days_due_date: 2, 
+            type_bank_slip: 'boletoA4', 
+            discount_cents: 0,
+        ),
+        new Payer(
+            name: 'Joao Inácio da Silva', 
+            email: 'joao.inacio@gmail.com', 
+            cpf_cnpj: '123.456.789-00', 
+            phone: '11985850505'
+            new Address(
+                street: 'Rua Alameda Barão de Limeira',
+                number: 102,
+                complement: 'Casa',
+                district: 'São Vicente',
+                city: 'São Paulo',
+                state: 'São Paulo',
+                zip_code: '13332251'
+            )
+        ),
         [
-            new Item(id: 12, description: 'Foo Bar 12', quantity: 1, price: 1200),
-            new Item(id: 13, description: 'Foo Bar 13', quantity: 1, price: 1300),
-            new Item(id: 14, description: 'Foo Bar 14', quantity: 1, price: 1400),
-        ],
-        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678'),
+            new Item(item_id: 12, description: 'Kit de Malas de Viagem', quantity: 1, price_cents: 25000),        
+            new Item(item_id: 13, description: 'Capa de Mala (100x100)', quantity: 1, price_cents: 5000),        
+            new Item(item_id: 14, description: 'Kit de Rodas (100x100)', quantity: 1, price_cents: 3500),        
+        ]       
     );
 ```
 
 ---
 
-Para facilitar sua interação com a Facade, `Paghiper for Laravel` oferece casts diferentes, sendo eles:
+Para facilitar sua interação com as respostas, `Paghiper for Laravel` oferece casts diferentes, sendo eles:
 
 - `Response`: o objeto original da resposta
-- `Json` ou `Array`: a resposta convertida para um array
+- `Array`: a resposta convertida para um `array`
+- `Json`: a resposta convertida para um `json`
 - `Collect` ou `Collection`: a resposta convertida para uma instância de `Illuminate\Support\Collection`
 
 ```php
-use App\Models\User;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\DTO\Objects\Address;
 use DevAjMeireles\PagHiper\DTO\Objects\Basic;
@@ -235,13 +295,37 @@ use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->create(
-        new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
-        User::first(),
-        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000),
-        new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678')
+        new Basic(
+            order_id: 1433, 
+            notification_url: route('paghiper.notification'), 
+            days_due_date: 2, 
+            type_bank_slip: 'boletoA4', 
+            discount_cents: 0,
+        ),
+        new Payer(
+            name: 'Joao Inácio da Silva', 
+            email: 'joao.inacio@gmail.com', 
+            cpf_cnpj: '123.456.789-00', 
+            phone: '11985850505'
+            new Address(
+                street: 'Rua Alameda Barão de Limeira',
+                number: 102,
+                complement: 'Casa',
+                district: 'São Vicente',
+                city: 'São Paulo',
+                state: 'São Paulo',
+                zip_code: '13332251'
+            )
+        ),
+        new Item(
+            item_id: 12, 
+            description: 'Kit de Malas de Viagem', 
+            quantity: 1, 
+            price_cents: 25000
+        ),
     );
 
-// $billet será uma instância de Illuminate\Support\Collection
+// $billet será a resposta convertida para uma instância de Illuminate\Support\Collection
 ```
 
 **Por padrão, as respostas de todos os métodos de interação com `Paghiper for Laravel` utilizam o cast `Cast::Array`, que transforma a resposta em `array`**
@@ -255,22 +339,22 @@ As classes `Basic`, `Payer`, `Address` e `Item`, acima mencionadas, oferecem dua
 ```php
 use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 
-$basic = new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0);
+$basic = new Basic(/* ... */);
 
 // ...
 ```
 
-2. Via padrão Laravel, `make`:
+2. Via padrão estático, `make`:
 
 ```php
 use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 
 $basic = Basic::make([
-    'orderId'         => '12345678901',
-    'notificationUrl' => $url = fake()->url(),
-    'daysDueDate'     => 2,
-    'typeBankSlip'    => 'boletoA4',
-    'discountCents'   => 0,
+    'order_id'         => 1222,
+    'notification_url' => route('paghiper.notification'),
+    'days_due_date'    => 2,
+    'type_bank_slip'   => 'boletoA4',
+    'discount_cents'   => 0,
 ]);
 
 // ou ...
@@ -300,7 +384,7 @@ use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->status(transaction: 'HF97T5SH2ZQNLF6Z');
 
-// $billet passa a ser uma instância de Illuminate\Support\Collection
+// $billet será a resposta convertida para uma instância de Illuminate\Support\Collection
 ```
 
 <a name="cancelling-billet"></a>
@@ -326,15 +410,17 @@ use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
 
-// $billet passa a ser uma instância de Illuminate\Support\Collection
+// $billet será a resposta convertida para uma instância de Illuminate\Support\Collection
 ```
 
 <a name="billet-notification"></a>
 ### Retorno Automático de Boleto Bancário
 
-`Paghiper for Laravel` oferece uma forma fácil de lidar com o retorno automático de boletos bancários. **O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notificationUrl` na criação do boleto bancário.** Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
+`Paghiper for Laravel` oferece uma forma fácil de lidar com o retorno automático de boletos bancários. 
 
-Supondo que você possui uma URL nomeada como `paghiper.notification`, e que essa foi a URL enviada como `$notificationUrl` na classe de objeto `Basic` no momento da criação do boleto bancário, então isso será suficiente:
+**O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notification_url` na criação do boleto bancário, ou para a URL definida via `config/paghiper.php`.** Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
+
+Supondo que você possui uma URL nomeada como `paghiper.notification`, e que essa foi a URL enviada como `$notification_url` na classe de objeto `Basic` no momento da criação do boleto bancário, então isso será suficiente:
 
 ```php
 // routes/web.php
@@ -371,7 +457,7 @@ Route::get('/payment/notification', function (Request $request) {
         ->notification(notification: $notification, transaction: $transaction)
         ->consult();
     
-// $status passa a ser uma instância de Illuminate\Support\Collection
+// $status será a resposta convertida para uma instância de Illuminate\Support\Collection
 })->name('paghiper.notification');
 ```
 
@@ -401,40 +487,36 @@ Route::get('/payment/notification', function (Request $request) {
 
 O cast `Dto` irá interceptar a resposta da PagHiper e transformá-la em uma instância da classe `PagHiperNotification` que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
 
-- `transaction()`: retorna o ID da transação
-- `order()`: retorna o ID do pedido
-- `createdAt()`: retorna a data de criação do boleto como instância de `Illuminate\Support\Carbon`
-- `pending()`: retorna `true` se o status do boleto for `pending`
-- `reserved()`: retorna `true` se o status do boleto for `reserved`
-- `canceled()`: retorna `true` se o status do boleto for `canceled`
-- `completed()`: retorna `true` se o status do boleto for `completed`
-- `paid()`: retorna `true` se o status do boleto for `paid`
-- `processing()`: retorna `true` se o status do boleto for `processing`
-- `refunded()`: retorna `true` se o status do boleto for `refunded`
-- `paidAt()`: retorna a data de pagamento do boleto como instância de `Illuminate\Support\Carbon`
-- `payer()`: retorna um array com os dados do pagador 
-  - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
-- `address()`: retorna um array com os dados do endereço 
-  - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
-- `finalPrice()`: retorna o valor final do boleto, `value_cents`
-- `discount()`: retorna o valor do desconto do boleto, `discount_cents`
-- `bankSlipUrl()`: retorna um array com dados do boleto (URL, linha digitável...)
-- `dueDateAt()`: retorna a data de vencimento do boleto como instância de `Illuminate\Support\Carbon`
-- `numItems`(): retorna o número de itens do boleto
-- `items()`: retorna um array com os itens do array
-  - defina o parâmetro como `true` para transformar o array para uma instância de `Illuminate\Support\Collection`
+- `transaction()`: ID da transação
+- `order()`: ID do pedido
+- `createdAt()`: data de criação do boleto como instância de `Illuminate\Support\Carbon`
+- `pending()`: `true` se o status do boleto for `pending`
+- `reserved()`: `true` se o status do boleto for `reserved`
+- `canceled()`: `true` se o status do boleto for `canceled`
+- `completed()`: `true` se o status do boleto for `completed`
+- `paid()`: `true` se o status do boleto for `paid`
+- `processing()`: `true` se o status do boleto for `processing`
+- `refunded()`: `true` se o status do boleto for `refunded`
+- `paidAt()`: data de pagamento do boleto como instância de `Illuminate\Support\Carbon`
+- `payer()`: instância da clase `Payer` mapeada
+- `finalPrice()`: valor final do boleto, `value_cents`
+- `discount()`: valor do desconto do boleto, `discount_cents`
+- `bankSlip()`: array com dados do boleto (URL, linha digitável...)
+- `dueDateAt()`: data de vencimento do boleto como instância de `Illuminate\Support\Carbon`
+- `numItems`(): número de itens do boleto
+- `items()`: instância da clase `Payer` mapeada
+  - **se um item**, será uma instância de `Payer`
+  - **se mais de um item**, será um array de instâncias de `Payer`
 
 ### Método Especial: `modelable`
 
-De forma estratégica, ao passar uma instância de modelador como `Payer` do boleto bancário, o `order_id` na PagHiper receberá uma referência da classe e ID do modelador, para que posteriormente no retorno automático você possa utilizar o método `modelable` para obter o modelador facilmente.
+De forma estratégica, ao passar uma instância de um modelador do Laravel como `Payer` do boleto bancário, o `order_id` na PagHiper receberá uma referência da classe e ID do modelador para que posteriormente no retorno automático você possa utilizar o método `modelable` para obter o modelador facilmente.
 
-Essa abordagem fará com que o `order_id` do boleto bancário fique, por exemplo, da seguinte maneira na PagHiper: `11|App\Model\User:1`, onde `11` é o número do `$orderId` que você especificou na criação da classe `Basic`. Não há preocupação enquanto a este formato, uma vez que o `order_id` do boleto bancário é para uso interno, e não é exibido ao cliente.
+Essa abordagem fará com que o `order_id` do boleto bancário fique, por exemplo, da seguinte maneira na PagHiper: `11|App\Model\User:1`, onde `11` é o número do `$order_id` que você especificou na criação da classe `Basic`. Não há preocupação enquanto a este formato, uma vez que o `order_id` do boleto bancário é para uso interno, e não é exibido ao cliente.
 
 Dessa forma você então poderá utilizar o método `modelable`:
 
 ```php
-// routes/web.php
-
 use App\Models\User;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\DTO\Objects\Address;
@@ -445,13 +527,25 @@ use DevAjMeireles\PagHiper\DTO\Objects\Item;
 
 $billet = PagHiper::billet()
     ->create(
-        new Basic(orderId: 12, notificationUrl: route('paghiper.notification'), daysDueDate: 2, typeBankSlip: 'boletoA4', discountCents: 0),
-        User::first(), // 👈 User:1
-        new Item(id: 12, description: 'Foo Bar', quantity: 1, price: 1000),
-        // ❌ new Address(street: 'Foo Street', number: 123, complement: 'Home', district: 'Bar District', city: 'Foo City', state: 'Foo Country', zipCode: '12345-678')
+        new Basic(
+            order_id: 1433, 
+            notification_url: route('paghiper.notification'), 
+            days_due_date: 2, 
+            type_bank_slip: 'boletoA4', 
+            discount_cents: 0,
+        ),
+        User::find(1), // 👈
+        new Item(
+            item_id: 12, 
+            description: 'Kit de Malas de Viagem', 
+            quantity: 1, 
+            price_cents: 25000
+        ),
     );
 
 // retorno automático 👇
+
+// routes/web.php
 
 use Illuminate\Http\Request;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -469,6 +563,8 @@ Route::get('/payment/notification', function (Request $request) {
     $status->modelable(); // 👈 retornará uma instância de App\Models\User:1
 })->name('paghiper.notification');
 ```
+
+De forma opcional, você pode definir o único parâmetro de `modelable()` como `false` para evitar que uma exception do tipo `NotificationModelNotFoundException` ou `ModelNotFoundException` seja lançada caso haja falha na busca pelo modelador.
 
 <a name="billet-errors"></a>
 ## Tratamento de Erros
