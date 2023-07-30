@@ -2,11 +2,17 @@
 
 namespace DevAjMeireles\PagHiper\Facades;
 
+use DevAjMeireles\PagHiper\Billet;
+use DevAjMeireles\PagHiper\Enums\Cast;
+use DevAjMeireles\PagHiper\Notification;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static self cast(Cast $cast = Cast::Array)
+ * @method static Billet billet(Cast $cast = Cast::Array)
+ * @method static Notification notification(string $notification, string $transaction)
+ *
  * @see \DevAjMeireles\PagHiper\PagHiper
- * @mixin \DevAjMeireles\PagHiper\PagHiper
  */
 class PagHiper extends Facade
 {
