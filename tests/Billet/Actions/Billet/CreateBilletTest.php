@@ -141,10 +141,40 @@ it('should be able to create billet casting to array with more than one item', f
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    [$payer, $basic, $address, $itemOne] = [...fakeBilletCreationBody()];
+    [$basic, $payer, $item, $address] = [...fakeBilletCreationBody()];
+
+    $clone  = clone $item;
+    $billet = (new PagHiper())->billet()->create($basic, $payer, [$item, $clone], $address);
+
+    expect($billet)
+        ->toBeArray()
+        ->toBe($result);
+});
+
+it('should be able to create billet with address as optional when model is used', function () use ($model) {
+    $result = [
+        'result'           => 'success',
+        'response_message' => 'transacao criada',
+        'transaction_id'   => 'HF97T5SH2ZQNLF6Z',
+        'created_date'     => now()->format('Y-m-d H:i:s'),
+        'value_cents'      => 1000,
+        'status'           => 'pending',
+        'order_id'         => 1,
+        'due_date'         => now()->addDays(2)->format('Y-m-d'),
+        'bank_slip'        => [
+            'digitable_line'           => '34191.76304 03906.270248 61514.190000 9 72330000017012',
+            'url_slip'                 => 'https://www.paghiper.com/checkout/boleto/180068c7/HF97T5SH2ZQNLF6Z/30039',
+            'url_slip_pdf'             => 'https://www.paghiper.com/checkout/boleto/180068c7/HF97T5SH2ZQNLF6Z/30039/pdf',
+            'bar_code_number_to_image' => '34199723300000170121763003906270246151419000',
+        ],
+    ];
+
+    fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
+
+    [$basic, $payer, $itemOne, $address] = [...fakeBilletCreationBody()];
 
     $itemTwo = clone $itemOne;
-    $billet  = (new PagHiper())->billet()->create($payer, $basic, $address, [$itemOne, $itemTwo]);
+    $billet  = (new PagHiper())->billet()->create($basic, $model, [$itemOne, $itemTwo]);
 
     expect($billet)
         ->toBeArray()

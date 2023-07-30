@@ -15,9 +15,9 @@ class CreateBillet
     public const END_POINT = 'transaction/create/';
 
     /** @throws PagHiperRejectException */
-    public static function execute(Payer|Model $payer, Basic $basic, Address $address, array|Item $items): Response
+    public static function execute(Basic $basic, Payer|Model $payer, array|Item $items, Address $address = null): Response
     {
-        $response = Request::execute(self::END_POINT, (new self())->parse($payer, $basic, $address, $items));
+        $response = Request::execute(self::END_POINT, (new self())->parse($basic, $payer, $items, $address));
 
         if ($response->json('create_request.result') === 'reject') {
             throw new PagHiperRejectException($response->json('create_request.response_message'));
@@ -26,7 +26,7 @@ class CreateBillet
         return $response;
     }
 
-    private function parse(Payer|Model $payer, Basic $basic, Address $address, array|Item $items): array
+    private function parse(Basic $basic, Payer|Model $payer, array|Item $items, Address $address = null): array
     {
         $model = $payer instanceof Model;
 

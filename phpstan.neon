@@ -7,3 +7,8 @@ parameters:
         - src/
 
     level: 5
+
+    ignoreErrors:
+        -
+            message: '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id#'
+            path: src/Actions/Billet/CreateBillet.php

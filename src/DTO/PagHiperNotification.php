@@ -3,7 +3,7 @@
 namespace DevAjMeireles\PagHiper\DTO;
 
 use DevAjMeireles\PagHiper\Exceptions\NotificationModelNotFoundException;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{Model, ModelNotFoundException};
 use Illuminate\Support\{Carbon, Collection};
 
 class PagHiperNotification
@@ -18,23 +18,6 @@ class PagHiperNotification
     {
         /** @phpstan-ignore-next-line */
         return new static(collect($response));
-    }
-
-    /** @throws NotificationModelNotFoundException */
-    public function model(): Model
-    {
-        $order = $this->order();
-
-        if (!str($order)->contains('|')) {
-            throw new NotificationModelNotFoundException();
-        }
-
-        $order = str($order)->explode('|');
-
-        $model = $order[1];
-        $id    = $order[2];
-
-        return (new $model())->findOrFail($id);
     }
 
     public function transaction(): string
@@ -160,6 +143,32 @@ class PagHiperNotification
             return collect($items);
         }
 
+        if (count($items) === 1) {
+            return $items[0];
+        }
+
         return $items;
+    }
+
+    /** @throws NotificationModelNotFoundException|ModelNotFoundException */
+    public function modelable(): Model
+    {
+        $order = $this->order();
+
+        if (!str($order)->contains('|') && !str($order)->contains(':')) {
+            throw new NotificationModelNotFoundException();
+        }
+
+        $unparsed = explode('|', $order);
+        $parsed   = explode(':', $unparsed[1]);
+
+        $model = $parsed[0];
+        $id    = $parsed[1];
+
+        if (!class_exists($model)) {
+            throw new NotificationModelNotFoundException();
+        }
+
+        return (new $model())->findOrFail($id);
     }
 }

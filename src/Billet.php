@@ -18,9 +18,9 @@ class Billet
         //
     }
 
-    public function create(Payer|Model $payer, Basic $basic, Address $address, array|Item $items): Response|Collection|array
+    public function create(Basic $basic, Payer|Model $payer, array|Item $items, Address $address = null): Response|Collection|array
     {
-        $response = CreateBillet::execute($payer, $basic, $address, $items);
+        $response = CreateBillet::execute($basic, $payer, $items, $address);
 
         return $this->cast->response($response, 'create_request');
     }

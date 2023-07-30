@@ -245,7 +245,7 @@ it('should be able to consult notification casting to notification dto', functio
         ->toBe(1)
         ->and($notification->items())
         ->toBeArray()
-        ->and($notification->items()[0])
+        ->and($notification->items())
         ->toBe([
             "item_id"     => "1",
             "description" => "piscina de bolinha",

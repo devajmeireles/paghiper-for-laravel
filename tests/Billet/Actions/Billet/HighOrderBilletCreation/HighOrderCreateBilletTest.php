@@ -64,9 +64,9 @@ it('should be able to create billet for a model instance casting to array', func
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    [$payer, $basic, $address, $items] = [...fakeBilletCreationBody()];
+    [$basic, $payer, $address, $items] = [...fakeBilletCreationBody()];
 
-    $billet = PagHiper::billet()->create($model, $basic, $address, $items);
+    $billet = PagHiper::billet()->create($basic, $payer, $address, $items);
 
     expect($billet)
         ->toBeArray()
@@ -98,9 +98,9 @@ it('should be able to create billet for a model instance casting to collection',
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    [$payer, $basic, $address, $items] = [...fakeBilletCreationBody()];
+    [$basic, $payer, $address, $items] = [...fakeBilletCreationBody()];
 
-    $billet = PagHiper::billet(Cast::Collection)->create($model, $basic, $address, $items);
+    $billet = PagHiper::billet(Cast::Collection)->create($basic, $model, $address, $items);
 
     expect($billet)
         ->toBeInstanceOf(Collection::class)
@@ -132,9 +132,9 @@ it('should be able to create billet for a model instance casting to original res
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    [$payer, $basic, $address, $items] = [...fakeBilletCreationBody()];
+    [$basic, $payer, $address, $items] = [...fakeBilletCreationBody()];
 
-    $billet = PagHiper::billet(Cast::Response)->create($model, $basic, $address, $items);
+    $billet = PagHiper::billet(Cast::Response)->create($basic, $model, $address, $items);
 
     expect($billet)
         ->toBeInstanceOf(Response::class)
