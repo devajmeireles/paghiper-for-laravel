@@ -10,6 +10,6 @@ trait MakeableObject
             $parameters = $parameters[0];
         }
 
-        return new static(...$parameters);
+        return new self(...$parameters);
     }
 }
