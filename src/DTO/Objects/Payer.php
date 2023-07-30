@@ -14,6 +14,7 @@ class Payer implements Arrayable
         private readonly string $email,
         private readonly string $document,
         private readonly string $phone,
+        private readonly Address $address,
     ) {
         //
     }
@@ -45,6 +46,7 @@ class Payer implements Arrayable
             'payer_email'    => $this->email(),
             'payer_cpf_cnpj' => $this->document(),
             'payer_phone'    => $this->phone(),
+            ...$this->address->toArray(),
         ];
     }
 }

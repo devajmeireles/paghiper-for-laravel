@@ -2,6 +2,7 @@
 
 namespace DevAjMeireles\PagHiper\DTO;
 
+use DevAjMeireles\PagHiper\DTO\Objects\{Address, Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\NotificationModelNotFoundException;
 use Illuminate\Database\Eloquent\{Model, ModelNotFoundException};
 use Illuminate\Support\{Carbon, Collection};
@@ -75,39 +76,23 @@ class PagHiperNotification
         return Carbon::parse($this->notification->get('paid_date'));
     }
 
-    public function payer(bool $toCollection = false): array|Collection
+    public function payer(): Payer
     {
-        $payer = [
+        return Payer::make([
             'name'     => $this->notification->get('payer_name'),
             'email'    => $this->notification->get('payer_email'),
             'document' => $this->notification->get('payer_cpf_cnpj'),
             'phone'    => $this->notification->get('payer_phone'),
-        ];
-
-        if ($toCollection) {
-            return collect($payer);
-        }
-
-        return $payer;
-    }
-
-    public function address(bool $toCollection = false): array|Collection
-    {
-        $payer = [
-            'street'     => $this->notification->get('payer_street'),
-            'number'     => $this->notification->get('payer_number'),
-            'complement' => $this->notification->get('payer_complement'),
-            'district'   => $this->notification->get('payer_district'),
-            'city'       => $this->notification->get('payer_city'),
-            'state'      => $this->notification->get('payer_state'),
-            'zip_code'   => $this->notification->get('payer_zip_code'),
-        ];
-
-        if ($toCollection) {
-            return collect($payer);
-        }
-
-        return $payer;
+            'address'  => Address::make([
+                'street'     => $this->notification->get('payer_street'),
+                'number'     => $this->notification->get('payer_number'),
+                'complement' => $this->notification->get('payer_complement'),
+                'district'   => $this->notification->get('payer_district'),
+                'city'       => $this->notification->get('payer_city'),
+                'state'      => $this->notification->get('payer_state'),
+                'zip_code'   => $this->notification->get('payer_zip_code'),
+            ]),
+        ]);
     }
 
     public function finalPrice(): string
@@ -135,19 +120,25 @@ class PagHiperNotification
         return (int) $this->notification->get('num_cart_items');
     }
 
-    public function items(bool $toCollection = false): array|Collection
+    public function items(): array|Item
     {
-        $items = (array) $this->notification->get('items');
+        $response = [];
+        $items    = $this->notification->get('items');
 
-        if ($toCollection) {
-            return collect($items);
+        foreach ($items as $item) {
+            $response[] = Item::make([
+                'id'          => $item['item_id'],
+                'description' => $item['description'],
+                'quantity'    => $item['quantity'],
+                'price'       => $item['price_cents'],
+            ]);
         }
 
-        if (count($items) === 1) {
-            return $items[0];
+        if (count($response) === 1) {
+            return $response[0];
         }
 
-        return $items;
+        return $response;
     }
 
     /** @throws NotificationModelNotFoundException|ModelNotFoundException */

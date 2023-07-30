@@ -20,7 +20,8 @@ enum Cast: string
     {
         return (match ($this) {
             self::Response => fn () => $response,
-            self::Array, self::Json => fn () => $this->toArray($response, $index),
+            self::Json     => fn () => $this->toJson($response, $index),
+            self::Array    => fn () => $this->toArray($response, $index),
             self::Collection, self::Collect => fn () => $this->toCollect($response, $index),
             default => throw new UnsupportedCastTypeExcetion("Unsupported cast {$this->value}"),
         })();
@@ -29,6 +30,11 @@ enum Cast: string
     public function toArray(Response $response, string $index): array
     {
         return $response->json($index);
+    }
+
+    public function toJson(Response $response, string $index): string
+    {
+        return collect($this->toArray($response, $index))->toJson();
     }
 
     public function toCollect(Response $response, string $index): Collection

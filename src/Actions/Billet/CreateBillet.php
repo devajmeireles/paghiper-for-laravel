@@ -3,8 +3,7 @@
 namespace DevAjMeireles\PagHiper\Actions\Billet;
 
 use DevAjMeireles\PagHiper\Actions\Billet\HighOrderBilletCreation\HighOrderCreateBillet;
-use DevAjMeireles\PagHiper\DTO\Objects\{Address, Basic};
-use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException};
 use DevAjMeireles\PagHiper\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -15,9 +14,9 @@ class CreateBillet
     public const END_POINT = 'transaction/create/';
 
     /** @throws PagHiperRejectException */
-    public static function execute(Basic $basic, Payer|Model $payer, array|Item $items, Address $address = null): Response
+    public static function execute(Basic $basic, Payer|Model $payer, array|Item $items): Response
     {
-        $response = Request::execute(self::END_POINT, (new self())->parse($basic, $payer, $items, $address));
+        $response = Request::execute(self::END_POINT, (new self())->parse($basic, $payer, $items));
 
         if ($response->json('create_request.result') === 'reject') {
             throw new PagHiperRejectException($response->json('create_request.response_message'));
@@ -26,7 +25,7 @@ class CreateBillet
         return $response;
     }
 
-    private function parse(Basic $basic, Payer|Model $payer, array|Item $items, Address $address = null): array
+    private function parse(Basic $basic, Payer|Model $payer, array|Item $items): array
     {
         $model = $payer instanceof Model;
 
@@ -35,7 +34,7 @@ class CreateBillet
 
         $billet += $model
             ? (new HighOrderCreateBillet($payer))->execute()
-            : array_merge($payer->toArray(), $address->toArray());
+            : $payer->toArray();
 
         $billet['order_id'] = $model
             ? sprintf('%s|%s:%s', $billet['order_id'], get_class($payer), $payer->id)

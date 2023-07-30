@@ -16,7 +16,7 @@ class Address implements Arrayable
         private readonly string $district,
         private readonly string $city,
         private readonly string $state,
-        private readonly string $zipCode,
+        private readonly string $zip_code,
     ) {
         //
     }
@@ -53,7 +53,7 @@ class Address implements Arrayable
 
     public function zipCode(): string
     {
-        return $this->zipCode;
+        return $this->zip_code;
     }
 
     public function toArray(): array

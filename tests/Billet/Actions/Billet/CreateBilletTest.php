@@ -141,10 +141,10 @@ it('should be able to create billet casting to array with more than one item', f
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    [$basic, $payer, $item, $address] = [...fakeBilletCreationBody()];
+    [$basic, $payer, $item] = [...fakeBilletCreationBody()];
 
     $clone  = clone $item;
-    $billet = (new PagHiper())->billet()->create($basic, $payer, [$item, $clone], $address);
+    $billet = (new PagHiper())->billet()->create($basic, $payer, [$item, $clone]);
 
     expect($billet)
         ->toBeArray()
@@ -171,10 +171,10 @@ it('should be able to create billet with address as optional when model is used'
 
     fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
 
-    [$basic, $payer, $itemOne, $address] = [...fakeBilletCreationBody()];
+    [$basic, $payer, $item] = [...fakeBilletCreationBody()];
 
-    $itemTwo = clone $itemOne;
-    $billet  = (new PagHiper())->billet()->create($basic, $model, [$itemOne, $itemTwo]);
+    $two    = clone $item;
+    $billet = (new PagHiper())->billet()->create($basic, $model, [$item, $two]);
 
     expect($billet)
         ->toBeArray()

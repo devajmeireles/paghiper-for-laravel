@@ -1,6 +1,7 @@
 <?php
 
 use DevAjMeireles\PagHiper\Actions\Notifications\ConsultNotification;
+use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
 use DevAjMeireles\PagHiper\DTO\PagHiperNotification;
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\PagHiper;
@@ -244,14 +245,8 @@ it('should be able to consult notification casting to notification dto', functio
         ->and($notification->numItems())
         ->toBe(1)
         ->and($notification->items())
-        ->toBeArray()
+        ->toBeInstanceOf(Item::class)
         ->and($notification->items())
-        ->toBe([
-            "item_id"     => "1",
-            "description" => "piscina de bolinha",
-            "quantity"    => "1",
-            "price_cents" => "1012",
-        ])
         ->and($slip = $notification->bankSlip())
         ->toBeArray()
         ->and($slip)
@@ -261,26 +256,7 @@ it('should be able to consult notification casting to notification dto', functio
             "url_slip_pdf"   => "https://www.paghiper.com/checkout/boleto/ab039901bd6f402e44424f30cd1d3ca9e1f5c90bdb78f7878e8dcdcf7701e1befdc7f1ff6521e8312f7cef408b10b500ee85da4b8903d28874a0436f00a0a3c6/3IMZI5QXGMI7K40W/43474166/pdf",
         ])
         ->and($payer = $notification->payer())
-        ->toBeArray()
-        ->and($payer)
-        ->toBe([
-            'name'     => 'poul silva',
-            'email'    => 'poulsilva@myexemple.com',
-            'document' => '00000000191',
-            'phone'    => '1140638785',
-        ])
-        ->and($address = $notification->address())
-        ->toBeArray()
-        ->and($address)
-        ->toBe([
-            'street'     => 'Av Brigadeiro Faria Lima',
-            'number'     => '1461',
-            'complement' => 'Torre Sul 4º Andar',
-            'district'   => 'Jardim Paulistano',
-            'city'       => 'São Paulo',
-            'state'      => 'SP',
-            'zip_code'   => '01452002',
-        ])
+        ->toBeInstanceOf(Payer::class)
         ->and($dueDate = $notification->dueDateAt())
         ->toBeInstanceOf(Carbon::class)
         ->and($dueDate->format('Y-m-d'))

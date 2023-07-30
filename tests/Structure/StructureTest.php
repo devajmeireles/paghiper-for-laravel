@@ -1,13 +1,9 @@
 <?php
 
+use DevAjMeireles\PagHiper\DTO\Objects\{Address, Basic, Item, Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
-use DevAjMeireles\PagHiper\{DTO\Objects\Address,
-    DTO\Objects\Basic,
-    DTO\Objects\Item,
-    DTO\Objects\Payer,
-    PagHiper,
-    Request,
-    Traits\MakeableObject};
+use DevAjMeireles\PagHiper\Traits\MakeableObject;
+use DevAjMeireles\PagHiper\{PagHiper, Request};
 
 test('will not debugging functions')
     ->expect(['dd', 'dump', 'ray'])

@@ -13,12 +13,27 @@ function fakeBilletCreationBody(): array
 {
     $fake = fake('pt_BR');
 
-    $payer   = new Payer($fake->name(), $fake->email(), $fake->cpf(false), $fake->cellphone(false));
-    $basic   = new Basic($fake->randomDigit(), $fake->url());
-    $address = new Address($fake->streetName(), $fake->randomDigit(), $fake->word(), $fake->city(), $fake->word(), $fake->country(), $fake->postcode());
-    $item    = new Item($fake->randomDigit(), $fake->word(), $fake->randomDigit(), 1500);
+    $payer = new Payer(
+        $fake->name(),
+        $fake->email(),
+        $fake->cpf(false),
+        $fake->cellphone(false),
+        Address::make($fake->streetName(), $fake->randomDigit(), $fake->word(), $fake->city(), $fake->word(), $fake->country(), $fake->postcode())
+    );
 
-    return [$basic, $payer, $item, $address];
+    $basic = new Basic(
+        $fake->randomDigit(),
+        $fake->url()
+    );
+
+    $item = new Item(
+        $fake->randomDigit(),
+        $fake->word(),
+        $fake->randomDigit(),
+        1500
+    );
+
+    return [$basic, $payer, $item];
 }
 
 function fakeBilletResponse(string $path, string $index, array $data): void
