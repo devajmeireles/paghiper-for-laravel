@@ -2,6 +2,7 @@
 
 - [Introdução](#introduction)
 - [Instalação](#installation)
+- [Detalhes Técnicos](#technical-details)
 - [Boleto Bancário](#billet)
     - [Criando Boleto Bancário](#creating-billet)
     - [Consultando Boleto Bancário](#consulting-billet)
@@ -44,8 +45,15 @@ Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação,
 <a name="billet"></a>
 # Boleto Bancário
 
-<a name="creating-billet"></a>
-### Criando Boleto Bancário
+<a name="technical-details"></a>
+### Detalhes Técnicos
+
+- Versão do Laravel Exigida: **10.x**
+- Versão do PHP Exigida: **8.1**
+
+---
+
+#### Facade
 
 O pacote `Paghiper for Laravel` oferece uma [Facade](https://laravel.com/docs/10.x/facades) para interação com a API do PagHiper:
 
@@ -54,6 +62,15 @@ use DevAjMeireles\PagHiper\Facades\PagHiper;
 
 $billet = PagHiper::billet()->create(/* ... */)
 ```
+
+---
+
+#### Cliente HTTP
+
+Por trás dos panos, o pacote utiliza o poder do [cliente de HTTP do Laravel](https://laravel.com/docs/10.x/http-client). Com isso, caso você precise escrever testes automatizados, você deve seguir o esquema de testes do Laravel.
+
+<a name="creating-billet"></a>
+### Criando Boleto Bancário
 
 Para uma melhor organização, a forma de interagir com o método `create` é enviar para ele quatro instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
 
@@ -74,6 +91,35 @@ $billet = (new PagHiper())->billet()
 ```
 
 **Observe que no exemplo acima todos os parâmetros das classes: `Payer`, `Basic`, `Address` e `Item` foram nomeados apenas para fins de instrução. Você pode optar por utilizar dessa forma ou não.**
+
+### Url Padrão de Retorno Automático
+
+Se a sua aplicação possuir uma URL específica e fixa de retorno automático, você pode definir uma nova chave no arquivo `config/paghiper.php` com essa URL:
+
+```php
+// config/paghiper.php
+
+return [
+    // ...
+    
+    'notification_url' => 'https://retorno-automático.com/paghiper/notification',
+    
+    // ...
+];
+```
+
+**Caso você não defina esta configuração**, o pacote espera que você informe a URL através do parametro `notificationUrl` da classe `Basic`:
+
+```php
+// ...
+
+$billet = (new PagHiper())->billet()
+    ->create(
+        // ...
+        new Basic(orderId: 12, notificationUrl: 'https://retorno-automático.com/paghiper/notification', ...), // 👈
+        // ...
+    );
+```
 
 ---
 

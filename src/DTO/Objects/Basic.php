@@ -11,7 +11,7 @@ class Basic implements Arrayable
 
     public function __construct(
         private readonly string|int $orderId,
-        private readonly string $notificationUrl,
+        private readonly ?string $notificationUrl = null,
         private readonly int $daysDueDate = 2,
         private readonly ?string $typeBankSlip = 'boletoA4',
         private readonly ?int $discountCents = 0,
@@ -36,7 +36,7 @@ class Basic implements Arrayable
 
     public function notificationUrl(): string
     {
-        return $this->notificationUrl;
+        return config('paghiper.notification_url') ?? $this->notificationUrl;
     }
 
     public function discountCents(): int
