@@ -2,7 +2,7 @@
 
 namespace DevAjMeireles\PagHiper\DTO;
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Address, Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Item, Billet\Payer};
 use DevAjMeireles\PagHiper\Exceptions\NotificationModelNotFoundException;
 use Illuminate\Database\Eloquent\{Model, ModelNotFoundException};
 use Illuminate\Http\Client\Response;

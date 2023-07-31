@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\Address;
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
 
 it('should return valid address instance using make with array', function () {
     expect(Address::make([

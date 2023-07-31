@@ -22,8 +22,8 @@ class PagHiper
     {
         $cast = $this->cast ?? $cast;
 
-        if ($cast === Cast::Dto) {
-            throw new UnallowedCastTypeException("dto");
+        if ($cast === Cast::BilletNotification) {
+            throw new UnallowedCastTypeException("BilletNotification");
         }
 
         return new Billet($this->cast ?? $cast);

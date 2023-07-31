@@ -3,7 +3,7 @@
 namespace DevAjMeireles\PagHiper\Actions\Billet;
 
 use DevAjMeireles\PagHiper\Actions\Billet\HighOrderBilletCreation\HighOrderCreateBillet;
-use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Billet\Item, Billet\Payer};
 use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException};
 use DevAjMeireles\PagHiper\Request;
 use Illuminate\Database\Eloquent\Model;

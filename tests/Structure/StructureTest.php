@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Address, Basic, Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Basic, Billet\Item, Billet\Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Resolvers\Billet\{ResolveBilletNotificationUrl};
 use DevAjMeireles\PagHiper\Resolvers\{ResolveToken, ResolverApi};

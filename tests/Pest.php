@@ -1,8 +1,8 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Address, Basic};
-use DevAjMeireles\PagHiper\DTO\Objects\{Item};
-use DevAjMeireles\PagHiper\DTO\Objects\{Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Basic};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Item};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Payer};
 use DevAjMeireles\PagHiper\Request;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -13,25 +13,35 @@ function fakeBilletCreationBody(): array
 {
     $fake = fake('pt_BR');
 
-    $payer = new Payer(
-        $fake->name(),
-        $fake->email(),
-        $fake->cpf(false),
-        $fake->cellphone(false),
-        Address::make($fake->streetName(), $fake->randomDigit(), $fake->word(), $fake->city(), $fake->word(), $fake->country(), $fake->postcode())
-    );
+    $payer = Payer::make()
+        ->set('name', $fake->name())
+        ->set('email', fake()->email())
+        ->set('cpf_cnpj', $fake->cpf(false))
+        ->set('phone', $phone = $fake->cellphone(false))
+        ->set(
+            'address',
+            Address::make()
+                ->set('street', $fake->streetName())
+                ->set('number', $fake->randomDigit())
+                ->set('complement', $fake->word())
+                ->set('district', $fake->word())
+                ->set('city', $fake->city())
+                ->set('state', $fake->country())
+                ->set('zip_code', $fake->postcode())
+        );
 
-    $basic = new Basic(
-        $fake->randomDigit(),
-        $fake->url()
-    );
+    $basic = Basic::make()
+        ->set('order_id', $fake->randomDigit())
+        ->set('notification_url', fake()->url())
+        ->set('days_due_date', $fake->randomDigit())
+        ->set('type_bank_slip', $fake->word())
+        ->set('discount_cents', $fake->numerify('####'));
 
-    $item = new Item(
-        $fake->randomDigit(),
-        $fake->word(),
-        $fake->randomDigit(),
-        1500
-    );
+    $item = Item::make()
+        ->set('item_id', $fake->randomDigit())
+        ->set('description', $fake->word())
+        ->set('quantity', $fake->randomDigit())
+        ->set('price_cents', $fake->numerify('####'));
 
     return [$basic, $payer, $item];
 }
