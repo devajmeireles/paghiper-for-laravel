@@ -6,7 +6,6 @@ use DevAjMeireles\PagHiper\Resolvers\Billet\{ResolveBilletNotificationUrl};
 use DevAjMeireles\PagHiper\Resolvers\{ResolveToken, ResolverApi};
 use DevAjMeireles\PagHiper\Traits\{MakeableObject, Resolveable};
 use DevAjMeireles\PagHiper\{Exceptions\PagHiperRejectException,
-    Exceptions\UnallowedCastTypeException,
     Exceptions\UnsupportedCastTypeExcetion,
     Exceptions\WrongModelSetUpException,
     PagHiper,
@@ -28,7 +27,6 @@ test('exceptions should extends the default exception class')
     ->expect([
         PagHiperRejectException::class,
         UnsupportedCastTypeExcetion::class,
-        UnallowedCastTypeException::class,
         WrongModelSetUpException::class,
     ])->toExtend(Exception::class);
 

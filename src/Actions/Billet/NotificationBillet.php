@@ -1,12 +1,12 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Actions\Notifications;
+namespace DevAjMeireles\PagHiper\Actions\Billet;
 
 use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\Request;
 use Illuminate\Http\Client\Response;
 
-class ConsultNotification
+class NotificationBillet
 {
     public const END_POINT = 'transaction/notification/';
 

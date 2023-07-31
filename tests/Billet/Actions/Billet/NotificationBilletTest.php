@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\Actions\Notifications\ConsultNotification;
+use DevAjMeireles\PagHiper\Actions\Billet\NotificationBillet;
 use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Item, Billet\Payer};
 use DevAjMeireles\PagHiper\DTO\PagHiperNotification;
 use DevAjMeireles\PagHiper\Enums\Cast;
@@ -53,9 +53,9 @@ it('should be able to consult notification casting to array', function () {
         "http_code" => "201",
     ];
 
-    fakeBilletResponse(ConsultNotification::END_POINT, 'status_request', $result);
+    fakeBilletResponse(NotificationBillet::END_POINT, 'status_request', $result);
 
-    $notification = (new PagHiper())->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction)->consult();
+    $notification = (new PagHiper())->billet()->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction);
 
     expect($notification)
         ->toBeArray()
@@ -108,11 +108,10 @@ it('should be able to consult notification casting to collection', function () {
         "http_code" => "201",
     ];
 
-    fakeBilletResponse(ConsultNotification::END_POINT, 'status_request', $result);
+    fakeBilletResponse(NotificationBillet::END_POINT, 'status_request', $result);
 
-    $notification = (new PagHiper())->cast(Cast::Collection)
-        ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction)
-        ->consult();
+    $notification = (new PagHiper())->billet(Cast::Collection)
+        ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction);
 
     expect($notification)
         ->toBeCollection()
@@ -165,11 +164,10 @@ it('should be able to consult notification casting to original response', functi
         "http_code" => "201",
     ];
 
-    fakeBilletResponse(ConsultNotification::END_POINT, 'status_request', $result);
+    fakeBilletResponse(NotificationBillet::END_POINT, 'status_request', $result);
 
-    $notification = (new PagHiper())->cast(Cast::Response)
-        ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction)
-        ->consult();
+    $notification = (new PagHiper())->billet(Cast::Response)
+        ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction);
 
     expect($notification)
         ->toBeInstanceOf(Response::class)
@@ -222,11 +220,10 @@ it('should be able to consult notification casting to notification dto', functio
         "http_code" => "201",
     ];
 
-    fakeBilletResponse(ConsultNotification::END_POINT, 'status_request', $result);
+    fakeBilletResponse(NotificationBillet::END_POINT, 'status_request', $result);
 
-    $notification = (new PagHiper())->cast(Cast::BilletNotification)
-        ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction)
-        ->consult();
+    $notification = (new PagHiper())->billet(Cast::BilletNotification)
+        ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction);
 
     expect($notification)
         ->toBeInstanceOf(PagHiperNotification::class)

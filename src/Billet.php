@@ -2,8 +2,9 @@
 
 namespace DevAjMeireles\PagHiper;
 
-use DevAjMeireles\PagHiper\Actions\Billet\{CancelBillet, CreateBillet, StatusBillet};
+use DevAjMeireles\PagHiper\Actions\Billet\{CancelBillet, CreateBillet, NotificationBillet, StatusBillet};
 use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Billet\Item, Billet\Payer};
+use DevAjMeireles\PagHiper\DTO\PagHiperNotification;
 use DevAjMeireles\PagHiper\Enums\Cast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
@@ -36,5 +37,16 @@ class Billet
         $response = CancelBillet::execute($transaction);
 
         return $this->cast->response($response, 'cancellation_request');
+    }
+
+    public function notification(string $notification, string $transaction): PagHiperNotification|Response|Collection|array|string
+    {
+        $response = NotificationBillet::execute($notification, $transaction);
+
+        if ($this->cast === Cast::BilletNotification) {
+            return PagHiperNotification::make($response);
+        }
+
+        return $this->cast->response($response, 'status_request');
     }
 }
