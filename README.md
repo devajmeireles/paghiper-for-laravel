@@ -28,8 +28,8 @@
 <a name="technical-details"></a>
 # Detalhes Técnicos
 
-- Versão do PHP: **8.1**
-- Versão do Laravel: **10.x**
+- Versão do PHP: ^8.1 | ^8.2
+- Versão do Laravel: 10.x
 
 ---
 
@@ -80,7 +80,7 @@ Opcionalmente, você pode utilizar o parâmetro `--force` para forçar que o arq
 
 use DevAjMeireles\PagHiper\PagHiper; // 👈
 
-public function boot()
+public function boot(): void
 {
     // ...
     
@@ -407,9 +407,9 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
 
 `Paghiper for Laravel` oferece uma forma fácil de lidar com o retorno automático de boletos bancários. 
 
-**O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notification_url` na criação do boleto bancário, ou para a URL definida via `config/paghiper.php`.** Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
+**O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notification_url` na criação do boleto bancário, ou para a URL definida via [resolvedor](https://github.com/devajmeireles/paghiper-for-laravel#resolvedores).** Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
 
-Supondo que você possui uma URL nomeada como `paghiper.notification`, e que essa foi a URL enviada como `$notification_url` na classe de objeto `Basic` no momento da criação do boleto bancário, então isso será suficiente:
+Supondo que você possui uma URL nomeada como `paghiper.notification`, e que essa foi a URL utilizada, então isso será suficiente:
 
 ```php
 // routes/web.php
@@ -423,6 +423,8 @@ Route::get('/payment/notification', function (Request $request) {
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
     $status = PagHiper::notification(notification: $notification, transaction: $transaction)->consult();
+    
+    // $status será a resposta convertida para array
 })->name('paghiper.notification');
 ```
 
@@ -446,7 +448,7 @@ Route::get('/payment/notification', function (Request $request) {
         ->notification(notification: $notification, transaction: $transaction)
         ->consult();
     
-// $status será a resposta convertida para uma instância de Illuminate\Support\Collection
+    // $status será a resposta convertida para uma instância de Illuminate\Support\Collection
 })->name('paghiper.notification');
 ```
 
@@ -454,7 +456,7 @@ Route::get('/payment/notification', function (Request $request) {
 
 ### Cast Especial: `PagHiperNotification`
 
-**De forma especial para o retorno automático, `Paghiper for Laravel` oferece um cast diferente, `Dto`:**
+**De forma especial para o retorno automático, `Paghiper for Laravel` oferece o cast `Dto`:**
 
 ```php
 // routes/web.php
@@ -474,7 +476,7 @@ Route::get('/payment/notification', function (Request $request) {
 })->name('paghiper.notification');
 ```
 
-O cast `Dto` irá interceptar a resposta da PagHiper e transformá-la em uma instância da classe `PagHiperNotification` que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
+O cast `Dto` irá interceptar a resposta da PagHiper e transformá-la numa instância da classe `PagHiperNotification` que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
 
 - `transaction()`: ID da transação
 - `order()`: ID do pedido
@@ -501,7 +503,7 @@ O cast `Dto` irá interceptar a resposta da PagHiper e transformá-la em uma ins
 
 ### Método Especial: `modelable`
 
-De forma estratégica, ao passar uma instância de um modelador do Laravel como `Payer` do boleto bancário, o `order_id` na PagHiper receberá uma referência da classe e ID do modelador para que posteriormente no retorno automático você possa utilizar o método `modelable` para obter o modelador facilmente.
+De forma estratégica, ao passar uma [instância de um modelador do Laravel](#creating-billet) como `Payer` do boleto bancário, o `order_id` na PagHiper receberá uma referência da classe e ID do modelador para que posteriormente no retorno automático você possa utilizar o método `modelable` para obter o modelador facilmente.
 
 Essa abordagem fará com que o `order_id` do boleto bancário fique, por exemplo, da seguinte maneira na PagHiper: `11|App\Model\User:1`, onde `11` é o número do `$order_id` que você especificou na criação da classe `Basic`. Não há preocupação enquanto a este formato, uma vez que o `order_id` do boleto bancário é para uso interno, e não é exibido ao cliente.
 
@@ -555,7 +557,7 @@ Route::get('/payment/notification', function (Request $request) {
 })->name('paghiper.notification');
 ```
 
-De forma opcional, você pode definir o único parâmetro de `modelable()` como `false` para evitar que uma exception do tipo `NotificationModelNotFoundException` ou `ModelNotFoundException` seja lançada caso haja falha na busca pelo modelador.
+Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` para evitar que uma exception do tipo `NotificationModelNotFoundException` ou `ModelNotFoundException` seja lançada caso haja falha na busca pelo modelador.
 
 <a name="billet-errors"></a>
 ## Tratamento de Erros
@@ -563,7 +565,7 @@ De forma opcional, você pode definir o único parâmetro de `modelable()` como 
 - `DevAjMeireles\PagHiper\Exceptions\PagHiperException` 
   - erro genérico do PagHiper, para todo caso onde `result` é `reject`
 - `DevAjMeireles\PagHiper\Exceptions\UnallowedCastType` 
-  - tentativa de uso indetivo do cast `DevAjMeireles\PagHiper\Enums\Cast::Dto`
+  - tentativa de uso indetivo do cast `Dto`
 - `DevAjMeireles\PagHiper\Exceptions\UnsupportedCastTypeExcetion` 
   - tentativa de uso de um cast inexistente
 - `DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException` 
@@ -620,4 +622,4 @@ composer analyse
 <a name="licensing"></a>
 ## Licença de Uso
 
-`PagHiper for Laravel` é um projeto open-source sobre a licença [MIT](LICENSE.md).
+`PagHiper for Laravel` é um projeto "open-source" sobre a licença [MIT](LICENSE.md).
