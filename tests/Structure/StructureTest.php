@@ -5,7 +5,12 @@ use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Resolvers\Billet\{ResolveBilletNotificationUrl};
 use DevAjMeireles\PagHiper\Resolvers\{ResolveToken, ResolverApi};
 use DevAjMeireles\PagHiper\Traits\{MakeableObject, Resolveable};
-use DevAjMeireles\PagHiper\{PagHiper, Request};
+use DevAjMeireles\PagHiper\{Exceptions\PagHiperRejectException,
+    Exceptions\UnallowedCastTypeException,
+    Exceptions\UnsupportedCastTypeExcetion,
+    Exceptions\WrongModelSetUpException,
+    PagHiper,
+    Request};
 
 test('will not debugging functions')
     ->expect(['dd', 'dump', 'ray'])
@@ -21,10 +26,10 @@ test('request class should be final')
 
 test('exceptions should extends the default exception class')
     ->expect([
-        DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException::class,
-        DevAjMeireles\PagHiper\Exceptions\UnsupportedCastTypeExcetion::class,
-        DevAjMeireles\PagHiper\Exceptions\UnallowedCastTypeException::class,
-        DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException::class,
+        PagHiperRejectException::class,
+        UnsupportedCastTypeExcetion::class,
+        UnallowedCastTypeException::class,
+        WrongModelSetUpException::class,
     ])->toExtend(Exception::class);
 
 test('enum should have all cases')
