@@ -90,7 +90,7 @@ public function boot(): void
 }
 ```
 
-Assim, para toda interação com a PagHiper estas configuraçõe serão usadas, ao invés das configurações definidas em seu arquivo `.env`.
+Assim, para toda interação com a PagHiper estas configuraçõe serão prioritariamente usadas, ao invés das configurações definidas em seu arquivo `.env`.
 
 <a name="billet"></a>
 # Boleto Bancário
