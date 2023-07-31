@@ -461,11 +461,11 @@ Route::post('/payment/notification', function (Request $request) {
 })->name('paghiper.notification');
 ```
 
-O cast `BilletNotification` irá interceptar a resposta da PagHiper e transformá-la numa instância da classe `PagHiperNotification` que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação:**
+O cast `BilletNotification` irá interceptar a resposta da PagHiper e transformá-la numa instância da classe `PagHiperNotification` que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação.
 
-- `transaction()`: ID da transação
-- `order()`: ID do pedido
-- `createdAt()`: data de criação do boleto como instância de `Illuminate\Support\Carbon`
+Veja alguns **exemplos**:
+
+- `original()`: resposta original da PagHiper como instância de `Illuminate\Http\Client\Response`
 - `status()`: status do boleto como string
 - `pending()`: `true` se o status do boleto for `pending`
 - `reserved()`: `true` se o status do boleto for `reserved`
@@ -474,17 +474,12 @@ O cast `BilletNotification` irá interceptar a resposta da PagHiper e transform�
 - `paid()`: `true` se o status do boleto for `paid`
 - `processing()`: `true` se o status do boleto for `processing`
 - `refunded()`: `true` se o status do boleto for `refunded`
-- `paidAt()`: data de pagamento do boleto como instância de `Illuminate\Support\Carbon`
-- `payer()`: instância da clase `Payer` mapeada
-- `finalPrice()`: valor final do boleto, `value_cents`
-- `discount()`: valor do desconto do boleto, `discount_cents`
-- `bankSlip()`: array com dados do boleto (URL, linha digitável...)
-- `dueDateAt()`: data de vencimento do boleto como instância de `Illuminate\Support\Carbon`
-- `numItems`(): número de itens do boleto
-- `original()`: resposta original da PagHiper como instância de `Illuminate\Http\Client\Response`
-- `items()`: instância da clase `Payer` mapeada
-  - **se um item**, será uma instância de `Payer`
-  - **se mais de um item**, será um array de instâncias de `Payer`
+- `payer()`: Referência da PagHiper: `payer_*`, mapeado para clase `Payer`
+- `items()`: instância da clase `Item` mapeada
+  - **se um**, será uma única instância de `Item`
+  - **se mais de um**, será um array de instâncias de `Item`
+
+**Veja todos os métodos disponíveis acessando a classe**, [clicando aqui](https://github.com/devajmeireles/paghiper-for-laravel/blob/main/src/DTO/PagHiperNotification.php).
 
 ### Método Especial: `modelable`
 

@@ -17,7 +17,7 @@ final class Request
         $token = app(ResolveToken::class)->resolve();
         $url   = app(ResolveBilletNotificationUrl::class)->resolve();
 
-        if ($url && isset($params['notification_url'])) {
+        if ($url) {
             $params['notification_url'] = $url;
         }
 

@@ -1,7 +1,7 @@
 <?php
 
 use DevAjMeireles\PagHiper\Actions\Billet\NotificationBillet;
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Item, Billet\Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\{Item, Payer};
 use DevAjMeireles\PagHiper\DTO\PagHiperNotification;
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\PagHiper;
@@ -227,19 +227,19 @@ it('should be able to consult notification casting to notification dto', functio
 
     expect($notification)
         ->toBeInstanceOf(PagHiperNotification::class)
-        ->and($notification->transaction())
+        ->and($notification->transactionId())
         ->toBe($transaction)
         ->and($notification->paid())
         ->toBeTrue()
-        ->and($createdAt = $notification->createdAt())
+        ->and($createdAt = $notification->createDate())
         ->toBeInstanceOf(Carbon::class)
         ->and($createdAt->format('Y-m-d H:i:s'))
         ->toBe('2017-07-14 21:21:02')
-        ->and($notification->paidAt())
+        ->and($notification->paidDate())
         ->toBeInstanceOf(Carbon::class)
-        ->and($notification->paidAt()->format('Y-m-d H:i:s'))
+        ->and($notification->paidDate()->format('Y-m-d H:i:s'))
         ->toBe('2017-07-20 05:21:02')
-        ->and($notification->numItems())
+        ->and($notification->numCartItems())
         ->toBe(1)
         ->and($notification->items())
         ->toBeInstanceOf(Item::class)
@@ -252,16 +252,16 @@ it('should be able to consult notification casting to notification dto', functio
             "url_slip"       => "https://www.paghiper.com/checkout/boleto/ab039901bd6f402e44424f30cd1d3ca9e1f5c90bdb78f7878e8dcdcf7701e1befdc7f1ff6521e8312f7cef408b10b500ee85da4b8903d28874a0436f00a0a3c6/3IMZI5QXGMI7K40W/43474166",
             "url_slip_pdf"   => "https://www.paghiper.com/checkout/boleto/ab039901bd6f402e44424f30cd1d3ca9e1f5c90bdb78f7878e8dcdcf7701e1befdc7f1ff6521e8312f7cef408b10b500ee85da4b8903d28874a0436f00a0a3c6/3IMZI5QXGMI7K40W/43474166/pdf",
         ])
-        ->and($payer = $notification->payer())
+        ->and($notification->payer())
         ->toBeInstanceOf(Payer::class)
-        ->and($dueDate = $notification->dueDateAt())
+        ->and($dueDate = $notification->dueDate())
         ->toBeInstanceOf(Carbon::class)
         ->and($dueDate->format('Y-m-d'))
         ->toBe('2017-07-31')
-        ->and($notification->finalPrice())
-        ->toBe("17012")
-        ->and($notification->discount())
-        ->toBe("1100")
+        ->and($notification->valueCents())
+        ->toBe(17012)
+        ->and($notification->discountCents())
+        ->toBe(1100)
         ->and($notification->original())
         ->toBeInstanceOf(Response::class)
         ->and($notification->status())

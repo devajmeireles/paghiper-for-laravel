@@ -23,17 +23,22 @@ class PagHiperNotification
         return new static($response, collect($response->json('status_request')));
     }
 
-    public function transaction(): string
+    public function original(): Response
+    {
+        return $this->response;
+    }
+
+    public function transactionId(): string
     {
         return $this->notification->get('transaction_id');
     }
 
-    public function order(): string
+    public function orderId(): string
     {
         return $this->notification->get('order_id');
     }
 
-    public function createdAt(): Carbon
+    public function createDate(): Carbon
     {
         return Carbon::parse($this->notification->get('created_date'));
     }
@@ -78,9 +83,85 @@ class PagHiperNotification
         return $this->notification->get('status') === 'refunded';
     }
 
-    public function paidAt(): Carbon
+    public function paidDate(): Carbon
     {
         return Carbon::parse($this->notification->get('paid_date'));
+    }
+
+    public function valueCents(): int
+    {
+        return $this->notification->get('value_cents');
+    }
+
+    public function valueFeeCents(): int
+    {
+        return $this->notification->get('value_fee_cents');
+    }
+
+    public function valueCentsPaid(): int
+    {
+        return $this->notification->get('value_cents_paid');
+    }
+
+    public function latePaymentFine(): int
+    {
+        return $this->notification->get('late_payment_fine');
+    }
+
+    public function perDayInterest(): bool
+    {
+        return $this->notification->get('per_day_interest');
+    }
+
+    public function earlyPaymentDiscountsDays(): int
+    {
+        return $this->notification->get('early_payment_discounts_days');
+    }
+
+    public function earlyPaymentDiscountsCents(): int
+    {
+        return $this->notification->get('early_payment_discounts_cents');
+    }
+
+    public function openAfterDayDue(): int
+    {
+        return $this->notification->get('open_after_day_due');
+    }
+
+    public function discountCents(): int
+    {
+        return $this->notification->get('discount_cents');
+    }
+
+    public function numCartItems(): int
+    {
+        return $this->notification->get('num_cart_items');
+    }
+
+    public function dueDate(): Carbon
+    {
+        return Carbon::parse($this->notification->get('due_date'));
+    }
+
+    public function bankSlip(): array
+    {
+        return [...$this->notification->get('bank_slip')];
+    }
+
+    public function items(): array|Item
+    {
+        $response = [];
+        $items    = $this->notification->get('items');
+
+        foreach ($items as $item) {
+            $response[] = Item::make([...$item]);
+        }
+
+        if (count($response) === 1) {
+            return $response[0];
+        }
+
+        return $response;
     }
 
     public function payer(): Payer
@@ -103,58 +184,13 @@ class PagHiperNotification
             );
     }
 
-    public function finalPrice(): string
-    {
-        return $this->notification->get('value_cents');
-    }
-
-    public function discount(): string
-    {
-        return $this->notification->get('discount_cents');
-    }
-
-    public function bankSlip(): array
-    {
-        return [...$this->notification->get('bank_slip')];
-    }
-
-    public function dueDateAt(): Carbon
-    {
-        return Carbon::parse($this->notification->get('due_date'));
-    }
-
-    public function numItems(): int
-    {
-        return (int) $this->notification->get('num_cart_items');
-    }
-
-    public function items(): array|Item
-    {
-        $response = [];
-        $items    = $this->notification->get('items');
-
-        foreach ($items as $item) {
-            $response[] = Item::make([...$item]);
-        }
-
-        if (count($response) === 1) {
-            return $response[0];
-        }
-
-        return $response;
-    }
-
-    public function original(): Response
-    {
-        return $this->response;
-    }
-
     /** @throws NotificationModelNotFoundException|ModelNotFoundException */
     public function modelable(bool $exception = true): Model|null
     {
-        $order = $this->order();
+        $order      = $this->orderId();
+        $stringable = str($order);
 
-        if (!str($order)->contains('|') && !str($order)->contains(':')) {
+        if (!$stringable->contains('|') && !$stringable->contains(':')) {
             if ($exception) {
                 throw new NotificationModelNotFoundException();
             }
