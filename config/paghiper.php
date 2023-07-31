@@ -22,40 +22,4 @@ return [
     |
     */
     'token' => env('PAGHIPER_TOKEN'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | PagHiper Account E-mail
-    |--------------------------------------------------------------------------
-    |
-    | This is the PagHiper Account E-mail. Generally, this is the email
-    | of the account you are trying to communicate with PagHiper by API.
-    |
-    */
-    'email' => env('PAGHIPER_EMAIL'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | PagHiper API URL
-    |--------------------------------------------------------------------------
-    |
-    | For obvious reasons, the package allows you to edit the URL of the PagHiper
-    | API, in case there is a crash, and they decide to change the URL for some reason,
-    | you do not depend on the package being updated to continue using it,
-    | but without a real reason PLEASE DO NOT CHANGE IT OR THE PACKAGE WILL NOT WORK.
-    |
-    */
-    'url' => 'https://api.paghiper.com/',
-
-    /*
-    |--------------------------------------------------------------------------
-    | PagHiper Callback Notification URL
-    |--------------------------------------------------------------------------
-    |
-    | You can optionally set a URL to be PagHiper's automatic return URL. To use,
-    | simply uncomment the line and enter the desired URL. If you don't use this,
-    | you must specify the URL whenever you create a billet. Read the documentation to learn more.
-    |
-    */
-    // 'notification_url' => 'https://my-app.com/paghiper/notification',
 ];

@@ -6,15 +6,15 @@ use Illuminate\Console\Command;
 
 class InstallPagHiperCommand extends Command
 {
-    protected $signature = 'paghiper:install';
+    protected $signature = 'paghiper:install {--force : Overwrite any existing files}';
 
     protected $description = 'Install and preparing the PagHiper for Laravel package';
 
     public function handle(): int
     {
-        $this->call('vendor:publish', [
-            '--provider' => 'DevAjMeireles\PagHiper\PagHiperServiceProvider',
-            '--tag'      => 'paghiper-config',
+        $this->callSilent('vendor:publish', [
+            '--tag'   => 'paghiper-config',
+            '--force' => $this->option('force'),
         ]);
 
         $this->components->info('PagHiper for Laravel Installed Successfully.');
@@ -30,7 +30,6 @@ class InstallPagHiperCommand extends Command
         $original .= PHP_EOL;
         $original .= 'PAGHIPER_API=' . PHP_EOL;
         $original .= 'PAGHIPER_TOKEN=' . PHP_EOL;
-        $original .= 'PAGHIPER_EMAIL=' . PHP_EOL;
 
         file_put_contents($env, $original);
 

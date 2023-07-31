@@ -36,7 +36,7 @@ class Basic implements Arrayable
 
     public function notificationUrl(): string
     {
-        return config('paghiper.notification_url') ?? $this->notification_url;
+        return $this->notification_url;
     }
 
     public function discountCents(): int

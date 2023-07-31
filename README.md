@@ -66,6 +66,8 @@ php artisan paghiper:install
 
 Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação, junto a criação de variáveis de ambiente para os seus arquivos: `.env`. **Recomendo que abra o arquivo `config/paghiper.php` e leia com atenção (traduza se necessário!)**
 
+Opcionalmente, você pode utilizar o parâmetro `--force` para forçar que o arquivo `config/paghiper.php` seja sobescrito se já existir.
+
 <a name="billet"></a>
 # Boleto Bancário
 
@@ -94,8 +96,8 @@ $billet = PagHiper::billet()
             name: 'Joao Inácio da Silva', 
             email: 'joao.inacio@gmail.com', 
             cpf_cnpj: '123.456.789-00', 
-            phone: '11985850505'
-            new Address( // 👈
+            phone: '11985850505',
+            address: new Address( // 👈
                 street: 'Rua Alameda Barão de Limeira',
                 number: 102,
                 complement: 'Casa',
