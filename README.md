@@ -261,8 +261,8 @@ $billet = PagHiper::billet()
             name: 'Joao Inácio da Silva', 
             email: 'joao.inacio@gmail.com', 
             cpf_cnpj: '123.456.789-00', 
-            phone: '11985850505'
-            new Address(
+            phone: '11985850505',
+            address: new Address(
                 street: 'Rua Alameda Barão de Limeira',
                 number: 102,
                 complement: 'Casa',
@@ -309,8 +309,8 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
             name: 'Joao Inácio da Silva', 
             email: 'joao.inacio@gmail.com', 
             cpf_cnpj: '123.456.789-00', 
-            phone: '11985850505'
-            new Address(
+            phone: '11985850505',
+            address: new Address(
                 street: 'Rua Alameda Barão de Limeira',
                 number: 102,
                 complement: 'Casa',
