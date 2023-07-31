@@ -36,6 +36,7 @@
     },
     "scripts": {
         "analyse": "./vendor/bin/phpstan analyse --memory-limit=2G",
+        "type:coverage": "./vendor/bin/pest --type-coverage",
         "test": "./vendor/bin/pest",
         "test:parallel": "./vendor/bin/pest --parallel",
         "format": "./vendor/bin/pint"

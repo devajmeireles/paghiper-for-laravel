@@ -557,7 +557,7 @@ Route::get('/payment/notification', function (Request $request) {
 })->name('paghiper.notification');
 ```
 
-Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` para evitar que uma exception do tipo `NotificationModelNotFoundException` ou `ModelNotFoundException` seja lançada caso haja falha na busca pelo modelador.
+Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` para evitar que uma exception do tipo `NotificationModelNotFoundException` ou `ModelNotFoundException` seja lançada caso haja falha na busca pelo modelador. Nesse caso, o método retornará `null` caso não encontre o modelador ou se depare a algum erro.
 
 <a name="billet-errors"></a>
 ## Tratamento de Erros
@@ -577,7 +577,7 @@ Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` par
 <a name="todo"></a>
 ## Pendências
 
-- Suporte completo a Boleto Bancário
+- Suporte Completo a Boleto Bancário
 - Integração com [PIX do PagHiper](https://dev.paghiper.com/reference/emissao-de-pix-paghiper)
 - Integração com [Contas Bancárias](https://dev.paghiper.com/reference/solicitacao-saque)
 - Integração com [Listas de Transações](https://dev.paghiper.com/reference/listar-transacoes-via-api-exemplo)
@@ -585,18 +585,16 @@ Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` par
 <a name="contributing"></a>
 ## Contribuição
 
-Todo e qualquer PR será bem-vindo em favor de ajustes de bugs, melhorias ou aprimoramentos desde que:
-- O PR ser criado de forma explicativa, mencionando inclusive o problema
-- O PR ser criado em favor de algo que faça sentido ou relevância
+Todo e qualquer PR será bem-vindo em favor de ajustes de bugs, melhorias ou aprimoramentos desde que atenda as seguintes exigências:
 - O código do PR ser escrito em inglês, seguindo a [PSR12](https://www.php-fig.org/psr/psr-12/)
 - O código do PR ser formatado usando [Laravel Pint](https://laravel.com/docs/10.x/pint)
 - O código do PR ser analisando usando [LaraStan](https://github.com/nunomaduro/larastan)
 - O código do PR ser testado usando [PestPHP](https://pestphp.com/), inclusive adições ou modificações
 
-### Ambiente de Desenvolvimento
+## Ambiente de Desenvolvimento
 
 1. Crie um fork do repositório
-2. Clone o repositório:
+2. Clone o repositório a partir do seu fork:
 
 ```bash
 git clone <url_do_repositório>
@@ -618,6 +616,12 @@ composer test
 
 ```bash
 composer analyse
+```
+
+6. Analise a integridade de tipagem do código: 
+
+```bash
+composer type:coverage
 ```
 
 <a name="licensing"></a>
