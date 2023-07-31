@@ -85,7 +85,7 @@ public function boot(): void
     // ...
     
     PagHiper::resolveApiUsing(fn () => 'api-que-vai-sobescrever-a-api-do-env');
-    PagHiper::resolveTokenUsing(fn () => 'token-que-vai-sobescrever-o-token-do-config');
+    PagHiper::resolveTokenUsing(fn () => 'token-que-vai-sobescrever-o-token-do-env');
     PagHiper::resolveBilletNotificationlUrlUsing(fn () => 'rota-padrão-de-retorno-automático-de-boletos');
 }
 ```
