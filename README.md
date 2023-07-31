@@ -78,7 +78,7 @@ Opcionalmente, você pode utilizar o parâmetro `--force` para forçar que o arq
 ```php
 // app/Providers/AppServicesProvider.php
 
-use DevAjMeireles\PagHiper\PagHiper; // 👈
+use DevAjMeireles\PagHiper\Facades\PagHiper; // 👈
 
 public function boot(): void
 {
@@ -345,7 +345,7 @@ Para consultar o status de um Boleto Bancário utilize o método `status`:
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 
-$billet = PagHiper::billet()->status(transaction: 'HF97T5SH2ZQNLF6Z');
+$billet = PagHiper::billet()->status('HF97T5SH2ZQNLF6Z');
 ```
 
 ---
@@ -357,7 +357,7 @@ use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
-    ->status(transaction: 'HF97T5SH2ZQNLF6Z');
+    ->status('HF97T5SH2ZQNLF6Z');
 
 // $billet será a resposta convertida para instância de Illuminate\Support\Collection
 ```
@@ -371,7 +371,7 @@ Para cancelar um boleto bancário utilize o método `cancel`:
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 
 $billet = PagHiper::billet()
-    ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
+    ->cancel('HF97T5SH2ZQNLF6Z');
 ```
 
 ---
@@ -383,7 +383,7 @@ use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
-    ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
+    ->cancel('HF97T5SH2ZQNLF6Z');
 
 // $billet será a resposta convertida para instância de Illuminate\Support\Collection
 ```
@@ -564,13 +564,14 @@ Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` par
 <a name="contributing"></a>
 ## Contribuição
 
-Todo e qualquer PR será bem-vindo em favor de ajustes de bugs, melhorias ou aprimoramentos desde que atenda as seguintes exigências:
+Sinta-se a vontade para contribuir com um PR que resolva algum bug ou introduza melhorias. Será muito útil se o seu PR seguir os seguintes padrões:
+
 - O código do PR ser escrito em inglês, seguindo a [PSR12](https://www.php-fig.org/psr/psr-12/)
 - O código do PR ser formatado usando [Laravel Pint](https://laravel.com/docs/10.x/pint)
 - O código do PR ser analisando usando [LaraStan](https://github.com/nunomaduro/larastan)
 - O código do PR ser testado usando [PestPHP](https://pestphp.com/), inclusive adições ou modificações
 
-Sinta-se à vontade para enviar o seu PR. Eu ou algum contribuidor podemos tratar de melhorá-lo 😉
+Sinta-se à vontade para enviar o seu PR mesmo que ele não atenda as exigências acima. 😉
 
 ## Ambiente de Desenvolvimento
 
