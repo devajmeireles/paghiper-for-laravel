@@ -408,7 +408,8 @@ Route::post('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
-    $status = PagHiper::notification(notification: $notification, transaction: $transaction)->consult();
+    $status = PagHiper::billet()
+        ->notification($notification, $transaction);
     
     // $status será a resposta convertida para array
 })->name('paghiper.notification');
@@ -430,9 +431,8 @@ Route::post('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
-    $status = PagHiper::cast(Cast::Collection) // 👈
-        ->notification(notification: $notification, transaction: $transaction)
-        ->consult();
+    $status = PagHiper::billet(Cast::Collection) // 👈
+        ->notification($notification, $transaction);
     
     // $status será a resposta convertida para instância de Illuminate\Support\Collection
 })->name('paghiper.notification');
@@ -456,9 +456,8 @@ Route::post('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
-    $status = PagHiper::cast(Cast::BilletNotification) // 👈
-        ->notification(notification: $notification, transaction: $transaction)
-        ->consult();
+    $status = PagHiper::billet(Cast::BilletNotification) // 👈
+        ->notification($notification, $transaction);
 })->name('paghiper.notification');
 ```
 
@@ -530,11 +529,12 @@ Route::post('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id');
     $transaction  = $request->input('transaction_id');
 
-    $status = PagHiper::cast(Cast::BilletNotification)
-        ->notification(notification: $notification, transaction: $transaction)
-        ->consult();
+    $status = PagHiper::billet(Cast::BilletNotification)
+        ->notification($notification, $transaction);
         
-    $status->modelable(); // 👈 retornará uma instância de App\Models\User:1
+    // $status será uma instância de PagHiperNotification
+        
+    // $status->modelable() será uma instância de App\Models\User:1
 })->name('paghiper.notification');
 ```
 
