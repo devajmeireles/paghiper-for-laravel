@@ -461,9 +461,9 @@ Route::post('/payment/notification', function (Request $request) {
 })->name('paghiper.notification');
 ```
 
-O cast `BilletNotification` irá interceptar a resposta da PagHiper e transformá-la numa instância da classe `PagHiperNotification` que **possui diversos métodos úteis como atalhos para lidar com a consulta da notificação.
+O cast `BilletNotification` irá interceptar a resposta da PagHiper e transformá-la numa instância da classe `PagHiperNotification` que possui diversos métodos úteis como atalhos para lidar com a consulta da notificação.
 
-Veja alguns **exemplos**:
+Veja alguns exemplos disponíveis:
 
 - `original()`: resposta original da PagHiper como instância de `Illuminate\Http\Client\Response`
 - `status()`: status do boleto como string
@@ -479,7 +479,7 @@ Veja alguns **exemplos**:
   - **se um**, será uma única instância de `Item`
   - **se mais de um**, será um array de instâncias de `Item`
 
-**Veja todos os métodos disponíveis acessando a classe**, [clicando aqui](https://github.com/devajmeireles/paghiper-for-laravel/blob/main/src/DTO/PagHiperNotification.php).
+> Veja todos os métodos disponíveis [clicando aqui](https://github.com/devajmeireles/paghiper-for-laravel/blob/main/src/DTO/PagHiperNotification.php).
 
 ### Método Especial: `modelable`
 
@@ -533,7 +533,7 @@ Route::post('/payment/notification', function (Request $request) {
 })->name('paghiper.notification');
 ```
 
-Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` para evitar que uma exception do tipo `NotificationModelNotFoundException` ou `ModelNotFoundException` seja lançada caso haja falha na busca pelo modelador. Nesse caso, o método retornará `null` caso não encontre o modelador ou se depare a algum erro.
+> Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` para evitar que uma exception do tipo `NotificationModelNotFoundException` ou `ModelNotFoundException` seja lançada caso haja falha na busca pelo modelador. Nesse caso, o método retornará `null` caso não encontre o modelador ou se depare a algum erro.
 
 <a name="billet-errors"></a>
 ## Tratamento de Erros
