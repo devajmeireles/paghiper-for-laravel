@@ -12,7 +12,7 @@ class PagHiperNotification
 {
     public function __construct(
         private readonly Response $response,
-        private readonly ?Collection $notification = null
+        private readonly Collection $notification
     ) {
         //
     }

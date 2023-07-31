@@ -8,7 +8,15 @@ it('should return valid payer instance using make with array', function () {
         'email'    => 'jhon.doe@gmail.com',
         'cpf_cnpj' => '12345678901',
         'phone'    => '11999999999',
-        'address'  => $address = new Address('Jhon Street', 123, 'House', 'Bah', 'Nashville', 'US', '12345678'),
+        'address'  => $address = Address::make([
+            'Jhon Street',
+            123,
+            'House',
+            'Bah',
+            'Nashville',
+            'US',
+            '12345678',
+        ]),
     ])
         ->toArray())
         ->toBeArray()
