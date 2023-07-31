@@ -255,8 +255,8 @@ Para facilitar a sua interação com as respostas, `Paghiper for Laravel` oferec
 
 - `Array`: resposta convertida para `array`
 - `Json`: resposta convertida para `json`
-- `Response`: objeto original da resposta, `Illuminate\Http\Client\Response`
 - `Collect` ou `Collection`: resposta convertida para `Illuminate\Support\Collection`
+- `Response`: objeto original da resposta, `Illuminate\Http\Client\Response`
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -265,21 +265,21 @@ use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Item;
 use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
-$billet = PagHiper::billet(Cast::Collection)
+$billet = PagHiper::billet(Cast::Collection) // 👈
     ->create(
-        Basic::make() // 👈
+        Basic::make()
             ->set('order_id', 1433) 
             ->set('notification_url', route('paghiper.notification')) 
             ->set('days_due_date', 2) 
             ->set('type_bank_slip', 'boletoA4') 
             ->set('discount_cents', 0),
-        Payer::make() // 👈
+        Payer::make()
             ->set('name', 'Joao Inácio da Silva') 
             ->set('email', 'joao.inacio@gmail.com') 
             ->set('cpf_cnpj', '123.456.789-00') 
             ->set('phone', '11985850505')
             ->set(
-                'address', Address::make() // 👈
+                'address', Address::make()
                     ->set('street', 'Rua Alameda Barão de Limeira')
                     ->set('number', 102)
                     ->set('complement', 'Casa')
@@ -288,7 +288,7 @@ $billet = PagHiper::billet(Cast::Collection)
                     ->set('state', 'São Paulo')
                     ->set('zip_code', '13332251')
             ),
-        Item::make() // 👈
+        Item::make()
             ->set('item_id', 12) 
             ->set('description', 'Kit de Malas de Viagem') 
             ->set('quantity', 1) 
@@ -297,13 +297,13 @@ $billet = PagHiper::billet(Cast::Collection)
 // $billet será a resposta convertida para instância de Illuminate\Support\Collection
 ```
 
-**Por padrão, as respostas de todos os métodos de interação com `Paghiper for Laravel` utilizam o cast `Cast::Array`, que transforma a resposta em `array`**
+Por padrão, as respostas de todos os métodos de interação com `Paghiper for Laravel` utilizam o cast `Cast::Array`, que transforma a resposta em `array`
 
 ### Alternativa de Construção das Classes de Objeto
 
-As classes `Basic`, `Payer`, `Address` e `Item`, acima mencionadas, oferecem duas formas de serem instanciadas:
+As classes `Basic`, `Payer`, `Address` e `Item`, acima mencionadas, oferecem alternativas de serem construídas:
 
-1. Via método comum de PHP, `new`:
+1. Via PHP comum, `new`:
 
 ```php
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
@@ -326,11 +326,11 @@ $basic = Basic::make([
     'discount_cents'   => 0,
 ]);
 
-// ou ...
+// ou 👇
 
 $basic = Basic::make(12, route('paghiper.notification'), 2, 'boletoA4', 0);
 
-// ou ...
+// ou 👇
 
 $basic = Basic::make()->set(/* propriedade */, /* valor */);
 ```
@@ -370,7 +370,7 @@ Para cancelar um boleto bancário utilize o método `cancel`:
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 
-$billet = PagHiper::billet(Cast::Collection) // 👈
+$billet = PagHiper::billet()
     ->cancel(transaction: 'HF97T5SH2ZQNLF6Z');
 ```
 
@@ -393,9 +393,9 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
 
 `Paghiper for Laravel` oferece uma forma fácil de lidar com o retorno automático de boletos bancários. 
 
-**O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notification_url` na criação do boleto bancário, ou para a URL definida via [resolvedor](https://github.com/devajmeireles/paghiper-for-laravel#resolvedores).** Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
+O retorno automático do PagHiper ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notification_url` na criação do boleto bancário, ou para a URL definida via [resolvedor](https://github.com/devajmeireles/paghiper-for-laravel#resolvedores). Essa URL deve ser uma URL pública em sua aplicação, e de preferência que não receba nenhum tratamento especial (middlewares, por exemplo):
 
-Supondo que você possui uma URL nomeada como `paghiper.notification`, e que essa foi a URL utilizada, então isso será suficiente:
+Supondo que você possui uma URL nomeada como `paghiper.notification` que aceita requisições POST, e que essa foi a URL utilizada, então isso será suficiente:
 
 ```php
 // routes/web.php
@@ -404,7 +404,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 
-Route::get('/payment/notification', function (Request $request) {
+Route::post('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
@@ -426,7 +426,7 @@ use DevAjMeireles\PagHiper\Facades\PagHiper;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
-Route::get('/payment/notification', function (Request $request) {
+Route::post('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
@@ -442,7 +442,7 @@ Route::get('/payment/notification', function (Request $request) {
 
 ### Cast Especial: `PagHiperNotification`
 
-**De forma especial para o retorno automático, `Paghiper for Laravel` oferece o cast `BilletNotification`:**
+**De forma especial para o retorno automático**, `Paghiper for Laravel` oferece o cast `BilletNotification`:
 
 ```php
 // routes/web.php
@@ -452,7 +452,7 @@ use DevAjMeireles\PagHiper\Facades\PagHiper;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
-Route::get('/payment/notification', function (Request $request) {
+Route::post('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
@@ -526,7 +526,7 @@ $billet = PagHiper::billet()
 
 // routes/web.php
 
-Route::get('/payment/notification', function (Request $request) {
+Route::post('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id');
     $transaction  = $request->input('transaction_id');
 
@@ -548,10 +548,9 @@ Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` par
 - `DevAjMeireles\PagHiper\Exceptions\UnallowedCastType` 
   - tentativa de uso indetivo do cast `BilletNotification`
 - `DevAjMeireles\PagHiper\Exceptions\UnsupportedCastTypeExcetion` 
-  - tentativa de uso de um cast inexistente
+  - tentativa de uso de cast inexistente
 - `DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException` 
   - tentativa de criação de boleto usando um modelador sem que ele tenha sido preparado
-
 - `DevAjMeireles\PagHiper\Exceptions\NotificationModelNotFoundException` 
   - não foi possível recuperar o model ao usar o método `modelable` no retorno automático
 
@@ -571,6 +570,8 @@ Todo e qualquer PR será bem-vindo em favor de ajustes de bugs, melhorias ou apr
 - O código do PR ser analisando usando [LaraStan](https://github.com/nunomaduro/larastan)
 - O código do PR ser testado usando [PestPHP](https://pestphp.com/), inclusive adições ou modificações
 
+Sinta-se à vontade para enviar o seu PR. Eu ou algum contribuidor podemos tratar de melhorá-lo 😉
+
 ## Ambiente de Desenvolvimento
 
 1. Crie um fork do repositório
@@ -583,13 +584,13 @@ git clone <url_do_repositório>
 3. Instale as dependências:
 
 ```bash
-cd pahiper-for-laravel && composer install
+cd <pasta> && composer install
 ```
 
 4. Execute testes:
 
 ```bash
-composer test
+composer test # ou composer test:parallel
 ```
 
 5. Analise a integridade do código: 
