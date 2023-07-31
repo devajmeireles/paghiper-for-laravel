@@ -570,7 +570,7 @@ Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` par
   - tentativa de uso de um cast inexistente
 - `DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException` 
   - tentativa de criação de boleto usando um modelador sem que ele tenha sido preparado
-  - tentativa de uso de um cast inexistente
+
 - `DevAjMeireles\PagHiper\Exceptions\NotificationModelNotFoundException` 
   - não foi possível recuperar o model ao usar o método `modelable` no retorno automático
 
