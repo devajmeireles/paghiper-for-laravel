@@ -8,12 +8,12 @@ use Illuminate\Support\Collection;
 
 enum Cast: string
 {
-    case Array      = 'array';
-    case Json       = 'json';
-    case Collect    = 'collect';
-    case Collection = 'collection';
-    case Response   = 'response';
-    case Dto        = 'dto';
+    case Array              = 'array';
+    case Json               = 'json';
+    case Collect            = 'collect';
+    case Collection         = 'collection';
+    case Response           = 'response';
+    case BilletNotification = 'dto';
 
     /** @throws UnsupportedCastTypeExcetion */
     public function response(Response $response, string $index): Response|Collection|array|string
@@ -23,7 +23,7 @@ enum Cast: string
             self::Json     => fn () => $this->toJson($response, $index),
             self::Array    => fn () => $this->toArray($response, $index),
             self::Collection, self::Collect => fn () => $this->toCollect($response, $index),
-            default => throw new UnsupportedCastTypeExcetion("Unsupported cast {$this->value}"),
+            default => throw new UnsupportedCastTypeExcetion($this->name),
         })();
     }
 

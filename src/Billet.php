@@ -3,7 +3,7 @@
 namespace DevAjMeireles\PagHiper;
 
 use DevAjMeireles\PagHiper\Actions\Billet\{CancelBillet, CreateBillet, StatusBillet};
-use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Billet\Item, Billet\Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;

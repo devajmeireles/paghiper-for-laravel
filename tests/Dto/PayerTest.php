@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Address, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Payer};
 
 it('should return valid payer instance using make with array', function () {
     expect(Payer::make([
@@ -8,7 +8,15 @@ it('should return valid payer instance using make with array', function () {
         'email'    => 'jhon.doe@gmail.com',
         'cpf_cnpj' => '12345678901',
         'phone'    => '11999999999',
-        'address'  => $address = new Address('Jhon Street', 123, 'House', 'Bah', 'Nashville', 'US', '12345678'),
+        'address'  => $address = Address::make([
+            'Jhon Street',
+            123,
+            'House',
+            'Bah',
+            'Nashville',
+            'US',
+            '12345678',
+        ]),
     ])
         ->toArray())
         ->toBeArray()
@@ -35,6 +43,33 @@ it('should return valid payer instance using make with deconstruction', function
         'payer_email'    => 'jhon.doe@gmail.com',
         'payer_cpf_cnpj' => '12345678901',
         'payer_phone'    => '11999999999',
+        ...$address->toArray(),
+    ]);
+});
+
+it('should be able to construct payer object using make and set', function () {
+    $payer = Payer::make()
+        ->set('name', 'Jhon Doe')
+        ->set('email', $url = fake()->email())
+        ->set('cpf_cnpj', '12345678901')
+        ->set('phone', $phone = '11999999999')
+        ->set(
+            'address',
+            $address = Address::make()
+                ->set('street', 'Jhon Street')
+                ->set('number', 123)
+                ->set('complement', 'House')
+                ->set('district', 'Bah')
+                ->set('city', 'Nashville')
+                ->set('state', 'US')
+                ->set('zip_code', '12345678')
+        );
+
+    expect($payer->toArray())->toBeArray()->toBe([
+        'payer_name'     => 'Jhon Doe',
+        'payer_email'    => $url,
+        'payer_cpf_cnpj' => '12345678901',
+        'payer_phone'    => $phone,
         ...$address->toArray(),
     ]);
 });

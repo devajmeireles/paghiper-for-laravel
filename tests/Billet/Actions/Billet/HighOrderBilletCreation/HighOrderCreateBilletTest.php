@@ -2,7 +2,7 @@
 
 use DevAjMeireles\PagHiper\Actions\Billet\CreateBillet;
 use DevAjMeireles\PagHiper\Contracts\PagHiperModelAbstraction;
-use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Billet\Item, Billet\Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use Illuminate\Database\Eloquent\Model;

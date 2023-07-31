@@ -8,6 +8,6 @@ class NotificationModelNotFoundException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("No model identified from the billet.");
+        parent::__construct("No model identified from the billet. Please, review the docs.");
     }
 }

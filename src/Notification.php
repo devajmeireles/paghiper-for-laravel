@@ -22,7 +22,7 @@ class Notification
     {
         $response = ConsultNotification::execute($this->notification, $this->transaction);
 
-        if ($this->cast === Cast::Dto) {
+        if ($this->cast === Cast::BilletNotification) {
             return PagHiperNotification::make($response);
         }
 
