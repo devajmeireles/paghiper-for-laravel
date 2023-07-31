@@ -17,7 +17,7 @@
 <a name="introduction"></a>
 # Introdução
 
-`PagHiper for Laravel` é um pacote que adiciona os principais recursos do PagHiper a aplicações Laravel de forma fácil e descomplicada. Com este pacote você poderá interagir com Boletos Bancários e PIX gerados pela PagHiper.
+`PagHiper for Laravel` é um pacote que adiciona os principais recursos do PagHiper a aplicações Laravel de forma fácil e descomplicada. Com este pacote você poderá interagir com Boletos Bancários e PIX *(pendência)* gerados pela PagHiper.
 
 **`Paghiper for Laravel` foi criado para Laravel 10 e PHP 8.1, no mais alto padrão possível do PHP moderno, com cobertura de testes e fortemente tipado, garantindo estabilidade nas funcionalidades.**
 
@@ -577,6 +577,7 @@ Opcionalmente, você pode definir o parâmetro de `modelable()` como `false` par
 <a name="todo"></a>
 ## Pendências
 
+- Suporte completo a Boleto Bancário
 - Integração com [PIX do PagHiper](https://dev.paghiper.com/reference/emissao-de-pix-paghiper)
 - Integração com [Contas Bancárias](https://dev.paghiper.com/reference/solicitacao-saque)
 - Integração com [Listas de Transações](https://dev.paghiper.com/reference/listar-transacoes-via-api-exemplo)
