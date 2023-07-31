@@ -26,14 +26,14 @@
 `Paghiper for Laravel` foi criado e é mantido por mim, [AJ Meireles](https://www.linkedin.com/in/devajmeireles/). Sou desenvolvedor de software há 12 anos, dos quais há 9 trabalho exclusivamente com PHP, inclusive como fundador da comunidade [EuSeiPhp](https://www.youtube.com/@euseiphp), um canal para compartilhamento de conteúdos sobre PHP e Laravel.
 
 <a name="technical-details"></a>
-### Detalhes Técnicos
+# Detalhes Técnicos
 
 - Versão do PHP: **8.1**
 - Versão do Laravel: **10.x**
 
 ---
 
-#### Facade
+### Facade
 
 `Paghiper for Laravel` oferece uma [Facade](https://laravel.com/docs/10.x/facades) para interação com a classe principal do pacote:
 
@@ -45,7 +45,7 @@ $billet = PagHiper::billet()->create(/* ... */)
 
 ---
 
-#### Cliente HTTP
+### Cliente HTTP
 
 Por trás dos panos, `Paghiper for Laravel` utiliza o poder do [cliente de HTTP do Laravel](https://laravel.com/docs/10.x/http-client). Com isso, caso você precise escrever testes automatizados, você deve seguir o esquema de testes do Laravel.
 
@@ -67,6 +67,30 @@ php artisan paghiper:install
 Este comando irá publicar o arquivo `config/paghiper.php` para sua aplicação, junto a criação de variáveis de ambiente para os seus arquivos: `.env`. **Recomendo que abra o arquivo `config/paghiper.php` e leia com atenção (traduza se necessário!)**
 
 Opcionalmente, você pode utilizar o parâmetro `--force` para forçar que o arquivo `config/paghiper.php` seja sobescrito se já existir.
+
+---
+
+
+## Resolvedores
+
+`Paghiper for Laravel` oferece recursos de resolvedores para viabilizar a definição de configurações em tempo de execução, ideal para casos onde você precise **sobescrever as configurações de `api` ou `token` do arquivo `.env`**, ou para prefixar uma URL de retorno automático de boletos usando a função `route()` do Laravel:
+
+```php
+// app/Providers/AppServicesProvider.php
+
+use DevAjMeireles\PagHiper\PagHiper; // 👈
+
+public function boot()
+{
+    // ...
+    
+    PagHiper::resolveApiUsing(fn () => 'api-que-vai-sobescrever-a-api-do-env');
+    PagHiper::resolveTokenUsing(fn () => 'token-que-vai-sobescrever-o-token-do-config');
+    PagHiper::resolveBilletNotificationlUrlUsing(fn () => 'rota-padrão-de-retorno-automático-de-boletos');
+}
+```
+
+Assim, para toda interação com a PagHiper estas configuraçõe serão usadas, ao invés das configurações definidas em seu arquivo `.env`.
 
 <a name="billet"></a>
 # Boleto Bancário
@@ -120,44 +144,6 @@ $billet = PagHiper::billet()
 
 1. Por mais que pareça confuso, dessa forma você tem uma declaração exata do que está sendo enviado para o boleto bancário.
 2. No exemplo acima os parâmetros foram nomeados para fins de instrução. Você pode optar por utilizar dessa forma ou não.
-
-### Url Padrão de Retorno Automático
-
-Se a sua aplicação possuir uma URL fixa para o [retorno automático do PagHiper](#billet-notification), você pode definir uma nova chave no arquivo `config/paghiper.php` com essa URL:
-
-```php
-// config/paghiper.php
-
-return [
-    // ...
-    
-    'notification_url' => 'https://retorno-automático.com/paghiper/notification',
-    
-    // ...
-];
-```
-
-**Caso você não defina esta configuração**, `Paghiper for Laravel` espera que você informe a URL através do parametro `$notification_url` da classe `Basic`:
-
-```php
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\DTO\Objects\Basic;
-
-// ...
-
-$billet = PagHiper::billet()
-    ->create(
-        // ...
-        new Basic(
-            order_id: 1433, 
-            notification_url: 'https://minha-aplicacão.com.br/paghiper/notification', // 👈 
-            days_due_date: 2, 
-            type_bank_slip: 'boletoA4', 
-            discount_cents: 0,
-        ),
-        // ...
-    );
-```
 
 ---
 
