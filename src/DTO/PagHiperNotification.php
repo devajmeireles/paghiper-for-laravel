@@ -85,21 +85,22 @@ class PagHiperNotification
 
     public function payer(): Payer
     {
-        return Payer::make([
-            'name'     => $this->notification->get('payer_name'),
-            'email'    => $this->notification->get('payer_email'),
-            'cpf_cnpj' => $this->notification->get('payer_cpf_cnpj'),
-            'phone'    => $this->notification->get('payer_phone'),
-            'address'  => Address::make([
-                'street'     => $this->notification->get('payer_street'),
-                'number'     => $this->notification->get('payer_number'),
-                'complement' => $this->notification->get('payer_complement'),
-                'district'   => $this->notification->get('payer_district'),
-                'city'       => $this->notification->get('payer_city'),
-                'state'      => $this->notification->get('payer_state'),
-                'zip_code'   => $this->notification->get('payer_zip_code'),
-            ]),
-        ]);
+        return Payer::make()
+            ->set('name', $this->notification->get('payer_name'))
+            ->set('email', $this->notification->get('payer_email'))
+            ->set('cpf_cnpj', $this->notification->get('payer_cpf_cnpj'))
+            ->set('phone', $this->notification->get('payer_phone'))
+            ->set(
+                'address',
+                Address::make()
+                    ->set('street', $this->notification->get('payer_street'))
+                    ->set('number', $this->notification->get('payer_number'))
+                    ->set('complement', $this->notification->get('payer_complement'))
+                    ->set('district', $this->notification->get('payer_district'))
+                    ->set('city', $this->notification->get('payer_city'))
+                    ->set('state', $this->notification->get('payer_state'))
+                    ->set('zip_code', $this->notification->get('payer_zip_code'))
+            );
     }
 
     public function finalPrice(): string
