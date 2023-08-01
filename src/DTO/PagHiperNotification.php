@@ -212,10 +212,8 @@ class PagHiperNotification
             return null;
         }
 
-        if ($exception) {
-            return (new $model())->findOrFail($id);
-        }
-
-        return (new $model())->find($id);
+        return $exception
+            ? (new $model())->findOrFail($id)
+            : (new $model())->find($id);
     }
 }
