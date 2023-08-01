@@ -553,8 +553,6 @@ Route::post('/payment/notification', function (Request $request) {
 ## Pendências
 
 - Integração com [PIX do PagHiper](https://dev.paghiper.com/reference/emissao-de-pix-paghiper)
-- Integração com [Contas Bancárias](https://dev.paghiper.com/reference/solicitacao-saque)
-- Integração com [Listas de Transações](https://dev.paghiper.com/reference/listar-transacoes-via-api-exemplo)
 
 <a name="contributing"></a>
 ## Contribuição
@@ -586,7 +584,7 @@ cd <pasta> && composer install
 4. Execute testes:
 
 ```bash
-composer test # ou composer test:parallel
+composer test
 ```
 
 5. Analise a integridade do código: 

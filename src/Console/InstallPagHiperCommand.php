@@ -13,7 +13,7 @@ class InstallPagHiperCommand extends Command
     public function handle(): int
     {
         $this->callSilent('vendor:publish', [
-            '--tag'   => 'paghiper-config',
+            '--tag'   => 'paghiper',
             '--force' => $this->option('force'),
         ]);
 
