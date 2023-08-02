@@ -18,11 +18,11 @@ it('should be able to cancel billet casting to array', function () {
 
     fakeBilletResponse(CancelBillet::END_POINT, 'cancellation_request', $result);
 
-    $status = (new PagHiper())->billet()->cancel($transaction);
+    $cancel = (new PagHiper())->billet()->cancel($transaction);
 
-    expect($status)
+    expect($cancel)
         ->toBeArray()
-        ->and($status)
+        ->and($cancel)
         ->toBe($result);
 });
 
@@ -37,15 +37,15 @@ it('should be able to cancel billet casting to json', function () {
 
     fakeBilletResponse(CancelBillet::END_POINT, 'cancellation_request', $result);
 
-    $status = (new PagHiper())->billet(Cast::Json)->cancel($transaction);
+    $cancel = (new PagHiper())->billet(Cast::Json)->cancel($transaction);
 
-    expect($status)
+    expect($cancel)
         ->toBeJson()
-        ->and($status)
+        ->and($cancel)
         ->toBe(collect($result)->toJson());
 });
 
-it('should be able to cancel billet casting to collection', function (string $cast) {
+it('should be able to cancel billet casting to collection', function (Cast $cast) {
     $transaction = 'BPV661O7AVLORCN5';
 
     $result = [
@@ -56,10 +56,16 @@ it('should be able to cancel billet casting to collection', function (string $ca
 
     fakeBilletResponse(CancelBillet::END_POINT, 'cancellation_request', $result);
 
-    $status = (new PagHiper())->billet(Cast::Collection)->cancel($transaction);
+    $cancel = (new PagHiper())->billet($cast)->cancel($transaction);
 
-    expect($status)->toBeInstanceOf(Collection::class);
-})->with(['collection', 'collect']);
+    expect($cancel)
+        ->toBeInstanceOf(Collection::class)
+        ->and($cancel->get('response_message'))
+        ->toBe("O Boleto $transaction foi cancelado com Sucesso");
+})->with([
+    Cast::Collect,
+    Cast::Collection,
+]);
 
 it('should be able to cancel billet casting to original response', function () {
     $transaction = 'BPV661O7AVLORCN5';
@@ -72,9 +78,12 @@ it('should be able to cancel billet casting to original response', function () {
 
     fakeBilletResponse(CancelBillet::END_POINT, 'cancellation_request', $result);
 
-    $status = (new PagHiper())->billet(Cast::Response)->cancel($transaction);
+    $cancel = (new PagHiper())->billet(Cast::Response)->cancel($transaction);
 
-    expect($status)->toBeInstanceOf(Response::class);
+    expect($cancel)
+        ->toBeInstanceOf(Response::class)
+        ->and($cancel->json('cancellation_request.response_message'))
+        ->toBe("O Boleto $transaction foi cancelado com Sucesso");
 });
 
 it('should be able to throw exception due response reject', function () {

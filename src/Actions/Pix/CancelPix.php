@@ -14,7 +14,7 @@ class CancelPix
     /** @throws PagHiperRejectException */
     public static function execute(string|Model $transaction): Response
     {
-        $response = Request::resource('billet')
+        $response = Request::resource('pix')
             ->execute(self::END_POINT, [
                 'status'         => 'canceled',
                 'transaction_id' => $transaction,
