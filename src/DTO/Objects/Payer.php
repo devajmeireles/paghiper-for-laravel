@@ -22,12 +22,14 @@ class Payer implements Arrayable
 
     public function toArray(): array
     {
+        $address = $this->address ? [...$this->address->toArray()] : [];
+
         return [
             'payer_name'     => $this->name,
             'payer_email'    => $this->email,
             'payer_cpf_cnpj' => $this->cpf_cnpj,
             'payer_phone'    => $this->phone,
-            ...$this->address->toArray(),
+            ...$address,
         ];
     }
 }

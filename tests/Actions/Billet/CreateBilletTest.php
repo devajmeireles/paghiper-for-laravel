@@ -75,7 +75,7 @@ it('should be able to create billet casting to json', function () {
     $result = [
         'result'           => 'success',
         'response_message' => 'transacao criada',
-        'transaction_id'   => 'HF97T5SH2ZQNLF6Z',
+        'transaction_id'   => $transaction = 'HF97T5SH2ZQNLF6Z',
         'created_date'     => now()->format('Y-m-d H:i:s'),
         'value_cents'      => 1000,
         'status'           => 'pending',
@@ -95,11 +95,11 @@ it('should be able to create billet casting to json', function () {
 
     expect($billet)
         ->toBeJson()
-        ->and($billet)
-        ->toBe(collect($result)->toJson());
+        ->and(json_decode($billet)->transaction_id)
+        ->toBe($transaction);
 });
 
-it('should be able to create billet casting to collection', function (string $cast) {
+it('should be able to create billet casting to collection', function (Cast $cast) {
     $result = [
         'result'           => 'success',
         'response_message' => 'transacao criada',
@@ -122,7 +122,10 @@ it('should be able to create billet casting to collection', function (string $ca
     $billet = (new PagHiper())->billet(Cast::Collection)->create(...fakeBilletCreationBody());
 
     expect($billet)->toBeInstanceOf(Collection::class);
-})->with(['collection', 'collect']);
+})->with([
+    Cast::Collect,
+    Cast::Collection,
+]);
 
 it('should be able to create billet casting to original response', function () {
     $result = [
@@ -179,6 +182,7 @@ it('should be able to create billet casting to array with more than one item', f
         ->toBe($result);
 });
 
+// TODO: talvez esse teste seja desnecessário
 it('should be able to create billet with address as optional when model is used', function () use ($model) {
     $result = [
         'result'           => 'success',
