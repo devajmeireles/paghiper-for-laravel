@@ -1,6 +1,5 @@
 <?php
 
-use DevAjMeireles\PagHiper\Actions\Billet\CreateBillet;
 use DevAjMeireles\PagHiper\Actions\Pix\CreatePix;
 use DevAjMeireles\PagHiper\Contracts\PagHiperModelAbstraction;
 use DevAjMeireles\PagHiper\Enums\Cast;
@@ -23,7 +22,7 @@ $model = new class () extends Model implements PagHiperModelAbstraction {
 
     public function pagHiperCpfCnpj(): string
     {
-        return '123.456.789-00';
+        return '89115748057';
     }
 
     public function pagHiperPhone(): string
@@ -221,7 +220,7 @@ it('should be able to create billet with address as optional when model is used'
         ],
     ];
 
-    fakeBilletResponse(CreateBillet::END_POINT, 'create_request', $result);
+    fakePixResponse(CreatePix::END_POINT, 'pix_create_request', $result);
 
     [$basic, $payer, $item] = [...fakePixCreationBody()];
 
@@ -230,7 +229,7 @@ it('should be able to create billet with address as optional when model is used'
     expect($pix)
         ->toBeArray()
         ->toBe($result);
-})->skip('Precisa ser adaptado');
+});
 
 it('should be able to throw exception due response reject', function () {
     $this->expectException(PagHiperRejectException::class);

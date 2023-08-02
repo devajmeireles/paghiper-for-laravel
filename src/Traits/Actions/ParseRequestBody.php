@@ -2,6 +2,7 @@
 
 namespace DevAjMeireles\PagHiper\Traits\Actions;
 
+use DevAjMeireles\PagHiper\Actions\Billet\CreateBillet;
 use DevAjMeireles\PagHiper\Actions\Billet\HighOrderBilletCreation\HighOrderCreateBillet;
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic as BasicBillet;
 use DevAjMeireles\PagHiper\DTO\Objects\Pix\Basic as BasicPix;
@@ -19,7 +20,7 @@ trait ParseRequestBody
 
         $body += $model
             ? (new HighOrderCreateBillet($payer))->execute()
-            : $payer->toArray();
+            : $payer->toArray($this instanceof CreateBillet);
 
         $body['order_id'] = $model
             ? sprintf('%s|%s:%s', $body['order_id'], get_class($payer), $payer->id)

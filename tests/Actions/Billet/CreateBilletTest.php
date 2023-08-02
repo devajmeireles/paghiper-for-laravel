@@ -22,7 +22,7 @@ $model = new class () extends Model implements PagHiperModelAbstraction {
 
     public function pagHiperCpfCnpj(): string
     {
-        return '123.456.789-00';
+        return '89115748057';
     }
 
     public function pagHiperPhone(): string

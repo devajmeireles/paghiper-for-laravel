@@ -20,9 +20,9 @@ class Payer implements Arrayable
         //
     }
 
-    public function toArray(): array
+    public function toArray(bool $address = true): array
     {
-        $address = $this->address ? [...$this->address->toArray()] : [];
+        $address = $this->address && $address ? [...$this->address->toArray()] : [];
 
         return [
             'payer_name'     => $this->name,
