@@ -2,9 +2,8 @@
 
 namespace DevAjMeireles\PagHiper;
 
-use DevAjMeireles\PagHiper\Actions\Billet\{CancelBillet, CreateBillet, NotificationBillet, StatusBillet};
-use DevAjMeireles\PagHiper\Actions\Pix\CreatePix;
-use DevAjMeireles\PagHiper\DTO\Objects\Pix\{Basic, PagHiperNotification};
+use DevAjMeireles\PagHiper\Actions\Pix\{CancelPix, CreatePix, StatusPix};
+use DevAjMeireles\PagHiper\DTO\Objects\Pix\Basic;
 use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
 use DevAjMeireles\PagHiper\Traits\ShareableBaseConstructor;
 use Illuminate\Database\Eloquent\Model;
@@ -21,21 +20,21 @@ class Pix
 
         return $this->cast->response($response, 'pix_create_request');
     }
-    //
-    //    public function status(string $transaction): Response|Collection|array|string
-    //    {
-    //        $response = StatusBillet::execute($transaction);
-    //
-    //        return $this->cast->response($response, 'status_request');
-    //    }
-    //
-    //    public function cancel(string $transaction): Response|Collection|array|string
-    //    {
-    //        $response = CancelBillet::execute($transaction);
-    //
-    //        return $this->cast->response($response, 'cancellation_request');
-    //    }
-    //
+
+    public function status(string $transaction): Response|Collection|array|string
+    {
+        $response = StatusPix::execute($transaction);
+
+        return $this->cast->response($response, 'status_request');
+    }
+
+    public function cancel(string $transaction): Response|Collection|array|string
+    {
+        $response = CancelPix::execute($transaction);
+
+        return $this->cast->response($response, 'cancellation_request');
+    }
+
     //    public function notification(string $notification, string $transaction): PagHiperNotification|Response|Collection|array|string
     //    {
     //        $response = NotificationBillet::execute($notification, $transaction);

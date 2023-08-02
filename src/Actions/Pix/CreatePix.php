@@ -16,13 +16,13 @@ class CreatePix
 
     public const END_POINT = 'invoice/create/';
 
+    /** @throws PagHiperRejectException */
     public static function execute(Basic $basic, Payer|Model $payer, array|Item $items): Response
     {
         $response = Request::resource('pix')
             ->execute(self::END_POINT, (new self())->parse($basic, $payer, $items));
 
         if ($response->json('pix_create_request.result') === 'reject') {
-            // TODO: exception pix
             throw new PagHiperRejectException($response->json('pix_create_request.response_message'));
         }
 
