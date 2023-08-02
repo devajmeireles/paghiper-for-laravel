@@ -14,27 +14,25 @@ trait ParseRequestBody
     {
         $model = $payer instanceof Model;
 
-        $billet          = $basic->toArray();
-        $billet['items'] = [];
+        $body          = $basic->toArray();
+        $body['items'] = [];
 
-        //TODO: pix não usa o address.. teremos erro aqui?????
-
-        $billet += $model
+        $body += $model
             ? (new HighOrderCreateBillet($payer))->execute()
             : $payer->toArray();
 
-        $billet['order_id'] = $model
-            ? sprintf('%s|%s:%s', $billet['order_id'], get_class($payer), $payer->id)
-            : $billet['order_id'];
+        $body['order_id'] = $model
+            ? sprintf('%s|%s:%s', $body['order_id'], get_class($payer), $payer->id)
+            : $body['order_id'];
 
         if ($items instanceof Item) {
-            $billet['items'] += [[...$items->toArray()]];
+            $body['items'] += [[...$items->toArray()]];
         } else {
             foreach ($items as $item) {
-                $billet['items'][] = [...$item->toArray()];
+                $body['items'][] = [...$item->toArray()];
             }
         }
 
-        return $billet;
+        return $body;
     }
 }
