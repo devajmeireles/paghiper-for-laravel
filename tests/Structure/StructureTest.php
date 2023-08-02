@@ -1,6 +1,10 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Basic, Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address,
+    Billet\Basic as BasicBillet,
+    Item,
+    Payer,
+    Pix\Basic as BasicPix};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Resolvers\Billet\{ResolveBilletNotificationUrl};
 use DevAjMeireles\PagHiper\Resolvers\{Pix\ResolvePixNotificationUrl, ResolveToken, ResolverApi};
@@ -40,7 +44,8 @@ test('makeable trait should only be used in objects')
     ->toOnlyBeUsedIn([
         Address::class,
         Item::class,
-        Basic::class,
+        BasicBillet::class,
+        BasicPix::class,
         Payer::class,
     ]);
 
