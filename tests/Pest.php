@@ -1,8 +1,8 @@
 <?php
 
 use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Basic};
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Item};
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Item};
+use DevAjMeireles\PagHiper\DTO\Objects\{Payer};
 use DevAjMeireles\PagHiper\Request;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -49,6 +49,6 @@ function fakeBilletCreationBody(): array
 function fakeBilletResponse(string $path, string $index, array $data): void
 {
     Http::fake([
-        Request::url($path) => Http::response([$index => $data]),
+        Request::resource('billet')->url($path) => Http::response([$index => $data]),
     ]);
 }

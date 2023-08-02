@@ -3,15 +3,15 @@
 namespace DevAjMeireles\PagHiper;
 
 use DevAjMeireles\PagHiper\Actions\Billet\{CancelBillet, CreateBillet, NotificationBillet, StatusBillet};
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\PagHiperNotification;
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\{Basic, PagHiperNotification};
+use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Traits\ShareableBaseConstructor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 
-class Billet
+class Pix
 {
     use ShareableBaseConstructor;
 

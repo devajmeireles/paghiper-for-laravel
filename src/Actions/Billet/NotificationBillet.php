@@ -13,10 +13,11 @@ class NotificationBillet
     /** @throws PagHiperRejectException */
     public static function execute(string $notification, string $transaction): Response
     {
-        $response = Request::execute(self::END_POINT, [
-            'notification_id' => $notification,
-            'transaction_id'  => $transaction,
-        ]);
+        $response = Request::resource('billet')
+            ->execute(self::END_POINT, [
+                'notification_id' => $notification,
+                'transaction_id'  => $transaction,
+            ]);
 
         if ($response->json('status_request.result') === 'reject') {
             throw new PagHiperRejectException($response->json('status_request.response_message'));

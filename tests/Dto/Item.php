@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Item;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
 
 it('should return valid items instance using make with array', function () {
     expect(Item::make([

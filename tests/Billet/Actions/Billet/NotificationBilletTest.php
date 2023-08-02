@@ -1,8 +1,9 @@
 <?php
 
 use DevAjMeireles\PagHiper\Actions\Billet\NotificationBillet;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\{Item, Payer};
-use DevAjMeireles\PagHiper\DTO\PagHiperNotification;
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\PagHiperNotification;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
+use DevAjMeireles\PagHiper\DTO\Objects\{Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Http\Client\Response;

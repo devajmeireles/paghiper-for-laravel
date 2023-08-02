@@ -1,7 +1,8 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\DTO\Objects\Billet;
+namespace DevAjMeireles\PagHiper\DTO\Objects;
 
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
 use DevAjMeireles\PagHiper\Traits\MakeableObject;
 use Illuminate\Contracts\Support\Arrayable;
 

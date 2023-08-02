@@ -3,7 +3,7 @@
 namespace DevAjMeireles\PagHiper\Actions\Billet;
 
 use DevAjMeireles\PagHiper\Actions\Billet\HighOrderBilletCreation\HighOrderCreateBillet;
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Billet\Item, Billet\Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException};
 use DevAjMeireles\PagHiper\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +16,8 @@ class CreateBillet
     /** @throws PagHiperRejectException */
     public static function execute(Basic $basic, Payer|Model $payer, array|Item $items): Response
     {
-        $response = Request::execute(self::END_POINT, (new self())->parse($basic, $payer, $items));
+        $response = Request::resource('billet')
+            ->execute(self::END_POINT, (new self())->parse($basic, $payer, $items));
 
         if ($response->json('create_request.result') === 'reject') {
             throw new PagHiperRejectException($response->json('create_request.response_message'));

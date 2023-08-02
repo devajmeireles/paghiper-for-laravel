@@ -104,8 +104,8 @@ Para uma melhor organização, a forma de interagir com o método `create` é en
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address; // 👈
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic; // 👈
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Item; // 👈
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Payer; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Item; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Payer; // 👈
 
 $billet = PagHiper::billet()
     ->create(
@@ -147,10 +147,10 @@ $billet = PagHiper::billet()
 Opcionalmente, você pode usar um modelador do Laravel como `Payer` do boleto no método `create`:
 
 ```php
-use App\Models\User; // 👈
 use DevAjMeireles\PagHiper\Facades\PagHiper;
+use App\Models\User; // 👈
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Item;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
 
 $billet = PagHiper::billet()
     ->create(
@@ -262,7 +262,7 @@ Para facilitar a sua interação com as respostas, `Paghiper for Laravel` oferec
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Item;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
 use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
@@ -479,7 +479,7 @@ Veja alguns exemplos disponíveis:
   - **se um**, será uma única instância de `Item`
   - **se mais de um**, será um array de instâncias de `Item`
 
-> Veja todos os métodos disponíveis [clicando aqui](https://github.com/devajmeireles/paghiper-for-laravel/blob/main/src/DTO/PagHiperNotification.php).
+> Veja todos os métodos disponíveis [clicando aqui](https://github.com/devajmeireles/paghiper-for-laravel/blob/main/src/DTO/Billet/PagHiperNotification.php).
 
 ### Método Especial: `modelable`
 
@@ -490,12 +490,11 @@ Essa abordagem fará com que o `order_id` do boleto bancário fique, por exemplo
 Dessa forma você então poderá utilizar o método `modelable`:
 
 ```php
+use DevAjMeireles\PagHiper\Facades\PagHiper;
 use App\Models\User; // 👈
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Item;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
 use DevAjMeireles\PagHiper\Enums\Cast;
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\Facades\PagHiper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

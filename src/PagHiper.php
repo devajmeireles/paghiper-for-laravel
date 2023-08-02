@@ -8,13 +8,14 @@ use DevAjMeireles\PagHiper\Resolvers\{ResolveToken, ResolverApi};
 
 class PagHiper
 {
-    protected ?Cast $cast = null;
-
     public function billet(Cast $cast = Cast::Array): Billet
     {
-        $cast = $this->cast ?? $cast;
+        return new Billet($cast);
+    }
 
-        return new Billet($this->cast ?? $cast);
+    public function pix(Cast $cast = Cast::Array)
+    {
+        return new Pix($cast);
     }
 
     public static function resolveApiUsing(callable $callback): void

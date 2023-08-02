@@ -1,9 +1,9 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Basic, Billet\Item, Billet\Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Basic, Item, Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Resolvers\Billet\{ResolveBilletNotificationUrl};
-use DevAjMeireles\PagHiper\Resolvers\{ResolveToken, ResolverApi};
+use DevAjMeireles\PagHiper\Resolvers\{Pix\ResolvePixNotificationUrl, ResolveToken, ResolverApi};
 use DevAjMeireles\PagHiper\Traits\{MakeableObject, Resolveable};
 use DevAjMeireles\PagHiper\{Exceptions\PagHiperRejectException,
     Exceptions\UnsupportedCastTypeExcetion,
@@ -50,4 +50,5 @@ test('resoveable trait should only be used in resolvers')
         ResolveToken::class,
         ResolverApi::class,
         ResolveBilletNotificationUrl::class,
+        ResolvePixNotificationUrl::class,
     ]);
