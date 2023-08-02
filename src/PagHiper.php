@@ -4,7 +4,7 @@ namespace DevAjMeireles\PagHiper;
 
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Resolvers\Billet\{ResolveBilletNotificationUrl};
-use DevAjMeireles\PagHiper\Resolvers\{ResolveToken, ResolverApi};
+use DevAjMeireles\PagHiper\Resolvers\{Pix\ResolvePixNotificationUrl, ResolveToken, ResolverApi};
 
 class PagHiper
 {
@@ -13,7 +13,7 @@ class PagHiper
         return new Billet($cast);
     }
 
-    public function pix(Cast $cast = Cast::Array)
+    public function pix(Cast $cast = Cast::Array): Pix
     {
         return new Pix($cast);
     }
@@ -31,5 +31,10 @@ class PagHiper
     public static function resolveBilletNotificationlUrlUsing(callable $callback): void
     {
         app()->singleton(ResolveBilletNotificationUrl::class, fn () => new ResolveBilletNotificationUrl($callback));
+    }
+
+    public static function resolvePixNotificationUlrUsing(callable $callback): void
+    {
+        app()->singleton(ResolvePixNotificationUrl::class, fn () => new ResolvePixNotificationUrl($callback));
     }
 }
