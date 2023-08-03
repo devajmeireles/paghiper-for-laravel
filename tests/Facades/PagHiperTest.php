@@ -1,10 +1,14 @@
 <?php
 
 use DevAjMeireles\PagHiper\Actions\Billet\StatusBillet;
-use DevAjMeireles\PagHiper\Facades\PagHiper as Facade;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\Resolvers\Billet\ResolveBilletNotificationUrl;
+use DevAjMeireles\PagHiper\Resolvers\Pix\ResolvePixNotificationUrl;
+use DevAjMeireles\PagHiper\Resolvers\ResolverApi;
+use DevAjMeireles\PagHiper\Resolvers\ResolveToken;
 
 it('facade was bounded', function () {
-    expect($this->app->bound(Facade::class))->toBeTrue();
+    expect($this->app->bound(PagHiper::class))->toBeTrue();
 });
 
 it('facade should be mocked', function () {
@@ -19,7 +23,7 @@ it('facade should be mocked', function () {
     $transaction = 'BPV661O7AVLORCN5';
 
     // this set the test to return an array (indicating success)...
-    Facade::shouldReceive('billet->status')
+    PagHiper::shouldReceive('billet->status')
         ->with($transaction)
         ->andReturn([
             'status_result' => $result = [
@@ -38,5 +42,29 @@ it('facade should be mocked', function () {
             ],
         ]);
 
-    expect(Facade::billet()->status($transaction))->toBe(['status_result' => $result]);
+    expect(PagHiper::billet()->status($transaction))->toBe(['status_result' => $result]);
+});
+
+it('smart resolver credentials should work successfully', function () {
+    PagHiper::resolveCredentials(
+        api: fn () => 'foo-api',
+        token: fn () => 'foo-token',
+    );
+
+    expect(app(ResolverApi::class)->resolve())
+        ->toBe('foo-api')
+        ->and(app(ResolveToken::class)->resolve())
+        ->toBe('foo-token');
+});
+
+it('smart resolver urls should work successfully', function () {
+    PagHiper::resolveNotificationUrlUsing(
+        billet: fn () => 'foo-billet-url',
+        pix: fn () => 'foo-pix-url',
+    );
+
+    expect(app(ResolveBilletNotificationUrl::class)->resolve())
+        ->toBe('foo-billet-url')
+        ->and(app(ResolvePixNotificationUrl::class)->resolve())
+        ->toBe('foo-pix-url');
 });

@@ -3,7 +3,7 @@
 namespace DevAjMeireles\PagHiper\Actions\Billet;
 
 use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer};
-use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException};
+use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException, UnallowedEmptyNotificationUrl, WrongModelSetUpException};
 use DevAjMeireles\PagHiper\Request;
 use DevAjMeireles\PagHiper\Traits\ParseRequestBody;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +15,7 @@ class CreateBillet
 
     public const END_POINT = 'transaction/create/';
 
-    /** @throws PagHiperRejectException */
+    /** @throws PagHiperRejectException|UnallowedEmptyNotificationUrl|WrongModelSetUpException */
     public static function execute(Basic $basic, Payer|Model $payer, array|Item $items): Response
     {
         $response = Request::resource('billet')
