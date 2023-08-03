@@ -44,9 +44,9 @@ Route::post('/payment/notification', function (Request $request) {
 
 `PagHiper for Laravel` irá buscar os parâmetros necessários para a notificação por si próprio.
 
-### Cast Especial: `BilletNotification`
+### Cast Especial: `PixNotification`
 
-De forma especial para o retorno automático, `Paghiper for Laravel` oferece o cast `BilletNotification`, que quando
+De forma especial para o retorno automático, `Paghiper for Laravel` oferece o cast `PixNotification`, que quando
 utilizado irá mapear a resposta da PagHiper para uma classe de objeto contendo muitos métodos úteis:
 
 ```php
@@ -58,7 +58,7 @@ use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Enums\Cast; // 👈
 
 Route::post('/payment/notification', function (Request $request) {
-    $notification = PagHiper::billet(Cast::BilletNotification) // 👈
+    $notification = PagHiper::pix(Cast::PixNotification) // 👈
         ->notification($request);
 })->name('paghiper.notification');
 ```
@@ -115,7 +115,7 @@ booleano para o status do pix
 
 ---
 
-Os demais métodos seguem a <a href="https://dev.paghiper.com/reference/notificao-automatica" target="_blank">convenção de nomes da PagHiper</a>:
+Os demais métodos seguem a <a href="https://dev.paghiper.com/reference/notificacoes-automatica-de-status-retorno-automatico-pix" target="_blank">convenção de nomes da PagHiper</a>:
 
 ```php
 public function dueDateTime(): \Illuminate\Support\Carbon
@@ -151,7 +151,7 @@ use Illuminate\Support\Facades\Route;
 
 // criando o boleto para o modelador User:1 👇
 
-$billet = PagHiper::pix()
+$pix = PagHiper::pix()
     ->create(
         Basic::make()
             ->set('order_id', 1433)  
@@ -167,12 +167,12 @@ $billet = PagHiper::pix()
 // retorno automático 👇
 
 Route::post('/payment/notification', function (Request $request) {
-    $notification = PagHiper::billet(Cast::PixNotification) // 👈
+    $notification = PagHiper::pix(Cast::PixNotification) // 👈
         ->notification($request);
 })->name('paghiper.notification');
 ```
 
-No exemplo acima, `$notification` será uma instância da classe `PagHiperBilletNotification` contendo o método `modelable()`.
+No exemplo acima, `$notification` será uma instância da classe `PagHiperPixNotification` contendo o método `modelable()`.
 Ao utilizar o método `$notification->modelable()` `PagHiper for Laravel` irá recuperar o usuário automaticamente:
 
 ```php
