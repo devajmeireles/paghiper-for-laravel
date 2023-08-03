@@ -34,5 +34,5 @@ DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException::class
 Erro na montagem do modelador para uso na criação de PIX/Boleto Bancário
 
 <div class="alert alert-warning">
-    Para se precaver de situações inesperadas utilize blocos try/catch.
+    Não encontrou o que procurava? Abra uma issue no repositório reportando um bug.
 </div>
