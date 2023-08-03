@@ -13,9 +13,9 @@ php artisan paghiper:install
 ```
 
 O comando `paghiper:install` irá publicar o arquivo de configuração do pacote em `config/paghiper.php`,
-e também criará variáveis de ambiente no arquivo `.env` do projeto. 
+e também criará variáveis de ambiente no arquivo `.env` do projeto. Opcionalmente, você pode utilizar o comando com o parametro `--force` para sobrescrever o arquivo de configuração, caso ele já exista.
 
-Configure o `.env` do projeto preenchendo as credenciais da sua conta PagHiper:
+Por último, configure o `.env` do projeto preenchendo as credenciais da sua conta PagHiper:
 
 ```dotenv
 PAGHIPER_API=sua-api-aqui

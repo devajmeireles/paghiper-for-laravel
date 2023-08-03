@@ -12,6 +12,19 @@ com cobertura de testes e fortemente tipado, garantindo estabilidade nas funcion
     - 9.x
     - 10.x
 
+## Facade
+
+`Paghiper for Laravel` oferece uma <a href="https://laravel.com/docs/facades" target="_blank">Facade</a> para interação com a classe principal do pacote:
+
+```php
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+
+$billet = PagHiper::billet()->create(/* ... */)
+```
+
+### Cliente HTTP
+
+Por trás dos panos, `Paghiper for Laravel` utiliza o poder do <a href="https://laravel.com/docs/http-client" target="_blank">cliente HTTP do Laravel</a>. Com isso, caso você precise escrever testes automatizados, você deve seguir o esquema de testes do Laravel.
     
 ## Outros Detalhes
 
@@ -19,6 +32,6 @@ com cobertura de testes e fortemente tipado, garantindo estabilidade nas funcion
 - Cobertura de Tipagem de Código (100%), <a href="https://pestphp.com" target="_blank">PestPHP</a>
 - Cobertura de Analise de Código (Level 5, 100%), <a href="https://phpstan.org/" target="_blank">PhpStan</a>
 
-<div class="alert alert-info">
+<div class="alert alert-warning">
     Os testes são projetados exclusivamete sob o Laravel 10.
 </div>
