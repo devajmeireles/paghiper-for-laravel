@@ -7,7 +7,7 @@ funcionalidades.
 ## PHP & Laravel
 
 - Versão do PHP:
-    - 8.0.x
+    - 8.0.2 (ou superior)
     - 8.1.x
 - Versão do Laravel:
     - 9.x
@@ -63,7 +63,7 @@ public function boot(): void
 {
     // ...
     
-    PagHiper::resolveCredentials(
+    PagHiper::resolveCredentialsUsing(
         fn () => 'api-que-vai-sobescrever-a-api-do-env',
         fn () => 'token-que-vai-sobescrever-o-token-do-env'
     );

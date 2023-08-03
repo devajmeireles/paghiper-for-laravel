@@ -1,4 +1,4 @@
-# Criando Boleto Bancário
+# Criando
 
 ## Sintaxe
 
@@ -10,7 +10,7 @@ $billet = PagHiper::billet()->create(/* ... */)
 
 ## Criando Boleto
 
-Para uma melhor organização, a forma de interagir com a criação de boletos é enviando para o método `create` quatro (4) instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
+Para uma melhor organização, a forma de interagir com a criação de boletos é enviando para o método `create` quatro (4) instâncias de classes de objeto:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -169,4 +169,4 @@ $billet = PagHiper::billet()
 
 ## Casts
 
-Você pode usar os [casts](/recursos/Utilidades/casts/) disponíveis para transformar a resposta.
+Você pode usar os [casts](../Utilidades/casts.md) disponíveis para transformar a resposta.
