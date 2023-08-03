@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static Billet billet(Cast $cast = Cast::Array)
  * @method static Pix pix(Cast $cast = Cast::Array)
+ * @method static void resolveCredentials(callable $api, callable $token)
  * @method static void resolveApiUsing(callable $callback)
  * @method static void resolveTokenUsing(callable $callback)
+ * @method static void resolveNotificationUrlUsing(callable $billet, callable $pix)
  * @method static void resolveBilletNotificationUrlUsing(callable $callback)
  * @method static void resolvePixNotificationUrlUsing(callable $callback)
  *
