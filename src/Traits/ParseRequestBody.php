@@ -1,6 +1,6 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Traits\Actions;
+namespace DevAjMeireles\PagHiper\Traits;
 
 use DevAjMeireles\PagHiper\Actions\Billet\CreateBillet;
 use DevAjMeireles\PagHiper\Actions\Billet\HighOrderBilletCreation\HighOrderCreateBillet;

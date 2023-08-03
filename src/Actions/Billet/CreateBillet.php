@@ -5,7 +5,7 @@ namespace DevAjMeireles\PagHiper\Actions\Billet;
 use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException};
 use DevAjMeireles\PagHiper\Request;
-use DevAjMeireles\PagHiper\Traits\Actions\ParseRequestBody;
+use DevAjMeireles\PagHiper\Traits\ParseRequestBody;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 

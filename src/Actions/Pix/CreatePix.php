@@ -6,7 +6,7 @@ use DevAjMeireles\PagHiper\DTO\Objects\Pix\Basic;
 use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\Request;
-use DevAjMeireles\PagHiper\Traits\Actions\ParseRequestBody;
+use DevAjMeireles\PagHiper\Traits\ParseRequestBody;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 

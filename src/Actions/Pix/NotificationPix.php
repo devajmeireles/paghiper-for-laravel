@@ -1,15 +1,15 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Actions\Billet;
+namespace DevAjMeireles\PagHiper\Actions\Pix;
 
 use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\Request;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request as LaravelRequest;
 
-class NotificationBillet
+class NotificationPix
 {
-    public const END_POINT = 'transaction/notification/';
+    public const END_POINT = 'invoice/notification/';
 
     /** @throws PagHiperRejectException */
     public static function execute(string|LaravelRequest $notification, string $transaction = null): Response
@@ -22,7 +22,7 @@ class NotificationBillet
             ? $notification->input('transaction_id')
             : $transaction;
 
-        $response = Request::resource('billet')
+        $response = Request::resource('pix')
             ->execute(self::END_POINT, [
                 'notification_id' => $notificationId,
                 'transaction_id'  => $transactionId,

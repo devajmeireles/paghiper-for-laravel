@@ -3,12 +3,13 @@
 namespace DevAjMeireles\PagHiper;
 
 use DevAjMeireles\PagHiper\Actions\Billet\{CancelBillet, CreateBillet, NotificationBillet, StatusBillet};
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\PagHiperNotification;
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\PagHiperBilletNotification;
 use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Item, Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Traits\ShareableBaseConstructor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
+use Illuminate\Http\Request as LaravelRequest;
 use Illuminate\Support\Collection;
 
 class Billet
@@ -36,12 +37,12 @@ class Billet
         return $this->cast->response($response, 'cancellation_request');
     }
 
-    public function notification(string $notification, string $transaction): PagHiperNotification|Response|Collection|array|string
+    public function notification(string|LaravelRequest $notification, string $transaction = null): PagHiperBilletNotification|Response|Collection|array|string
     {
         $response = NotificationBillet::execute($notification, $transaction);
 
         if ($this->cast === Cast::BilletNotification) {
-            return PagHiperNotification::make($response);
+            return PagHiperBilletNotification::make($response);
         }
 
         return $this->cast->response($response, 'status_request');

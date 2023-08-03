@@ -2,12 +2,14 @@
 
 namespace DevAjMeireles\PagHiper;
 
-use DevAjMeireles\PagHiper\Actions\Pix\{CancelPix, CreatePix, StatusPix};
+use DevAjMeireles\PagHiper\Actions\Pix\{CancelPix, CreatePix, NotificationPix, StatusPix};
 use DevAjMeireles\PagHiper\DTO\Objects\Pix\Basic;
-use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer, Pix\PagHiperPixNotification};
+use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Traits\ShareableBaseConstructor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
+use Illuminate\Http\Request as LaravelRequest;
 use Illuminate\Support\Collection;
 
 class Pix
@@ -35,14 +37,14 @@ class Pix
         return $this->cast->response($response, 'cancellation_request');
     }
 
-    //    public function notification(string $notification, string $transaction): PagHiperNotification|Response|Collection|array|string
-    //    {
-    //        $response = NotificationBillet::execute($notification, $transaction);
-    //
-    //        if ($this->cast === Cast::BilletNotification) {
-    //            return PagHiperNotification::make($response);
-    //        }
-    //
-    //        return $this->cast->response($response, 'status_request');
-    //    }
+    public function notification(string|LaravelRequest $notification, string $transaction = null): PagHiperPixNotification|Response|Collection|array|string
+    {
+        $response = NotificationPix::execute($notification, $transaction);
+
+        if ($this->cast === Cast::BilletNotification) {
+            return PagHiperPixNotification::make($response);
+        }
+
+        return $this->cast->response($response, 'status_request');
+    }
 }
