@@ -1,21 +1,34 @@
-name: Publish Docs
+name: Publish MkDocs via GitHub Pages
 on:
     push:
         branches:
-            - main
+            - "main"
         paths:
-            - 'docs/**'
+            - "docs/**"
+
+    workflow_dispatch:
 
 jobs:
     build:
-        name: Deploy Docs
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout Main
+            - name: Checkout
               uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+
+            - name: Setup Python
+              uses: actions/setup-python@v2
+
+            - name: Install Dependencies
+              run: |
+                  pip install --upgrade pip
+                  pip install mkdocs
+
+#            - name: Setup Git Config
+#              run: |
+#                  git config user.name 'mkdocs-deploy'
+#                  git config user.email 'mkdocs-deploy@noreply.github.com'
 
             - name: Deploy Docs
-              uses: mhausenblas/mkdocs-deploy-gh-pages@nomaterial
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  CONFIG_FILE: docs/mkdocs.yml
+              run: mkdocs gh-deploy --config-file docs/mkdocs.yml --remote-branch docs
