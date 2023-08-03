@@ -1,7 +1,8 @@
 # Detalhes Técnicos
 
-`Paghiper for Laravel` foi criado para suportar aplicações Laravel a partir da versão 9, com PHP 8.1, no mais alto padrão possível do PHP moderno, 
-com cobertura de testes e fortemente tipado, garantindo estabilidade nas funcionalidades.
+`Paghiper for Laravel` foi criado para suportar aplicações Laravel a partir da versão 9, com PHP 8.1, no mais 
+alto padrão possível do PHP moderno, com cobertura de testes e fortemente tipado, garantindo estabilidade nas 
+funcionalidades.
 
 ## PHP & Laravel
 
@@ -14,7 +15,8 @@ com cobertura de testes e fortemente tipado, garantindo estabilidade nas funcion
 
 ## Facade
 
-`Paghiper for Laravel` oferece uma <a href="https://laravel.com/docs/facades" target="_blank">Facade</a> para interação com a classe principal do pacote:
+`Paghiper for Laravel` oferece uma <a href="https://laravel.com/docs/facades" target="_blank">Facade</a> para 
+interação com a classe principal do pacote:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -24,7 +26,67 @@ $billet = PagHiper::billet()->create(/* ... */)
 
 ### Cliente HTTP
 
-Por trás dos panos, `Paghiper for Laravel` utiliza o poder do <a href="https://laravel.com/docs/http-client" target="_blank">cliente HTTP do Laravel</a>. Com isso, caso você precise escrever testes automatizados, você deve seguir o esquema de testes do Laravel.
+Por trás dos panos, `Paghiper for Laravel` utiliza o poder do <a href="https://laravel.com/docs/http-client" 
+target="_blank">cliente HTTP do Laravel</a>. Com isso, caso você precise escrever testes automatizados, 
+você deve seguir o esquema de testes do Laravel.
+
+## Resolvedores
+
+`Paghiper for Laravel` oferece recursos de resolvedores para viabilizar a definição de configurações em tempo de execução, 
+ideal para casos onde você precise **sobescrever as configurações** de `api` ou `token` do arquivo `.env`, 
+ou para prefixar URL de retorno automático:
+
+```php
+// arquivo: app/Providers/AppServicesProvider.php
+
+use DevAjMeireles\PagHiper\Facades\PagHiper; // 👈
+
+public function boot(): void
+{
+    // ...
+    
+    PagHiper::resolveApiUsing(fn () => 'api-que-vai-sobescrever-a-api-do-env');
+    PagHiper::resolveTokenUsing(fn () => 'token-que-vai-sobescrever-o-token-do-env');
+    PagHiper::resolveBilletNotificationUrlUsing(fn () => route('rota-padrão-de-retorno-automático-de-boletos'));
+    PagHiper::resolvePixNotificationUrlUsing(fn () => route('rota-padrão-de-retorno-automático-de-pix'));
+}
+```
+
+Se preferir você pode utilizar métodos que combinam as ações:
+
+```php
+// arquivo: app/Providers/AppServicesProvider.php
+
+use DevAjMeireles\PagHiper\Facades\PagHiper; // 👈
+
+public function boot(): void
+{
+    // ...
+    
+    PagHiper::resolveCredentials(
+        fn () => 'api-que-vai-sobescrever-a-api-do-env',
+        fn () => 'token-que-vai-sobescrever-o-token-do-env'
+    );
+}
+```
+
+Você também pode utilizar uma única função para resolver duas rotas:
+
+```php
+// arquivo: app/Providers/AppServicesProvider.php
+
+use DevAjMeireles\PagHiper\Facades\PagHiper; // 👈
+
+public function boot(): void
+{
+    // ...
+    
+    PagHiper::resolveNotificationUrlUsing(
+        fn () => route('rota-padrão-de-retorno-automático-de-boletos'),
+        fn () => route('rota-padrão-de-retorno-automático-de-pix')
+    );
+}
+```
     
 ## Outros Detalhes
 
