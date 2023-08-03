@@ -49,4 +49,5 @@ $billet = PagHiper::billet(Cast::Collection) // 👈
             ->set('price_cents', 25000));
 ```
 
-No exemplo acima, `$billet` passa a ser uma instância de `Illuminate\Support\Collection`
+No exemplo acima, `$billet` passa a ser uma instância de `Illuminate\Support\Collection`. Se não definido, 
+todas as respostas receberão o cast `Array`.
