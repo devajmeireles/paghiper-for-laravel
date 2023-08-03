@@ -103,7 +103,6 @@ public function status(): string
 
 ```php
 public function pending(): bool
-public function reserved(): bool
 public function canceled(): bool
 public function completed(): bool
 public function paid(): bool
