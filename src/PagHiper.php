@@ -27,12 +27,6 @@ class PagHiper
         return new Pix($cast);
     }
 
-    public function resolveCredentials(callable $api, callable $token): void
-    {
-        $this->resolveApiUsing($api);
-        $this->resolveTokenUsing($token);
-    }
-
     public function resolveApiUsing(callable $callback): void
     {
         app()->singleton(ResolverApi::class, fn () => new ResolverApi($callback));
@@ -43,10 +37,10 @@ class PagHiper
         app()->singleton(ResolveToken::class, fn () => new ResolveToken($callback));
     }
 
-    public function resolveNotificationUrlUsing(callable $billet, callable $pix): void
+    public function resolveCredentialsUsing(callable $api, callable $token): void
     {
-        $this->resolveBilletNotificationUrlUsing($billet);
-        $this->resolvePixNotificationUrlUsing($pix);
+        $this->resolveApiUsing($api);
+        $this->resolveTokenUsing($token);
     }
 
     public function resolveBilletNotificationUrlUsing(callable $callback): void
@@ -57,5 +51,11 @@ class PagHiper
     public function resolvePixNotificationUrlUsing(callable $callback): void
     {
         app()->singleton(ResolvePixNotificationUrl::class, fn () => new ResolvePixNotificationUrl($callback));
+    }
+
+    public function resolveNotificationUrlUsing(callable $billet, callable $pix): void
+    {
+        $this->resolveBilletNotificationUrlUsing($billet);
+        $this->resolvePixNotificationUrlUsing($pix);
     }
 }

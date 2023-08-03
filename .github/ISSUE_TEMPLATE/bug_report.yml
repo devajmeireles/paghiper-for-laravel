@@ -1,57 +1,55 @@
-name: Bug Report
-description: Report an Issue or Bug with the Package
+name: Report de Bug
+description: Reportar um problema ou um bug com o pacote
 title: "[Bug]: "
 labels: ["bug"]
 body:
     - type: markdown
       attributes:
           value: |
-              We're sorry to hear you have a problem. Can you help us solve it by providing the following details.
+              Lamentamos saber que você tem um problema. Você pode nos ajudar a resolvê-lo fornecendo os seguintes detalhes.
     - type: textarea
       id: what-happened
       attributes:
-          label: What happened?
-          description: What did you expect to happen?
-          placeholder: I cannot currently do X thing because when I do, it breaks X thing.
+          label: O que aconteceu?
+          description: O que aconteceu exatamente?
       validations:
           required: true
     - type: textarea
       id: how-to-reproduce
       attributes:
-          label: How to reproduce the bug
-          description: How did this occur, please add any config values used and provide a set of reliable steps if possible.
-          placeholder: When I do X I see Y.
+          label: Como reproduzir o bug
+          description: Como isso ocorreu, adicione quaisquer valores de configuração usados e forneça um conjunto de etapas confiáveis, se possível.
       validations:
           required: true
     - type: input
       id: package-version
       attributes:
-          label: Package Version
-          description: What version of our Package are you running? Please be as specific as possible
+          label: Versão do pacote
+          description: Qual versão do pacote você está utilizando?
           placeholder: 1.0.0
       validations:
           required: true
     - type: input
       id: php-version
       attributes:
-          label: PHP Version
-          description: What version of PHP are you running? Please be as specific as possible
+          label: Versão do PHP
+          description: Qual versão do PHP você está utilizando?
           placeholder: 8.1.0
       validations:
           required: true
     - type: input
       id: laravel-version
       attributes:
-          label: Laravel Version
-          description: What version of Laravel are you running? Please be as specific as possible
+          label: Versão do Laravel
+          description: Qual versão do Laravel você está utilizando?
           placeholder: 10.0.0
       validations:
           required: true
     - type: dropdown
       id: operating-systems
       attributes:
-          label: Which operating systems does with happen with?
-          description: You may select more than one.
+          label: Com quais sistemas operacionais acontece?
+          description: Você pode selecionar mais de um.
           multiple: true
           options:
               - macOS
@@ -60,7 +58,7 @@ body:
     - type: textarea
       id: notes
       attributes:
-          label: Notes
-          description: Use this field to provide any other notes that you feel might be relevant to the issue.
+          label: Observações
+          description: Use este campo para fornecer quaisquer outras observações que você considere relevantes para o problema.
       validations:
           required: false
