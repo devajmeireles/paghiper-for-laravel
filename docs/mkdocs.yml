@@ -1,4 +1,8 @@
 site_name: PagHiper for Laravel
+site_description: Integração da PagHiper com Laravel
+site_author: AJ Meireles
+repo_url: https://github.com/devajmeireles/paghiper-for-laravel/
+edit_uri: blob/main/docs/docs
 extra_css:
   - css/style.css
 theme:
@@ -9,3 +13,6 @@ theme:
     - php
   locale: pt_BR
   logo: images/logo.png
+  collapse_navigation: False
+  titles_only: True
+  sticky_navigation: False

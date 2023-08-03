@@ -1,18 +1,12 @@
-# Welcome to MkDocs
+# Boas-vindas
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Bem-vindo a documentação do pacote `PagHiper for Laravel`.
 
-## Commands
+`PagHiper for Laravel` é um pacote de código aberto, baseado na <a href="https://github.com/devajmeireles/paghiper-for-laravel/blob/main/LICENSE.md" target="_blank">licença MIT</a> criando por <a href="https://www.linkedin.com/in/devajmeireles/" target="_blank">AJ Meireles</a>, que visa adicionar a sua aplicação Laravel uma integração fácil com os principais recursos da PagHiper, sendo eles:
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-* `test` - Print help message and exit.
+- Integração Completa com Boleto Bancário
+- Integração Completa com PIX
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+<div class="alert alert-info">
+    Você pode contribuir para o pacote como desejar. <b><a href="/repositório/">Confira a sessão Contribuição</a></b>
+</div>
