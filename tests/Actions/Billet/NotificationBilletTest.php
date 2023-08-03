@@ -1,8 +1,9 @@
 <?php
 
 use DevAjMeireles\PagHiper\Actions\Billet\NotificationBillet;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\{Item, Payer};
-use DevAjMeireles\PagHiper\DTO\PagHiperNotification;
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\PagHiperBilletNotification;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
+use DevAjMeireles\PagHiper\DTO\Objects\{Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Http\Client\Response;
@@ -226,7 +227,7 @@ it('should be able to consult notification casting to notification dto', functio
         ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction);
 
     expect($notification)
-        ->toBeInstanceOf(PagHiperNotification::class)
+        ->toBeInstanceOf(PagHiperBilletNotification::class)
         ->and($notification->transactionId())
         ->toBe($transaction)
         ->and($notification->paid())

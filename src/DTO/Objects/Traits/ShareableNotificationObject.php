@@ -1,14 +1,15 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\DTO;
+namespace DevAjMeireles\PagHiper\DTO\Objects\Traits;
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Item, Billet\Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\PagHiperBilletNotification, Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\NotificationModelNotFoundException;
-use Illuminate\Database\Eloquent\{Model, ModelNotFoundException};
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\{Carbon, Collection};
 
-class PagHiperNotification
+trait ShareableNotificationObject
 {
     public function __construct(
         private readonly Response $response,
@@ -26,6 +27,11 @@ class PagHiperNotification
     public function original(): Response
     {
         return $this->response;
+    }
+
+    public function type(): string
+    {
+        return $this instanceof PagHiperBilletNotification ? 'billet' : 'pix';
     }
 
     public function transactionId(): string
@@ -128,6 +134,11 @@ class PagHiperNotification
         return $this->notification->get('open_after_day_due');
     }
 
+    public function shippingPriceCents(): int
+    {
+        return $this->notification->get('shipping_price_cents');
+    }
+
     public function discountCents(): int
     {
         return $this->notification->get('discount_cents');
@@ -143,9 +154,19 @@ class PagHiperNotification
         return Carbon::parse($this->notification->get('due_date'));
     }
 
+    public function dueDateTime(): Carbon
+    {
+        return Carbon::parse($this->notification->get('due_date_time'));
+    }
+
     public function bankSlip(): array
     {
-        return [...$this->notification->get('bank_slip')];
+        return [...$this->notification->get('bank_slip') ?? []];
+    }
+
+    public function pixCode(): array|false
+    {
+        return [...$this->notification->get('pix_code') ?? []];
     }
 
     public function items(): array|Item
@@ -166,12 +187,14 @@ class PagHiperNotification
 
     public function payer(): Payer
     {
-        return Payer::make()
+        $payer = Payer::make()
             ->set('name', $this->notification->get('payer_name'))
             ->set('email', $this->notification->get('payer_email'))
             ->set('cpf_cnpj', $this->notification->get('payer_cpf_cnpj'))
-            ->set('phone', $this->notification->get('payer_phone'))
-            ->set(
+            ->set('phone', $this->notification->get('payer_phone'));
+
+        if ($this instanceof PagHiperBilletNotification) {
+            $payer->set(
                 'address',
                 Address::make()
                     ->set('street', $this->notification->get('payer_street'))
@@ -182,9 +205,11 @@ class PagHiperNotification
                     ->set('state', $this->notification->get('payer_state'))
                     ->set('zip_code', $this->notification->get('payer_zip_code'))
             );
+        }
+
+        return $payer;
     }
 
-    /** @throws NotificationModelNotFoundException|ModelNotFoundException */
     public function modelable(bool $exception = true): Model|null
     {
         $order      = $this->orderId();

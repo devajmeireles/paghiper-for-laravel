@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Payer};
 
 it('should return valid payer instance using make with array', function () {
     expect(Payer::make([

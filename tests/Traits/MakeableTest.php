@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Item;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
 
 it('should only be able to set existent property value', function () {
     $item = Item::make()

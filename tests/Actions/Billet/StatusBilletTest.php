@@ -59,7 +59,7 @@ it('should be able to consult billet status casting to json', function () {
         ->toBe(collect($result)->toJson());
 });
 
-it('should be able to consult billet status casting to collection', function () {
+it('should be able to consult billet status casting to collection', function (Cast $cast) {
     $result = [
         'result'           => 'success',
         'response_message' => 'transacao encontrada',
@@ -77,10 +77,13 @@ it('should be able to consult billet status casting to collection', function () 
 
     fakeBilletResponse(StatusBillet::END_POINT, 'status_request', $result);
 
-    $status = (new PagHiper())->billet(Cast::Collection)->status('BPV661O7AVLORCN5');
+    $status = (new PagHiper())->billet($cast)->status('BPV661O7AVLORCN5');
 
     expect($status)->toBeInstanceOf(Collection::class);
-})->with(['collection', 'collect']);
+})->with([
+    Cast::Collect,
+    Cast::Collection,
+]);
 
 it('should be able to consult billet status casting to original response', function () {
     $result = [
@@ -102,7 +105,10 @@ it('should be able to consult billet status casting to original response', funct
 
     $status = (new PagHiper())->billet(Cast::Response)->status('BPV661O7AVLORCN5');
 
-    expect($status)->toBeInstanceOf(Response::class);
+    expect($status)
+        ->toBeInstanceOf(Response::class)
+        ->and($status->json('status_request'))
+        ->toBe($result);
 });
 
 it('should be able to throw exception due response reject', function () {

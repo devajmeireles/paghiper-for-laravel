@@ -12,3 +12,7 @@ parameters:
         -
             message: '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id#'
             path: src/Actions/Billet/CreateBillet.php
+
+        -
+            message: '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id#'
+            path: src/Actions/Pix/CreatePix.php

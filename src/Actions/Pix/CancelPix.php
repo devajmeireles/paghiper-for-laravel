@@ -1,20 +1,20 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Actions\Billet;
+namespace DevAjMeireles\PagHiper\Actions\Pix;
 
 use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 
-class CancelBillet
+class CancelPix
 {
-    public const END_POINT = 'transaction/cancel/';
+    public const END_POINT = 'invoice/cancel/';
 
     /** @throws PagHiperRejectException */
     public static function execute(string|Model $transaction): Response
     {
-        $response = Request::resource('billet')
+        $response = Request::resource('pix')
             ->execute(self::END_POINT, [
                 'status'         => 'canceled',
                 'transaction_id' => $transaction,

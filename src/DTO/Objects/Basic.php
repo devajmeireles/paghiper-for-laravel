@@ -1,6 +1,6 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\DTO\Objects\Billet;
+namespace DevAjMeireles\PagHiper\DTO\Objects;
 
 use DevAjMeireles\PagHiper\Traits\MakeableObject;
 use Illuminate\Contracts\Support\Arrayable;
@@ -13,6 +13,7 @@ class Basic implements Arrayable
         private ?string $order_id = null,
         private ?string $notification_url = null,
         private ?int $days_due_date = 2,
+        private ?int $minutes_due_date = null,
         private ?string $type_bank_slip = 'boletoA4',
         private ?int $discount_cents = 0,
         private ?int $shipping_price_cents = null,
@@ -36,6 +37,7 @@ class Basic implements Arrayable
             'order_id'                      => $this->order_id,
             'notification_url'              => $this->notification_url,
             'days_due_date'                 => $this->days_due_date,
+            'minutes_due_date'              => $this->minutes_due_date,
             'type_bank_slip'                => $this->type_bank_slip,
             'discount_cents'                => $this->discount_cents,
             'shipping_price_cents'          => $this->shipping_price_cents,

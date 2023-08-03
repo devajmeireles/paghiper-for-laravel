@@ -70,5 +70,8 @@
         "require_once"
       ]
     }
-  }
+  },
+  "notPath": [
+    "tests/Structure/StructureTest.php"
+  ]
 }

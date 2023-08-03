@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 
 it('should return valid basic instance using make with array', function () {
     expect(Basic::make([
@@ -16,6 +16,7 @@ it('should return valid basic instance using make with array', function () {
             'order_id'                      => '12345678901',
             'notification_url'              => $url,
             'days_due_date'                 => 10,
+            'minutes_due_date'              => null,
             'type_bank_slip'                => 'foo-bar',
             'discount_cents'                => 20000,
             'shipping_price_cents'          => null,
@@ -33,14 +34,15 @@ it('should return valid basic instance using make with array', function () {
 });
 
 it('should return valid basic instance using make with deconstruction', function () {
-    $payer = Basic::make('12345678901', $url = fake()->url(), 5, 'foo-bar', 1500);
+    $payer = Basic::make($id = fake()->numerify('##########'), $url = fake()->url(), 5, 5, 1500);
 
     expect($payer->toArray())->toBeArray()->toBe([
-        'order_id'                      => '12345678901',
+        'order_id'                      => $id,
         'notification_url'              => $url,
         'days_due_date'                 => 5,
-        'type_bank_slip'                => 'foo-bar',
-        'discount_cents'                => 1500,
+        'minutes_due_date'              => 5,
+        'type_bank_slip'                => '1500',
+        'discount_cents'                => 0,
         'shipping_price_cents'          => null,
         'shipping_methods'              => null,
         'partners_id'                   => null,
@@ -70,6 +72,7 @@ it('should be able to construct basic object using make and set', function () {
         'order_id'                      => '12345678901',
         'notification_url'              => $url,
         'days_due_date'                 => 55,
+        'minutes_due_date'              => null,
         'type_bank_slip'                => 'foo-bar-baz',
         'discount_cents'                => 2700,
         'shipping_price_cents'          => 123,

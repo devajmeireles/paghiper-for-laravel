@@ -13,7 +13,8 @@ enum Cast: string
     case Collect            = 'collect';
     case Collection         = 'collection';
     case Response           = 'response';
-    case BilletNotification = 'dto';
+    case BilletNotification = 'billet';
+    case PixNotification    = 'pix';
 
     /** @throws UnsupportedCastTypeExcetion */
     public function response(Response $response, string $index): Response|Collection|array|string
