@@ -41,7 +41,7 @@ class Pix
     {
         $response = NotificationPix::execute($notification, $transaction);
 
-        if ($this->cast === Cast::BilletNotification) {
+        if ($this->cast === Cast::PixNotification) {
             return PagHiperPixNotification::make($response);
         }
 

@@ -32,14 +32,7 @@ $model = new class () extends Model implements PagHiperModelAbstraction {
 
     public function pagHiperAddress(): array
     {
-        return [
-            'street'     => 'Foo Street',
-            'number'     => 123,
-            'complement' => 'Home',
-            'district'   => 'Bar District',
-            'city'       => 'Foo City',
-            'zip_code'   => '12345-678',
-        ];
+        return [];
     }
 };
 
