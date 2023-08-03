@@ -24,9 +24,7 @@ $billet = PagHiper::billet()
         Basic::make() // 👈
             ->set('order_id', 1433) 
             ->set('notification_url', route('paghiper.notification')) 
-            ->set('days_due_date', 2) 
-            ->set('type_bank_slip', 'boletoA4') 
-            ->set('discount_cents', 0),
+            ->set('days_due_date', 2),
         Payer::make() // 👈
             ->set('name', 'Joao Inácio da Silva') 
             ->set('email', 'joao.inacio@gmail.com') 
@@ -69,9 +67,7 @@ $billet = PagHiper::billet()
         Basic::make()
             ->set('order_id', 1433) 
             ->set('notification_url', route('paghiper.notification')) 
-            ->set('days_due_date', 2) 
-            ->set('type_bank_slip', 'boletoA4') 
-            ->set('discount_cents', 0),
+            ->set('days_due_date', 2),
         User::first(), // 👈
         Item::make()
             ->set('item_id', 12) 
@@ -142,9 +138,7 @@ $billet = PagHiper::billet()
         Basic::make()
             ->set('order_id', 1433) 
             ->set('notification_url', route('paghiper.notification')) 
-            ->set('days_due_date', 2) 
-            ->set('type_bank_slip', 'boletoA4') 
-            ->set('discount_cents', 0),
+            ->set('days_due_date', 2),
         Payer::make()
             ->set('name', 'Joao Inácio da Silva') 
             ->set('email', 'joao.inacio@gmail.com') 

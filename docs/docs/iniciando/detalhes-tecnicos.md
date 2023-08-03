@@ -1,6 +1,6 @@
 # Detalhes Técnicos
 
-`Paghiper for Laravel` foi criado para suportar aplicações Laravel a partir da versão 9, com PHP 8.1, no mais 
+`Paghiper for Laravel` foi criado para suportar aplicações Laravel a partir da versão 9, com PHP 8.0, no mais 
 alto padrão possível do PHP moderno, com cobertura de testes e fortemente tipado, garantindo estabilidade nas 
 funcionalidades.
 

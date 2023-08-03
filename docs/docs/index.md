@@ -7,6 +7,3 @@ Bem-vindo a documentação do pacote `PagHiper for Laravel`.
 - Integração Completa com Boleto Bancário
 - Integração Completa com PIX
 
-<div class="alert alert-info">
-    Você pode contribuir para o pacote como desejar. <b><a href="/repositório/">Confira a sessão Contribuição</a></b>
-</div>

@@ -1,12 +1,12 @@
 # Retorno Automático
 
 `Paghiper for Laravel` oferece uma forma fácil de lidar com o retorno automático. O retorno automático da PagHiper 
-ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notification_url` na criação do PIX, 
-ou para a URL definida via [resolvedor](../../iniciando/detalhes-tecnicos.md). Essa URL deve ser uma URL pública em sua 
+ocorrerá para a rota que você configurou no objeto `Basic`, no parâmetro `$notification_url` na criação do PIX, 
+ou para a rota definida via [resolvedor](../../iniciando/detalhes-tecnicos.md). Essa rota deve ser uma rota pública em sua 
 aplicação, e de preferência que não receba nenhum tratamento especial, por exemplo: middlewares, autenticação, etc.
 
-Supondo que você possui uma URL nomeada como `paghiper.notification` que aceita requisições `POST`, e que essa foi 
-a URL utilizada, então isso será suficiente:
+Supondo que você possui uma rota nomeada como `paghiper.notification` que aceita requisições `POST`, e que essa foi 
+a rota utilizada, então isso será suficiente:
 
 ```php
 // arquivo: routes/web.php
@@ -28,7 +28,7 @@ No exemplo acima, `$notification` será um array com os dados da notificação.
 ## Injetando o `\Illuminate\Http\Request`
 
 De forma auxiliar, você pode injetar uma instância de `\Illuminate\Http\Request` ao invés de ter que definir 
-manualmente os parâmetros da requisição:
+manualmente os parâmetros para o método `notification`:
 
 ```php
 // arquivo: routes/web.php
@@ -42,7 +42,7 @@ Route::post('/payment/notification', function (Request $request) {
 })->name('paghiper.notification');
 ```
 
-`PagHiper for Laravel` irá buscar os parâmetros necessários para a notificação por si próprio.
+`PagHiper for Laravel` irá buscar os parâmetros necessários para a notificação automaticamente.
 
 ### Cast Especial: `PixNotification`
 
@@ -69,37 +69,37 @@ Route::post('/payment/notification', function (Request $request) {
 public function original(): Response
 ```
 
-resposta original, instância de `\Illuminate\Http\Client\Response`
+👆 resposta original, instância de `\Illuminate\Http\Client\Response`
 
 ```php
 public function type(): string
 ```
 
-tipo da notificação, pode ser `billet` ou `pix`
+👆 tipo da notificação, pode ser `billet` ou `pix`
 
 ```php
 public function transactionId(): string
 ```
 
-id da transação
+👆 id da transação
 
 ```php
 public function orderId(): string
 ```
 
-`$order_id` da transação
+👆 `$order_id` da transação
 
 ```php
 public function createDate(): Carbon
 ```
 
-data de criação do pix como instância de `\Illuminate\Support\Carbon`
+👆 data de criação do pix como instância de `\Illuminate\Support\Carbon`
 
 ```php
 public function status(): string
 ```
 
-status da transação como string
+👆 status da transação como string
 
 ```php
 public function pending(): bool
@@ -111,7 +111,7 @@ public function processing(): bool
 public function refunded(): bool
 ```
 
-booleano para o status do pix
+👆 booleano para o status do pix
 
 ---
 
@@ -179,7 +179,7 @@ Ao utilizar o método `$notification->modelable()` `PagHiper for Laravel` irá r
 $user = $notification->modelable(); // 👈
 ```
 
-No exemplo acima, `$user` será uma instância de `\App\Models\User`.
+No exemplo acima, `$user` será uma instância de `\App\Models\User:1`.
 
 ## Tratamento de Excessão
 

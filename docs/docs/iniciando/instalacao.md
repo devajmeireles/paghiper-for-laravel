@@ -6,7 +6,7 @@ Para instalar o pacote `PagHiper for Laravel`, execute os seguintes comandos:
 composer require devajmeireles/paghiper-for-laravel
 ```
 
-E logo em seguida execute o comando:
+Em seguida execute o comando:
 
 ```shell
 php artisan paghiper:install

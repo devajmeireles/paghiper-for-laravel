@@ -5,7 +5,7 @@
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 
-$billet = PagHiper::pix()->create(/* ... */)
+$pix = PagHiper::pix()->create(/* ... */)
 ```
 
 ## Criando PIX
@@ -15,17 +15,14 @@ Para uma melhor organização, a forma de interagir com a criação de PIX é en
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\DTO\Objects\Basic; // 👈
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address; // 👈
 use DevAjMeireles\PagHiper\DTO\Objects\Item; // 👈
 use DevAjMeireles\PagHiper\DTO\Objects\Payer; // 👈
 
-$billet = PagHiper::pix()
+$pix = PagHiper::pix()
     ->create(
         Basic::make() // 👈
             ->set('order_id', 1433) 
             ->set('notification_url', route('paghiper.notification')) 
-            ->set('days_due_date', 2) 
-            ->set('type_bank_slip', 'boletoA4') 
             ->set('discount_cents', 0),
         Payer::make() // 👈
             ->set('name', 'Joao Inácio da Silva') 
@@ -54,13 +51,11 @@ use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 use DevAjMeireles\PagHiper\DTO\Objects\Item;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 
-$billet = PagHiper::pix()
+$pix = PagHiper::pix()
     ->create(
         Basic::make()
             ->set('order_id', 1433) 
             ->set('notification_url', route('paghiper.notification')) 
-            ->set('days_due_date', 2) 
-            ->set('type_bank_slip', 'boletoA4') 
             ->set('discount_cents', 0),
         User::first(), // 👈
         Item::make()
@@ -117,17 +112,14 @@ Você também pode enviar um array de itens:
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\DTO\Objects\Basic;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
 use DevAjMeireles\PagHiper\DTO\Objects\Item;
 use DevAjMeireles\PagHiper\DTO\Objects\Payer;
 
-$billet = PagHiper::pix()
+$pix = PagHiper::pix()
     ->create(
         Basic::make()
             ->set('order_id', 1433) 
             ->set('notification_url', route('paghiper.notification')) 
-            ->set('days_due_date', 2) 
-            ->set('type_bank_slip', 'boletoA4') 
             ->set('discount_cents', 0),
         Payer::make()
             ->set('name', 'Joao Inácio da Silva') 
