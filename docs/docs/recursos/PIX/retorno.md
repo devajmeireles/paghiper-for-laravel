@@ -1,7 +1,7 @@
 # Retorno Automático
 
 `Paghiper for Laravel` oferece uma forma fácil de lidar com o retorno automático. O retorno automático da PagHiper 
-ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notification_url` na criação do boleto bancário, 
+ocorrerá para a URL que você configurou no objeto `Basic`, no parâmetro `$notification_url` na criação do PIX, 
 ou para a URL definida via [resolvedor](../../iniciando/detalhes-tecnicos.md). Essa URL deve ser uma URL pública em sua 
 aplicação, e de preferência que não receba nenhum tratamento especial, por exemplo: middlewares, autenticação, etc.
 
@@ -19,7 +19,7 @@ Route::post('/payment/notification', function (Request $request) {
     $notification = $request->input('notification_id'); // 👈 enviado pelo PagHiper
     $transaction  = $request->input('transaction_id');  // 👈 enviado pelo PagHiper
 
-    $notification = PagHiper::billet()->notification($notification, $transaction);
+    $notification = PagHiper::pix()->notification($notification, $transaction);
 })->name('paghiper.notification');
 ```
 
@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 
 Route::post('/payment/notification', function (Request $request) {
-    $notification = PagHiper::billet()->notification($request);
+    $notification = PagHiper::pix()->notification($request);
 })->name('paghiper.notification');
 ```
 
@@ -93,7 +93,7 @@ public function orderId(): string
 public function createDate(): Carbon
 ```
 
-data de criação do boleto como instância de `\Illuminate\Support\Carbon`
+data de criação do pix como instância de `\Illuminate\Support\Carbon`
 
 ```php
 public function status(): string
@@ -111,36 +111,32 @@ public function processing(): bool
 public function refunded(): bool
 ```
 
-booleano para o status do boleto
+booleano para o status do pix
 
 ---
 
 Os demais métodos seguem a <a href="https://dev.paghiper.com/reference/notificao-automatica" target="_blank">convenção de nomes da PagHiper</a>:
 
 ```php
+public function dueDateTime(): \Illuminate\Support\Carbon
 public function paidDate(): \Illuminate\Support\Carbon
 public function valueCents(): int
 public function valueFeeCents(): int
 public function valueCentsPaid(): int
-public function latePaymentFine(): int
-public function perDayInterest(): bool
-public function earlyPaymentDiscountsDays(): int
-public function earlyPaymentDiscountsCents(): int
-public function openAfterDayDue(): int
 public function shippingPriceCents(): int
 public function discountCents(): int
 public function numCartItems(): int
 public function dueDate(): \Illuminate\Support\Carbon
-public function bankSlip(): array
+public function pixCode(): array
 public function items(): array|\DevAjMeireles\PagHiper\DTO\Objects\Item
 public function payer(): \DevAjMeireles\PagHiper\DTO\Objects\Payer
 ```
 
 ## Método Especial: `modelable`
 
-De forma estratégica, ao passar uma instância de um modelador do Laravel como `Payer` do boleto bancário, o `order_id` na PagHiper receberá uma referência da classe e ID do modelador para que posteriormente no retorno automático você possa utilizar o método `modelable` para obter o modelador facilmente.
+De forma estratégica, ao passar uma instância de um modelador do Laravel como `Payer` do PIX, o `order_id` na PagHiper receberá uma referência da classe e ID do modelador para que posteriormente no retorno automático você possa utilizar o método `modelable` para obter o modelador facilmente.
 
-Essa abordagem fará com que o `order_id` do boleto bancário fique, por exemplo, da seguinte maneira na PagHiper: `11|App\Model\User:1`, onde `11` é o número do `$order_id` que você especificou na criação da classe `Basic`. Não há preocupação enquanto a este formato, uma vez que o `order_id` do boleto bancário é para uso interno, e não é exibido ao cliente.
+Essa abordagem fará com que o `order_id` PIX fique, por exemplo, da seguinte maneira na PagHiper: `11|App\Model\User:1`, onde `11` é o número do `$order_id` que você especificou na criação da classe `Basic`. Não há preocupação enquanto a este formato, uma vez que o `order_id` do PIX é para uso interno, e não é exibido ao cliente.
 
 Dessa forma você então poderá utilizar o método `modelable`:
 
@@ -155,12 +151,11 @@ use Illuminate\Support\Facades\Route;
 
 // criando o boleto para o modelador User:1 👇
 
-$billet = PagHiper::billet()
+$billet = PagHiper::pix()
     ->create(
         Basic::make()
             ->set('order_id', 1433)  
-            ->set('days_due_date', 2) 
-            ->set('type_bank_slip', 'boletoA4') 
+            ->set('days_due_date', 2)  
             ->set('discount_cents', 0),
         User::find(1), // 👈
         Item::make()
@@ -172,7 +167,7 @@ $billet = PagHiper::billet()
 // retorno automático 👇
 
 Route::post('/payment/notification', function (Request $request) {
-    $notification = PagHiper::billet(Cast::BilletNotification) // 👈
+    $notification = PagHiper::billet(Cast::PixNotification) // 👈
         ->notification($request);
 })->name('paghiper.notification');
 ```

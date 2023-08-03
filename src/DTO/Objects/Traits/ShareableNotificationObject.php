@@ -164,7 +164,7 @@ trait ShareableNotificationObject
         return [...$this->notification->get('bank_slip') ?? []];
     }
 
-    public function pixCode(): array|false
+    public function pixCode(): array
     {
         return [...$this->notification->get('pix_code') ?? []];
     }
