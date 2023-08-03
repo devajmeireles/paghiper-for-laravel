@@ -45,7 +45,7 @@ final class Request
             $params['notification_url'] = $url;
         }
 
-        if ($params['notification_url'] === null) {
+        if (str($endpoint)->contains('create/') && empty(data_get($params, 'notification_url'))) {
             throw new UnallowedEmptyNotificationUrl();
         }
 

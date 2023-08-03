@@ -10,13 +10,13 @@ class Address implements Arrayable
     use MakeableObject;
 
     public function __construct(
-        private readonly ?string $street = null,
-        private readonly ?string $number = null,
-        private readonly ?string $complement = null,
-        private readonly ?string $district = null,
-        private readonly ?string $city = null,
-        private readonly ?string $state = null,
-        private readonly ?string $zip_code = null,
+        private ?string $street = null,
+        private ?string $number = null,
+        private ?string $complement = null,
+        private ?string $district = null,
+        private ?string $city = null,
+        private ?string $state = null,
+        private ?string $zip_code = null,
     ) {
         //
     }

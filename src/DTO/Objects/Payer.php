@@ -11,11 +11,11 @@ class Payer implements Arrayable
     use MakeableObject;
 
     public function __construct(
-        private readonly ?string $name = null,
-        private readonly ?string $email = null,
-        private readonly ?string $cpf_cnpj = null,
-        private readonly ?string $phone = null,
-        private readonly ?Address $address = null,
+        private ?string $name = null,
+        private ?string $email = null,
+        private ?string $cpf_cnpj = null,
+        private ?string $phone = null,
+        private ?Address $address = null,
     ) {
         //
     }

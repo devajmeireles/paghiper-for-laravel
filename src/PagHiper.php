@@ -3,6 +3,7 @@
 namespace DevAjMeireles\PagHiper;
 
 use DevAjMeireles\PagHiper\Enums\Cast;
+use DevAjMeireles\PagHiper\Exceptions\UnsupportedCastTypeExcetion;
 use DevAjMeireles\PagHiper\Resolvers\Billet\{ResolveBilletNotificationUrl};
 use DevAjMeireles\PagHiper\Resolvers\{Pix\ResolvePixNotificationUrl, ResolveToken, ResolverApi};
 
@@ -10,11 +11,19 @@ class PagHiper
 {
     public function billet(Cast $cast = Cast::Array): Billet
     {
+        if ($cast === Cast::PixNotification) {
+            throw new UnsupportedCastTypeExcetion($cast->name);
+        }
+
         return new Billet($cast);
     }
 
     public function pix(Cast $cast = Cast::Array): Pix
     {
+        if ($cast === Cast::BilletNotification) {
+            throw new UnsupportedCastTypeExcetion($cast->name);
+        }
+
         return new Pix($cast);
     }
 
