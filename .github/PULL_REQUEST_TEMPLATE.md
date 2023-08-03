@@ -3,7 +3,6 @@ O PR está sujeito a ser negado se:
 - O PR contiver mudanças irrelevantes, inúteis ou desnecessárias
 - O código não for escrito em inglês
 - O código não seguir a PSR12
-- O código não ter sido formatado usando Laravel Pint
 - O código não possuir testes ou os testes falharem
 -->
 
