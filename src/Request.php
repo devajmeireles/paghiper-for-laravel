@@ -3,7 +3,7 @@
 namespace DevAjMeireles\PagHiper;
 
 use DevAjMeireles\PagHiper\Resolvers\Billet\{ResolveBilletNotificationUrl};
-use DevAjMeireles\PagHiper\Resolvers\{ResolveToken, ResolverApi};
+use DevAjMeireles\PagHiper\Resolvers\{Pix\ResolvePixNotificationUrl, ResolveToken, ResolverApi};
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use RuntimeException;
@@ -11,6 +11,8 @@ use RuntimeException;
 final class Request
 {
     public const PAGHIPER_BASE_URL = 'https://{resource}.paghiper.com/';
+
+    protected static string $base;
 
     protected static string $resource;
 
@@ -24,7 +26,8 @@ final class Request
         }
 
         $class            = new self();
-        $class::$resource = str(self::PAGHIPER_BASE_URL)->replace('{resource}', $resource);
+        $class::$base     = str(self::PAGHIPER_BASE_URL)->replace('{resource}', $resource)->value();
+        $class::$resource = $resource;
 
         return $class;
     }
@@ -33,14 +36,16 @@ final class Request
     {
         $api   = app(ResolverApi::class)->resolve();
         $token = app(ResolveToken::class)->resolve();
-        $url   = app(ResolveBilletNotificationUrl::class)->resolve();
+        $url   = self::$resource === 'api'
+            ? app(ResolveBilletNotificationUrl::class)->resolve()
+            : app(ResolvePixNotificationUrl::class)->resolve();
 
         if ($url) {
             $params['notification_url'] = $url;
         }
 
         $client = Http::timeout(10)
-            ->baseUrl(self::$resource)
+            ->baseUrl(self::$base)
             ->withHeaders([
                 'Accept'          => 'application/json',
                 'Accept-Encoding' => 'application/json',
@@ -57,6 +62,6 @@ final class Request
 
     public static function url(string $path): string
     {
-        return self::$resource . $path;
+        return self::$base . $path;
     }
 }
