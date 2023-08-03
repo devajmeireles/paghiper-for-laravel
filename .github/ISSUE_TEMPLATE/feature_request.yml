@@ -1,0 +1,42 @@
+name: Sugestão de Melhoria
+description: Sugerir um recurso, melhoria ou aprimoramento
+title: "[Sugestão]: "
+labels: ["feature request"]
+body:
+    - type: textarea
+      id: suggestion
+      attributes:
+          label: Sugestão
+          description: O que você deseja sugerir?
+      validations:
+          required: true
+    - type: input
+      id: php-version
+      attributes:
+          label: Versão do PHP
+          description: Para qual versão de PHP a sugestão se aplica?
+          placeholder: 8.1.0
+      validations:
+          required: true
+    - type: input
+      id: laravel-version
+      attributes:
+          label: Versão do Laravel
+          description: Para qual versão de Laravel a sugestão se aplica?
+          placeholder: 10.0.0
+      validations:
+          required: true
+    - type: dropdown
+      id: help-us
+      attributes:
+          label: Você pode nos ajudar, caso a sugestão seja aceita?
+          options:
+              - Sim
+              - Não
+    - type: textarea
+      id: notes
+      attributes:
+          label: Observações
+          description: Use este campo para fornecer quaisquer outras observações que você considere relevantes para a sugestão.
+      validations:
+          required: false
