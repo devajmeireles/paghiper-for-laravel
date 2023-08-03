@@ -1,6 +1,7 @@
 # Cast das Respostas
 
-Para facilitar a sua interação com as respostas dadas pela PagHiper, o `Paghiper for Laravel` oferece diversos casts diferentes, sendo eles:
+Para facilitar a sua interação com as respostas dadas pela PagHiper, o `Paghiper for Laravel` oferece diversos casts 
+diferentes que visam interceptar a resposta e transforma-lá em algo, sendo eles:
 
 - **Array**: resposta convertida para `array`
 - **Json**: resposta convertida para `json`

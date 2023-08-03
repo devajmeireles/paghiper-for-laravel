@@ -169,4 +169,4 @@ $billet = PagHiper::billet()
 
 ## Casts
 
-Você pode usar os [casts](../Utilidades/casts.md) disponíveis para transformar a resposta.
+Você pode usar [casts](../Utilidades/casts.md) disponíveis para transformar a resposta.
