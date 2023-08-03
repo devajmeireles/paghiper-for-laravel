@@ -45,8 +45,8 @@ it('facade should be mocked', function () {
     expect(PagHiper::billet()->status($transaction))->toBe(['status_result' => $result]);
 });
 
-it('smart resolver credentials should work successfully', function () {
-    PagHiper::resolveCredentials(
+test('smart resolver credentials should work successfully', function () {
+    PagHiper::resolveCredentialsUsing(
         api: fn () => 'foo-api',
         token: fn () => 'foo-token',
     );
@@ -57,7 +57,7 @@ it('smart resolver credentials should work successfully', function () {
         ->toBe('foo-token');
 });
 
-it('smart resolver urls should work successfully', function () {
+test('smart resolver urls should work successfully', function () {
     PagHiper::resolveNotificationUrlUsing(
         billet: fn () => 'foo-billet-url',
         pix: fn () => 'foo-pix-url',
