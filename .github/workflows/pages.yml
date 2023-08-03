@@ -6,21 +6,15 @@ on:
         paths:
             - "docs/**"
 jobs:
-    build:
+    jekyll_build:
         runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: docs
+        env:
+            BUNDLE_GEMFILE: ${{ github.workspace }}/docs/Gemfile
         steps:
-            - name: Setup Ruby
-              uses: ruby/setup-ruby@v1
+            - uses: actions/checkout@v2
+            - uses: ruby/setup-ruby@v1
               with:
-                  ruby-version: '3.1'
-                  bundler-cache: true
-                  cache-version: 0
-                  working-directory: '${{ github.workspace }}/docs'
-            - name: Upload artifact
-              uses: actions/upload-pages-artifact@v1
-              with:
-                  path: "docs/_site/"
-
+                  ruby-version: 2.6 # Not needed with a .ruby-version file
+                  bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+            # - run: bundle exec htmlproofer _site --assume-extension --disable-external
+            - run: bundle exec jekyll build -s docs -d _site --config docs/_config.yml
