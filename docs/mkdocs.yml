@@ -1,0 +1,11 @@
+site_name: PagHiper for Laravel
+extra_css:
+  - css/style.css
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_style: vs2015
+  hljs_languages:
+    - php
+  locale: pt_BR
+  logo: images/logo.png
