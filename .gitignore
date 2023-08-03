@@ -4,6 +4,7 @@
 build/
 vendor/
 coverage/
+docs/site/
 node_modules
 workspace
 .phpunit.cache/
