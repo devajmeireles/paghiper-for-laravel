@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt_BR" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="AJ Meireles" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Criando - PagHiper for Laravel</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs.min.css" />
+        <link href="../../../css/style.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Criando";
+        var mkdocs_page_input_path = "recursos/boleto/criando.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/php.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../..">
+          <img src="../../../images/logo.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Boas-vindas</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Iniciando</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../iniciando/detalhes-tecnicos/">Detalhes Técnicos</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../iniciando/instalacao/">Instalação</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Recursos</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Boleto Bancário</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Criando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../status/">Status</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cancelando/">Cancelando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../retorno/">Retorno Automático</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">PIX</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../pix/criando/">Criando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../pix/status/">Status</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../pix/cancelando/">Cancelando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../pix/retorno/">Retorno Automático</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Utilidades</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../utilidades/casts/">Casts</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tratamento de Erros</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../erros/excessoes/">Excessões</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Repositório</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../repositorio/contribuicao/">Contribuição</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">PagHiper for Laravel</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>Recursos &raquo;</li>
+          <li>Boleto Bancário &raquo;</li>
+      <li class="breadcrumb-item active">Criando</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/devajmeireles/paghiper-for-laravel/blob/main/docs/docs/recursos/boleto/criando.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="criando">Criando</h1>
+<h2 id="sintaxe">Sintaxe</h2>
+<pre><code class="language-php">use DevAjMeireles\PagHiper\Facades\PagHiper;
+
+$billet = PagHiper::billet()-&gt;create(/* ... */)
+</code></pre>
+<h2 id="criando-boleto">Criando Boleto</h2>
+<p>Para uma melhor organização, a forma de interagir com a criação de boletos é enviando para o método <code>create</code> quatro (4) instâncias de classes de objeto:</p>
+<pre><code class="language-php">use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Item; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Payer; // 👈
+
+$billet = PagHiper::billet()
+    -&gt;create(
+        Basic::make() // 👈
+            -&gt;set('order_id', 1433) 
+            -&gt;set('notification_url', route('paghiper.notification')) 
+            -&gt;set('days_due_date', 2),
+        Payer::make() // 👈
+            -&gt;set('name', 'Joao Inácio da Silva') 
+            -&gt;set('email', 'joao.inacio@gmail.com') 
+            -&gt;set('cpf_cnpj', '99279725041') 
+            -&gt;set('phone', '11985850505')
+            -&gt;set(
+                'address', Address::make() // 👈
+                    -&gt;set('street', 'Rua Alameda Barão de Limeira')
+                    -&gt;set('number', 102)
+                    -&gt;set('complement', 'Casa')
+                    -&gt;set('district', 'São Vicente')
+                    -&gt;set('city', 'São Paulo')
+                    -&gt;set('state', 'São Paulo')
+                    -&gt;set('zip_code', '13332251')
+            ),
+        Item::make() // 👈
+            -&gt;set('item_id', 12) 
+            -&gt;set('description', 'Kit de Malas de Viagem') 
+            -&gt;set('quantity', 1) 
+            -&gt;set('price_cents', 25000));
+</code></pre>
+<h3 id="observacoes">Observações</h3>
+<ol>
+<li>O método <code>set</code> irá procurar pela propriedade e só definirá o seu valor caso encontre a propriedade na classe que está sendo construída pelo método <code>make</code>.</li>
+<li>O nome das propriedades deve seguir exatamente a <a href="https://dev.paghiper.com/reference/especificacoes-dos-campos-que-devem-ser-enviados-na-requisicao-boleto" target="_blank">convenção de nome das propriedades de boleto bancário da PagHiper</a></li>
+</ol>
+<h2 id="usando-modelador-do-laravel">Usando Modelador do Laravel</h2>
+<p>Opcionalmente, você pode usar um modelador do Laravel como <code>Payer</code> do boleto:</p>
+<pre><code class="language-php">use App\Models\User; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+
+$billet = PagHiper::billet()
+    -&gt;create(
+        Basic::make()
+            -&gt;set('order_id', 1433) 
+            -&gt;set('notification_url', route('paghiper.notification')) 
+            -&gt;set('days_due_date', 2),
+        User::first(), // 👈
+        Item::make()
+            -&gt;set('item_id', 12) 
+            -&gt;set('description', 'Kit de Malas de Viagem') 
+            -&gt;set('quantity', 1) 
+            -&gt;set('price_cents', 25000));
+</code></pre>
+<p>Para utilizar a abordagem, acima seu modelador deve implementar a interface <code>PagHiperModelAbstraction</code>, a qual exigirá que os seguintes métodos sejam criados na classe do modelador:</p>
+<pre><code class="language-php">namespace App\Models;
+
+use DevAjMeireles\PagHiper\Contracts\PagHiperModelAbstraction; // 👈
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model implements PagHiperModelAbstraction // 👈
+{
+    // ...
+
+    public function pagHiperName(): string
+    {
+        return 'Joao Inácio da Silva';
+    }
+
+    public function pagHiperEmail(): string
+    {
+        return 'joao.inacio@gmail.com';
+    }
+
+    public function pagHiperCpfCnpj(): string
+    {
+        return '99279725041';
+    }
+
+    public function pagHiperPhone(): string
+    {
+        return '11985850505';
+    }
+
+    public function pagHiperAddress(): array
+    {
+        return [
+            'street'     =&gt; 'Rua Alameda Barão de Limeira',
+            'number'     =&gt; 102,
+            'complement' =&gt; 'Casa',
+            'district'   =&gt; 'São Vicente',
+            'city'       =&gt; 'São Paulo',
+            'zip_code'   =&gt; '13332251',
+        ];
+    }
+};
+</code></pre>
+<h2 id="multiplos-itens">Multiplos Itens</h2>
+<p>Você também pode enviar um array de itens:</p>
+<pre><code class="language-php">use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
+use DevAjMeireles\PagHiper\DTO\Objects\Payer;
+
+$billet = PagHiper::billet()
+    -&gt;create(
+        Basic::make()
+            -&gt;set('order_id', 1433) 
+            -&gt;set('notification_url', route('paghiper.notification')) 
+            -&gt;set('days_due_date', 2),
+        Payer::make()
+            -&gt;set('name', 'Joao Inácio da Silva') 
+            -&gt;set('email', 'joao.inacio@gmail.com') 
+            -&gt;set('cpf_cnpj', '99279725041') 
+            -&gt;set('phone', '11985850505')
+            -&gt;set(
+                'address', Address::make()
+                    -&gt;set('street', 'Rua Alameda Barão de Limeira')
+                    -&gt;set('number', 102)
+                    -&gt;set('complement', 'Casa')
+                    -&gt;set('district', 'São Vicente')
+                    -&gt;set('city', 'São Paulo')
+                    -&gt;set('state', 'São Paulo')
+                    -&gt;set('zip_code', '13332251')
+            ),
+            [
+                Item::make()-&gt;set('item_id', 12)-&gt;set('description', 'Kit de Malas de Viagem')-&gt;set('quantity', 1)-&gt;set('price_cents', 25000), 
+                Item::make()-&gt;set('item_id', 12)-&gt;set('description', 'Protetor de Malas (100x100)')-&gt;set('quantity', 3)-&gt;set('price_cents', 3550), 
+            ]   
+        );
+</code></pre>
+<h2 id="casts">Casts</h2>
+<p>Você pode usar <a href="../../utilidades/casts/">casts</a> disponíveis para transformar a resposta.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../../iniciando/instalacao/" class="btn btn-neutral float-left" title="Instalação"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../status/" class="btn btn-neutral float-right" title="Status">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/devajmeireles/paghiper-for-laravel/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../../iniciando/instalacao/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../status/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(false);
+        });
+    </script>
+
+</body>
+</html>

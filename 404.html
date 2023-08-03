@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="AJ Meireles" />
       <link rel="shortcut icon" href="/img/favicon.ico" />
     <title>PagHiper for Laravel</title>
     <link rel="stylesheet" href="/css/theme.css" />
     <link rel="stylesheet" href="/css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs.min.css" />
         <link href="/css/style.css" rel="stylesheet" />
     
     <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/php.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
       <script>hljs.highlightAll();</script> 
 </head>
 
@@ -36,8 +37,58 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="/.">Welcome to MkDocs</a>
+                <li class="toctree-l1"><a class="reference internal" href="/.">Boas-vindas</a>
                 </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Iniciando</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="/iniciando/detalhes-tecnicos/">Detalhes Técnicos</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="/iniciando/instalacao/">Instalação</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Recursos</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Boleto Bancário</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="/recursos/boleto/criando/">Criando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/recursos/boleto/status/">Status</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/recursos/boleto/cancelando/">Cancelando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/recursos/boleto/retorno/">Retorno Automático</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">PIX</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="/recursos/pix/criando/">Criando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/recursos/pix/status/">Status</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/recursos/pix/cancelando/">Cancelando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/recursos/pix/retorno/">Retorno Automático</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Utilidades</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="/recursos/utilidades/casts/">Casts</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tratamento de Erros</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="/erros/excessoes/">Excessões</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Repositório</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="/repositorio/contribuicao/">Contribuição</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -89,6 +140,10 @@
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
     
+        <span>
+          <a href="https://github.com/devajmeireles/paghiper-for-laravel/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
     
     
   </span>
@@ -100,7 +155,7 @@
       <script src="/search/main.js"></script>
     <script>
         jQuery(function () {
-            SphinxRtdTheme.Navigation.enable(true);
+            SphinxRtdTheme.Navigation.enable(false);
         });
     </script>
 

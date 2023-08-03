@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt_BR" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="AJ Meireles" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Casts - PagHiper for Laravel</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs.min.css" />
+        <link href="../../../css/style.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Casts";
+        var mkdocs_page_input_path = "recursos/utilidades/casts.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/php.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../..">
+          <img src="../../../images/logo.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Boas-vindas</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Iniciando</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../iniciando/detalhes-tecnicos/">Detalhes Técnicos</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../iniciando/instalacao/">Instalação</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Recursos</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="#">Boleto Bancário</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../boleto/criando/">Criando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../boleto/status/">Status</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../boleto/cancelando/">Cancelando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../boleto/retorno/">Retorno Automático</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">PIX</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../pix/criando/">Criando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../pix/status/">Status</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../pix/cancelando/">Cancelando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../pix/retorno/">Retorno Automático</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Utilidades</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Casts</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tratamento de Erros</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../erros/excessoes/">Excessões</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Repositório</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../repositorio/contribuicao/">Contribuição</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">PagHiper for Laravel</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>Recursos &raquo;</li>
+          <li>Utilidades &raquo;</li>
+      <li class="breadcrumb-item active">Casts</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/devajmeireles/paghiper-for-laravel/blob/main/docs/docs/recursos/utilidades/casts.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="cast-das-respostas">Cast das Respostas</h1>
+<p>Para facilitar a sua interação com as respostas dadas pela PagHiper, o <code>Paghiper for Laravel</code> oferece diversos casts 
+diferentes que visam interceptar a resposta e transforma-lá em algo, sendo eles:</p>
+<ul>
+<li><strong>Array</strong>: resposta convertida para <code>array</code></li>
+<li><strong>Json</strong>: resposta convertida para <code>json</code></li>
+<li><strong>Collect</strong> ou <strong>Collection</strong>: resposta convertida para <code>Illuminate\Support\Collection</code></li>
+<li><strong>Response</strong>: objeto original da resposta, <code>Illuminate\Http\Client\Response</code></li>
+</ul>
+<div class="alert alert-success">
+    Os casts estão disponíveis tanto para interação com Boleto Bancário como PIX.
+</div>
+
+<pre><code class="language-php">use DevAjMeireles\PagHiper\Facades\PagHiper;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
+use DevAjMeireles\PagHiper\Enums\Cast; // 👈
+
+$billet = PagHiper::billet(Cast::Collection) // 👈
+    -&gt;create(
+        Basic::make()
+            -&gt;set('order_id', 1433) 
+            -&gt;set('notification_url', route('paghiper.notification')) 
+            -&gt;set('days_due_date', 2) 
+            -&gt;set('type_bank_slip', 'boletoA4') 
+            -&gt;set('discount_cents', 0),
+        Payer::make()
+            -&gt;set('name', 'Joao Inácio da Silva') 
+            -&gt;set('email', 'joao.inacio@gmail.com') 
+            -&gt;set('cpf_cnpj', '123.456.789-00') 
+            -&gt;set('phone', '11985850505')
+            -&gt;set(
+                'address', Address::make()
+                    -&gt;set('street', 'Rua Alameda Barão de Limeira')
+                    -&gt;set('number', 102)
+                    -&gt;set('complement', 'Casa')
+                    -&gt;set('district', 'São Vicente')
+                    -&gt;set('city', 'São Paulo')
+                    -&gt;set('state', 'São Paulo')
+                    -&gt;set('zip_code', '13332251')
+            ),
+        Item::make()
+            -&gt;set('item_id', 12) 
+            -&gt;set('description', 'Kit de Malas de Viagem') 
+            -&gt;set('quantity', 1) 
+            -&gt;set('price_cents', 25000));
+</code></pre>
+<p>No exemplo acima, <code>$billet</code> passa a ser uma instância de <code>Illuminate\Support\Collection</code>. Se não definido, 
+todas as respostas receberão o cast <code>Array</code>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../pix/retorno/" class="btn btn-neutral float-left" title="Retorno Automático"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../../erros/excessoes/" class="btn btn-neutral float-right" title="Excessões">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/devajmeireles/paghiper-for-laravel/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../pix/retorno/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../../erros/excessoes/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(false);
+        });
+    </script>
+
+</body>
+</html>

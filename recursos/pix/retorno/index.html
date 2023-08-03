@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt_BR" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="AJ Meireles" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Retorno Automático - PagHiper for Laravel</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs.min.css" />
+        <link href="../../../css/style.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Retorno Autom\u00e1tico";
+        var mkdocs_page_input_path = "recursos/pix/retorno.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/php.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../..">
+          <img src="../../../images/logo.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Boas-vindas</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Iniciando</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../iniciando/detalhes-tecnicos/">Detalhes Técnicos</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../iniciando/instalacao/">Instalação</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Recursos</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="#">Boleto Bancário</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../boleto/criando/">Criando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../boleto/status/">Status</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../boleto/cancelando/">Cancelando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../boleto/retorno/">Retorno Automático</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">PIX</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../criando/">Criando</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../status/">Status</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cancelando/">Cancelando</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Retorno Automático</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Utilidades</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../utilidades/casts/">Casts</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tratamento de Erros</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../erros/excessoes/">Excessões</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Repositório</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../repositorio/contribuicao/">Contribuição</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">PagHiper for Laravel</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>Recursos &raquo;</li>
+          <li>PIX &raquo;</li>
+      <li class="breadcrumb-item active">Retorno Automático</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/devajmeireles/paghiper-for-laravel/blob/main/docs/docs/recursos/pix/retorno.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="retorno-automatico">Retorno Automático</h1>
+<p><code>Paghiper for Laravel</code> oferece uma forma fácil de lidar com o retorno automático. O retorno automático da PagHiper 
+ocorrerá para a rota que você configurou no objeto <code>Basic</code>, no parâmetro <code>$notification_url</code> na criação do PIX, 
+ou para a rota definida via <a href="../../../iniciando/detalhes-tecnicos/">resolvedor</a>. Essa rota deve ser uma rota pública em sua 
+aplicação, e de preferência que não receba nenhum tratamento especial, por exemplo: middlewares, autenticação, etc.</p>
+<p>Supondo que você possui uma rota nomeada como <code>paghiper.notification</code> que aceita requisições <code>POST</code>, e que essa foi 
+a rota utilizada, então isso será suficiente:</p>
+<pre><code class="language-php">// arquivo: routes/web.php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+
+Route::post('/payment/notification', function (Request $request) {
+    $notification = $request-&gt;input('notification_id'); // 👈 enviado pelo PagHiper
+    $transaction  = $request-&gt;input('transaction_id');  // 👈 enviado pelo PagHiper
+
+    $notification = PagHiper::pix()-&gt;notification($notification, $transaction);
+})-&gt;name('paghiper.notification');
+</code></pre>
+<p>No exemplo acima, <code>$notification</code> será um array com os dados da notificação.</p>
+<h2 id="injetando-o-illuminatehttprequest">Injetando o <code>\Illuminate\Http\Request</code></h2>
+<p>De forma auxiliar, você pode injetar uma instância de <code>\Illuminate\Http\Request</code> ao invés de ter que definir 
+manualmente os parâmetros para o método <code>notification</code>:</p>
+<pre><code class="language-php">// arquivo: routes/web.php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+
+Route::post('/payment/notification', function (Request $request) {
+    $notification = PagHiper::pix()-&gt;notification($request);
+})-&gt;name('paghiper.notification');
+</code></pre>
+<p><code>PagHiper for Laravel</code> irá buscar os parâmetros necessários para a notificação automaticamente.</p>
+<h3 id="cast-especial-pixnotification">Cast Especial: <code>PixNotification</code></h3>
+<p>De forma especial para o retorno automático, <code>Paghiper for Laravel</code> oferece o cast <code>PixNotification</code>, que quando
+utilizado irá mapear a resposta da PagHiper para uma classe de objeto contendo muitos métodos úteis:</p>
+<pre><code class="language-php">// routes/web.php
+
+use Illuminate\Http\Request;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use Illuminate\Support\Facades\Route;
+use DevAjMeireles\PagHiper\Enums\Cast; // 👈
+
+Route::post('/payment/notification', function (Request $request) {
+    $notification = PagHiper::pix(Cast::PixNotification) // 👈
+        -&gt;notification($request);
+})-&gt;name('paghiper.notification');
+</code></pre>
+<h3 id="metodos-disponiveis">Métodos Disponíveis:</h3>
+<pre><code class="language-php">public function original(): Response
+</code></pre>
+<p>👆 resposta original, instância de <code>\Illuminate\Http\Client\Response</code></p>
+<pre><code class="language-php">public function type(): string
+</code></pre>
+<p>👆 tipo da notificação, pode ser <code>billet</code> ou <code>pix</code></p>
+<pre><code class="language-php">public function transactionId(): string
+</code></pre>
+<p>👆 id da transação</p>
+<pre><code class="language-php">public function orderId(): string
+</code></pre>
+<p>👆 <code>$order_id</code> da transação</p>
+<pre><code class="language-php">public function createDate(): Carbon
+</code></pre>
+<p>👆 data de criação do pix como instância de <code>\Illuminate\Support\Carbon</code></p>
+<pre><code class="language-php">public function status(): string
+</code></pre>
+<p>👆 status da transação como string</p>
+<pre><code class="language-php">public function pending(): bool
+public function canceled(): bool
+public function completed(): bool
+public function paid(): bool
+public function processing(): bool
+public function refunded(): bool
+</code></pre>
+<p>👆 booleano para o status do pix</p>
+<hr />
+<p>Os demais métodos seguem a <a href="https://dev.paghiper.com/reference/notificacoes-automatica-de-status-retorno-automatico-pix" target="_blank">convenção de nomes da PagHiper</a>:</p>
+<pre><code class="language-php">public function dueDateTime(): \Illuminate\Support\Carbon
+public function paidDate(): \Illuminate\Support\Carbon
+public function valueCents(): int
+public function valueFeeCents(): int
+public function valueCentsPaid(): int
+public function shippingPriceCents(): int
+public function discountCents(): int
+public function numCartItems(): int
+public function dueDate(): \Illuminate\Support\Carbon
+public function pixCode(): array
+public function items(): array|\DevAjMeireles\PagHiper\DTO\Objects\Item
+public function payer(): \DevAjMeireles\PagHiper\DTO\Objects\Payer
+</code></pre>
+<h2 id="metodo-especial-modelable">Método Especial: <code>modelable</code></h2>
+<p>De forma estratégica, ao passar uma instância de um modelador do Laravel como <code>Payer</code> do PIX, o <code>order_id</code> na PagHiper receberá uma referência da classe e ID do modelador para que posteriormente no retorno automático você possa utilizar o método <code>modelable</code> para obter o modelador facilmente.</p>
+<p>Essa abordagem fará com que o <code>order_id</code> PIX fique, por exemplo, da seguinte maneira na PagHiper: <code>11|App\Model\User:1</code>, onde <code>11</code> é o número do <code>$order_id</code> que você especificou na criação da classe <code>Basic</code>. Não há preocupação enquanto a este formato, uma vez que o <code>order_id</code> do PIX é para uso interno, e não é exibido ao cliente.</p>
+<p>Dessa forma você então poderá utilizar o método <code>modelable</code>:</p>
+<pre><code class="language-php">use App\Models\User; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
+use DevAjMeireles\PagHiper\Enums\Cast; // 👈
+use DevAjMeireles\PagHiper\Facades\PagHiper;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+// criando o boleto para o modelador User:1 👇
+
+$pix = PagHiper::pix()
+    -&gt;create(
+        Basic::make()
+            -&gt;set('order_id', 1433)  
+            -&gt;set('days_due_date', 2)  
+            -&gt;set('discount_cents', 0),
+        User::find(1), // 👈
+        Item::make()
+            -&gt;set('item_id', 12) 
+            -&gt;set('description', 'Kit de Malas de Viagem') 
+            -&gt;set('quantity', 1) 
+            -&gt;set('price_cents', 25000));
+
+// retorno automático 👇
+
+Route::post('/payment/notification', function (Request $request) {
+    $notification = PagHiper::pix(Cast::PixNotification) // 👈
+        -&gt;notification($request);
+})-&gt;name('paghiper.notification');
+</code></pre>
+<p>No exemplo acima, <code>$notification</code> será uma instância da classe <code>PagHiperPixNotification</code> contendo o método <code>modelable()</code>.
+Ao utilizar o método <code>$notification-&gt;modelable()</code> <code>PagHiper for Laravel</code> irá recuperar o usuário automaticamente:</p>
+<pre><code class="language-php">$user = $notification-&gt;modelable(); // 👈
+</code></pre>
+<p>No exemplo acima, <code>$user</code> será uma instância de <code>\App\Models\User:1</code>.</p>
+<h2 id="tratamento-de-excessao">Tratamento de Excessão</h2>
+<p>Como é de se esperar, caso haja algum erro na tentativa de capturar o modelador, uma excessão do tipo 
+<code>NotificationModelNotFoundException</code> ou <code>ModelNotFoundException</code> será lançada. Para evitar esse comportamento
+você pode utilizar o método <code>modelable</code> com o parâmetro <code>false</code>:</p>
+<pre><code class="language-php">$user = $notification-&gt;modelable(false); // 👈
+</code></pre>
+<p>Dessa forma, se houver algum erro ou o modelador não for encontrado, o retorno será <code>null</code>.</p>
+<h2 id="casts">Casts</h2>
+<p>Você também pode usar os outros <a href="../../utilidades/casts/">casts</a> disponíveis para transformar a resposta.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../cancelando/" class="btn btn-neutral float-left" title="Cancelando"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../utilidades/casts/" class="btn btn-neutral float-right" title="Casts">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/devajmeireles/paghiper-for-laravel/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../cancelando/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../utilidades/casts/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(false);
+        });
+    </script>
+
+</body>
+</html>
