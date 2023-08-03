@@ -1,8 +1,8 @@
-name: Publish MkDocs via GitHub Pages
+name: Publish Docs
 on:
     push:
         branches:
-            - "main"
+            - main
         paths:
             - "docs/**"
 
@@ -24,11 +24,6 @@ jobs:
               run: |
                   pip install --upgrade pip
                   pip install mkdocs
-
-#            - name: Setup Git Config
-#              run: |
-#                  git config user.name 'mkdocs-deploy'
-#                  git config user.email 'mkdocs-deploy@noreply.github.com'
 
             - name: Deploy Docs
               run: mkdocs gh-deploy --config-file docs/mkdocs.yml --remote-branch docs
