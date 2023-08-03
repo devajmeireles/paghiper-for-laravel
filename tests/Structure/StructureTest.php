@@ -1,25 +1,29 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address,
-    Billet\Basic as BasicBillet,
-    Billet\PagHiperBilletNotification,
-    Item,
-    Payer,
-    Pix\Basic as BasicPix,
-    Pix\PagHiperPixNotification,
-    Traits\ShareableNotificationObject
-};
+use DevAjMeireles\PagHiper\Billet;
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic as BasicBillet;
+use DevAjMeireles\PagHiper\DTO\Objects\Billet\PagHiperBilletNotification;
+use DevAjMeireles\PagHiper\DTO\Objects\Item;
+use DevAjMeireles\PagHiper\DTO\Objects\Payer;
+use DevAjMeireles\PagHiper\DTO\Objects\Pix\Basic as BasicPix;
+use DevAjMeireles\PagHiper\DTO\Objects\Pix\PagHiperPixNotification;
+use DevAjMeireles\PagHiper\DTO\Objects\Traits\ShareableNotificationObject;
 use DevAjMeireles\PagHiper\Enums\Cast;
-use DevAjMeireles\PagHiper\Resolvers\Billet\{ResolveBilletNotificationUrl};
-use DevAjMeireles\PagHiper\Resolvers\{Pix\ResolvePixNotificationUrl, ResolveToken, ResolverApi};
-use DevAjMeireles\PagHiper\Traits\{MakeableObject, Resolveable, ShareableBaseConstructor};
-use DevAjMeireles\PagHiper\{Billet,
-    Exceptions\PagHiperRejectException,
-    Exceptions\UnsupportedCastTypeExcetion,
-    Exceptions\WrongModelSetUpException,
-    PagHiper,
-    Pix,
-    Request};
+use DevAjMeireles\PagHiper\Exceptions\NotificationModelNotFoundException;
+use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
+use DevAjMeireles\PagHiper\Exceptions\UnsupportedCastTypeExcetion;
+use DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException;
+use DevAjMeireles\PagHiper\PagHiper;
+use DevAjMeireles\PagHiper\Pix;
+use DevAjMeireles\PagHiper\Request;
+use DevAjMeireles\PagHiper\Resolvers\Billet\ResolveBilletNotificationUrl;
+use DevAjMeireles\PagHiper\Resolvers\Pix\ResolvePixNotificationUrl;
+use DevAjMeireles\PagHiper\Resolvers\ResolverApi;
+use DevAjMeireles\PagHiper\Resolvers\ResolveToken;
+use DevAjMeireles\PagHiper\Traits\MakeableObject;
+use DevAjMeireles\PagHiper\Traits\Resolveable;
+use DevAjMeireles\PagHiper\Traits\ShareableBaseConstructor;
 
 test('will not debugging functions')
     ->expect(['dd', 'dump', 'ray'])
@@ -38,6 +42,7 @@ test('exceptions should extends the default exception class')
         PagHiperRejectException::class,
         UnsupportedCastTypeExcetion::class,
         WrongModelSetUpException::class,
+        NotificationModelNotFoundException::class,
     ])->toExtend(Exception::class);
 
 test('enum should have all cases')
@@ -50,8 +55,8 @@ test('makeable trait should only be used in objects')
     ->toOnlyBeUsedIn([
         Address::class,
         Item::class,
-        BasicBillet::class,
         BasicPix::class,
+        BasicBillet::class,
         Payer::class,
     ]);
 
