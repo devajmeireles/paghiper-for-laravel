@@ -33,6 +33,7 @@ final class Request
         return $class;
     }
 
+    /** @throws UnallowedEmptyNotificationUrl */
     public static function execute(string $endpoint, array $params = []): Response
     {
         $api   = app(ResolverApi::class)->resolve();

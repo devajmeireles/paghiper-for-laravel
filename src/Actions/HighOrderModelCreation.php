@@ -1,12 +1,12 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\Actions\Billet\HighOrderBilletCreation;
+namespace DevAjMeireles\PagHiper\Actions;
 
 use DevAjMeireles\PagHiper\Contracts\PagHiperModelAbstraction;
 use DevAjMeireles\PagHiper\Exceptions\WrongModelSetUpException;
 use Illuminate\Database\Eloquent\Model;
 
-class HighOrderCreateBillet
+class HighOrderModelCreation
 {
     public function __construct(
         protected readonly Model $model
