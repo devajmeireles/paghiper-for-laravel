@@ -5,7 +5,7 @@ namespace DevAjMeireles\PagHiper\DTO\Objects\Traits;
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
 use DevAjMeireles\PagHiper\DTO\Objects\{Billet\PagHiperBilletNotification, Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\NotificationModelNotFoundException;
-use Illuminate\Database\Eloquent\{Model, ModelNotFoundException};
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\{Carbon, Collection};
 
@@ -210,7 +210,6 @@ trait ShareableNotificationObject
         return $payer;
     }
 
-    /** @throws NotificationModelNotFoundException|ModelNotFoundException */
     public function modelable(bool $exception = true): Model|null
     {
         $order      = $this->orderId();

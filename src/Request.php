@@ -2,6 +2,7 @@
 
 namespace DevAjMeireles\PagHiper;
 
+use DevAjMeireles\PagHiper\Exceptions\UnallowedEmptyNotificationUrl;
 use DevAjMeireles\PagHiper\Resolvers\Billet\{ResolveBilletNotificationUrl};
 use DevAjMeireles\PagHiper\Resolvers\{Pix\ResolvePixNotificationUrl, ResolveToken, ResolverApi};
 use Illuminate\Http\Client\Response;
@@ -42,6 +43,10 @@ final class Request
 
         if ($url) {
             $params['notification_url'] = $url;
+        }
+
+        if ($params['notification_url'] === null) {
+            throw new UnallowedEmptyNotificationUrl();
         }
 
         $client = Http::timeout(10)
