@@ -6,10 +6,13 @@ use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException,
     UnallowedEmptyNotificationUrl,
     UnsupportedCastTypeExcetion};
+use DevAjMeireles\PagHiper\Facades\PagHiper as Facade;
 use DevAjMeireles\PagHiper\PagHiper;
+use DevAjMeireles\PagHiper\Resolvers\Pix\ResolvePixNotificationUrl;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
+use Mockery\MockInterface;
 
 $model = new class () extends Model implements PagHiperModelAbstraction {
     public function pagHiperName(): string
@@ -299,3 +302,43 @@ it('should be able to throw exception due empty notification_url', function (?st
 
     (new PagHiper())->pix()->create($basic, $payer, $item);
 })->with(['', null]);
+
+it('should be able to throw exception due empty notification_url interacting with facade', function () {
+    $this->expectException(UnallowedEmptyNotificationUrl::class);
+    $this->expectExceptionMessage("Attempt to interact with PagHiper without notification URL to the PagHiper callbacks. Please, review the docs.");
+
+    $result = [
+        "result"           => "success",
+        "response_message" => "transacao criada",
+        "transaction_id"   => "HF97T5SH2ZQNLF6Z",
+        "created_date"     => now()->format('Y-m-d H:i:s'),
+        "value_cents"      => "18507",
+        "status"           => "pending",
+        "order_id"         => 1,
+        "due_date"         => "2017-07-27",
+        "pix_code"         => [
+            "qrcode_base64"    => "iVBORw0KGgoAAAANSUhEUgAAAPoAAAD6AQAAAACgl2eQA",
+            "qrcode_image_url" => "https://pix.paghiper.com/pixcode/?a5eef1cc3013a9a0063ff657229efde603122f9898b26f7c9e5c7d2cc950fdde990aad6d0693bbc3d61b28a640cc775db1eddc55261462ba514f6a41b7d3268c/39JI4HD3FF7NC27Y/84700950.png",
+            "emv"              => "00020101021226770014BR.GOV.BCB.PIX2555api.itau/pix/qr/v1/ce7f9743-6575-485a-86da-a0f56cf136565204000053039865802BR5925PAGHIPER SERV ONLINE EIRE6009SAO PAULO62070503***630409AD",
+            "pix_url"          => "https://pix.paghiper.com/qrcode/180068c7/HF97T5SH2ZQNLF6Z/30039",
+            "bacen_url"        => "https://pix.bcb.gov.br/qr/MDAwMjAxMDEwMjEyMjY3NzAwMTRCUi5HT1YuQkNCLlBJWDI1NTVhcGkuaXRhdS9waXgvcXIvdjEvY2U3Zjk3NDMtNjU3NS00ODVhLTg2ZGEtYTBmNTZjZjEzNjU2NTIwNDAwMDA1MzAzOTg2NTgwMkJSNTkyNVBBR0hJUEVSIFNFUlYgT05MSU5FIEVJUkU2MDA5U0FPIFBBVUxPNjIwNzA1MDMqKio2MzA0MDlBRA==",
+        ],
+        "http_code" => "201",
+    ];
+
+    fakeBilletResponse(CreatePix::END_POINT, 'pix_create_request', $result);
+
+    [$basic, $payer, $item] = [...fakePixCreationBody()];
+
+    $basic->set('notification_url', null);
+
+    Facade::resolveBilletNotificationUrlUsing(fn () => 'bar-foo');
+
+    $this->mock(ResolvePixNotificationUrl::class, function (MockInterface $mock) {
+        $mock->shouldReceive('resolve')
+            ->once()
+            ->andReturnNull();
+    });
+
+    (new PagHiper())->pix()->create($basic, $payer, $item);
+});

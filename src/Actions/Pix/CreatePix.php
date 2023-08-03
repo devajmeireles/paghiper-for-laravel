@@ -3,7 +3,7 @@
 namespace DevAjMeireles\PagHiper\Actions\Pix;
 
 use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer};
-use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
+use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException, UnallowedEmptyNotificationUrl, WrongModelSetUpException};
 use DevAjMeireles\PagHiper\Request;
 use DevAjMeireles\PagHiper\Traits\ParseRequestBody;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +15,7 @@ class CreatePix
 
     public const END_POINT = 'invoice/create/';
 
-    /** @throws PagHiperRejectException */
+    /** @throws PagHiperRejectException|UnallowedEmptyNotificationUrl|WrongModelSetUpException */
     public static function execute(Basic $basic, Payer|Model $payer, array|Item $items): Response
     {
         $response = Request::resource('pix')
