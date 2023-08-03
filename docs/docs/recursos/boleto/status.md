@@ -10,4 +10,4 @@ $billet = PagHiper::billet()->status('HF97T5SH2ZQNLF6Z');
 
 ## Casts
 
-Você também pode usar os [casts](../Utilidades/casts.md) disponíveis para transformar a resposta.
+Você também pode usar os [casts](../utilidades/casts.md) disponíveis para transformar a resposta.

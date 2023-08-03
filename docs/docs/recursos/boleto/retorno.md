@@ -200,4 +200,4 @@ Dessa forma, se houver algum erro ou o modelador não for encontrado, o retorno 
 
 ## Casts
 
-Você também pode usar os outros [casts](../Utilidades/casts.md) disponíveis para transformar a resposta.
+Você também pode usar os outros [casts](../utilidades/casts.md) disponíveis para transformar a resposta.
