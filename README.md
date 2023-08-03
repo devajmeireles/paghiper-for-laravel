@@ -101,11 +101,11 @@ Assim, para toda interação com a PagHiper estas configuraçõe serão priorita
 Para uma melhor organização, a forma de interagir com o método `create` é enviar para ele quatro (4) instâncias de classes de objeto que representam os dados do corpo do boleto bancário:
 
 ```php
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address; // 👈
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic; // 👈
-use DevAjMeireles\PagHiper\DTO\Objects\Item; // 👈
-use DevAjMeireles\PagHiper\DTO\Objects\Payer; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\DTO\Objects\Payer;use DevAjMeireles\PagHiper\Facades\PagHiper;
+// 👈
+// 👈
+// 👈
+// 👈
 
 $billet = PagHiper::billet()
     ->create(
@@ -147,10 +147,8 @@ $billet = PagHiper::billet()
 Opcionalmente, você pode usar um modelador do Laravel como `Payer` do boleto no método `create`:
 
 ```php
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use App\Models\User; // 👈
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
-use DevAjMeireles\PagHiper\DTO\Objects\Item;
+use App\Models\User;use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\Facades\PagHiper;
+// 👈
 
 $billet = PagHiper::billet()
     ->create(
@@ -259,11 +257,8 @@ Para facilitar a sua interação com as respostas, `Paghiper for Laravel` oferec
 - `Response`: objeto original da resposta, `Illuminate\Http\Client\Response`
 
 ```php
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
-use DevAjMeireles\PagHiper\DTO\Objects\Item;
-use DevAjMeireles\PagHiper\Enums\Cast; // 👈
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;
+// 👈
 
 $billet = PagHiper::billet(Cast::Collection) // 👈
     ->create(
@@ -306,7 +301,7 @@ As classes `Basic`, `Payer`, `Address` e `Item`, acima mencionadas, oferecem alt
 1. Via PHP comum, `new`:
 
 ```php
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 
 $basic = new Basic(/* ... */);
 
@@ -316,7 +311,7 @@ $basic = new Basic(/* ... */);
 2. Via padrão estático, `make`:
 
 ```php
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 
 $basic = Basic::make([
     'order_id'         => 1222,
@@ -490,13 +485,8 @@ Essa abordagem fará com que o `order_id` do boleto bancário fique, por exemplo
 Dessa forma você então poderá utilizar o método `modelable`:
 
 ```php
-use DevAjMeireles\PagHiper\Facades\PagHiper;
-use App\Models\User; // 👈
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic;
-use DevAjMeireles\PagHiper\DTO\Objects\Item;
-use DevAjMeireles\PagHiper\Enums\Cast;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Models\User;use DevAjMeireles\PagHiper\DTO\Objects\Basic;use DevAjMeireles\PagHiper\DTO\Objects\Item;use DevAjMeireles\PagHiper\Enums\Cast;use DevAjMeireles\PagHiper\Facades\PagHiper;use Illuminate\Http\Request;use Illuminate\Support\Facades\Route;
+// 👈
 
 // criando o boleto (User:1) 👇
 

@@ -1,8 +1,8 @@
 <?php
 
 use DevAjMeireles\PagHiper\Billet;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic as BasicBillet;
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic as BasicBillet;
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\PagHiperBilletNotification;
 use DevAjMeireles\PagHiper\DTO\Objects\Item;
 use DevAjMeireles\PagHiper\DTO\Objects\Payer;

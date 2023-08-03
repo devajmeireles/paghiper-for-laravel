@@ -3,8 +3,7 @@
 namespace DevAjMeireles\PagHiper;
 
 use DevAjMeireles\PagHiper\Actions\Pix\{CancelPix, CreatePix, NotificationPix, StatusPix};
-use DevAjMeireles\PagHiper\DTO\Objects\Pix\Basic;
-use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer, Pix\PagHiperPixNotification};
+use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer, Pix\PagHiperPixNotification};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Traits\ShareableBaseConstructor;
 use Illuminate\Database\Eloquent\Model;

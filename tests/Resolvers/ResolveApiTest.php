@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\PagHiper;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\Resolvers\ResolverApi;
 
 it('should be able to resolve api successfully', function () {

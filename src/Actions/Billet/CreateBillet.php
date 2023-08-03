@@ -2,7 +2,7 @@
 
 namespace DevAjMeireles\PagHiper\Actions\Billet;
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\{PagHiperRejectException};
 use DevAjMeireles\PagHiper\Request;
 use DevAjMeireles\PagHiper\Traits\ParseRequestBody;

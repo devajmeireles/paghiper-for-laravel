@@ -1,6 +1,6 @@
 <?php
 
-namespace DevAjMeireles\PagHiper\DTO\Objects\Billet;
+namespace DevAjMeireles\PagHiper\DTO\Objects;
 
 use DevAjMeireles\PagHiper\Traits\MakeableObject;
 use Illuminate\Contracts\Support\Arrayable;
@@ -10,22 +10,23 @@ class Basic implements Arrayable
     use MakeableObject;
 
     public function __construct(
-        private ?string $order_id = null,
-        private ?string $notification_url = null,
-        private ?int $days_due_date = 2,
-        private ?string $type_bank_slip = 'boletoA4',
-        private ?int $discount_cents = 0,
-        private ?int $shipping_price_cents = null,
-        private ?string $shipping_methods = null,
-        private ?string $partners_id = null,
-        private ?int $number_ntfiscal = null,
-        private ?bool $fixed_description = null,
-        private ?string $seller_description = null,
-        private ?int $late_payment_fine = null,
-        private ?bool $per_day_interest = null,
-        private ?int $early_payment_discounts_days = null,
-        private ?int $early_payment_discounts_cents = null,
-        private ?int $open_after_day_due = null,
+        private readonly ?string $order_id = null,
+        private readonly ?string $notification_url = null,
+        private readonly ?int $days_due_date = 2,
+        private readonly ?int $minutes_due_date = null,
+        private readonly ?string $type_bank_slip = 'boletoA4',
+        private readonly ?int $discount_cents = 0,
+        private readonly ?int $shipping_price_cents = null,
+        private readonly ?string $shipping_methods = null,
+        private readonly ?string $partners_id = null,
+        private readonly ?int $number_ntfiscal = null,
+        private readonly ?bool $fixed_description = null,
+        private readonly ?string $seller_description = null,
+        private readonly ?int $late_payment_fine = null,
+        private readonly ?bool $per_day_interest = null,
+        private readonly ?int $early_payment_discounts_days = null,
+        private readonly ?int $early_payment_discounts_cents = null,
+        private readonly ?int $open_after_day_due = null,
     ) {
         //
     }
@@ -36,6 +37,7 @@ class Basic implements Arrayable
             'order_id'                      => $this->order_id,
             'notification_url'              => $this->notification_url,
             'days_due_date'                 => $this->days_due_date,
+            'minutes_due_date'              => $this->minutes_due_date,
             'type_bank_slip'                => $this->type_bank_slip,
             'discount_cents'                => $this->discount_cents,
             'shipping_price_cents'          => $this->shipping_price_cents,

@@ -2,8 +2,7 @@
 
 namespace DevAjMeireles\PagHiper\Actions\Pix;
 
-use DevAjMeireles\PagHiper\DTO\Objects\Pix\Basic;
-use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer};
 use DevAjMeireles\PagHiper\Exceptions\PagHiperRejectException;
 use DevAjMeireles\PagHiper\Request;
 use DevAjMeireles\PagHiper\Traits\ParseRequestBody;

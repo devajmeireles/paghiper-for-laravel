@@ -4,14 +4,12 @@ namespace DevAjMeireles\PagHiper\Traits;
 
 use DevAjMeireles\PagHiper\Actions\Billet\CreateBillet;
 use DevAjMeireles\PagHiper\Actions\Billet\HighOrderBilletCreation\HighOrderCreateBillet;
-use DevAjMeireles\PagHiper\DTO\Objects\Billet\Basic as BasicBillet;
-use DevAjMeireles\PagHiper\DTO\Objects\Pix\Basic as BasicPix;
-use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer};
 use Illuminate\Database\Eloquent\Model;
 
 trait ParseRequestBody
 {
-    private function parse(BasicPix|BasicBillet $basic, Payer|Model $payer, array|Item $items): array
+    private function parse(Basic $basic, Payer|Model $payer, array|Item $items): array
     {
         $model = $payer instanceof Model;
 

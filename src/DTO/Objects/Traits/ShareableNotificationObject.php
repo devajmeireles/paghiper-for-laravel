@@ -29,6 +29,11 @@ trait ShareableNotificationObject
         return $this->response;
     }
 
+    public function type(): string
+    {
+        return $this instanceof PagHiperBilletNotification ? 'billet' : 'pix';
+    }
+
     public function transactionId(): string
     {
         return $this->notification->get('transaction_id');
@@ -157,6 +162,11 @@ trait ShareableNotificationObject
     public function bankSlip(): array
     {
         return [...$this->notification->get('bank_slip') ?? []];
+    }
+
+    public function pixCode(): array|false
+    {
+        return [...$this->notification->get('pix_code') ?? []];
     }
 
     public function items(): array|Item

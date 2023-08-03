@@ -5,16 +5,15 @@ namespace DevAjMeireles\PagHiper\DTO\Objects;
 use DevAjMeireles\PagHiper\Traits\MakeableObject;
 use Illuminate\Contracts\Support\Arrayable;
 
-//TODO: item vai ser compartilhado entre boleto e PIX
 class Item implements Arrayable
 {
     use MakeableObject;
 
     public function __construct(
-        private ?string $item_id = null,
-        private ?string $description = null,
-        private ?int $quantity = null,
-        private ?int $price_cents = null,
+        private readonly ?string $item_id = null,
+        private readonly ?string $description = null,
+        private readonly ?int $quantity = null,
+        private readonly ?int $price_cents = null,
     ) {
         //
     }

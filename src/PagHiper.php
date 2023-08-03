@@ -18,22 +18,22 @@ class PagHiper
         return new Pix($cast);
     }
 
-    public static function resolveApiUsing(callable $callback): void
+    public function resolveApiUsing(callable $callback): void
     {
         app()->singleton(ResolverApi::class, fn () => new ResolverApi($callback));
     }
 
-    public static function resolveTokenUsing(callable $callback): void
+    public function resolveTokenUsing(callable $callback): void
     {
         app()->singleton(ResolveToken::class, fn () => new ResolveToken($callback));
     }
 
-    public static function resolveBilletNotificationlUrlUsing(callable $callback): void
+    public function resolveBilletNotificationUrlUsing(callable $callback): void
     {
         app()->singleton(ResolveBilletNotificationUrl::class, fn () => new ResolveBilletNotificationUrl($callback));
     }
 
-    public static function resolvePixNotificationUlrUsing(callable $callback): void
+    public function resolvePixNotificationUrlUsing(callable $callback): void
     {
         app()->singleton(ResolvePixNotificationUrl::class, fn () => new ResolvePixNotificationUrl($callback));
     }

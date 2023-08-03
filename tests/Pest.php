@@ -1,8 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Address, Billet\Basic as BasicBillet};
-use DevAjMeireles\PagHiper\DTO\Objects\{Item};
-use DevAjMeireles\PagHiper\DTO\Objects\{Payer, Pix\Basic as BasicPix};
+use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Billet\Address, Item, Payer};
 use DevAjMeireles\PagHiper\Request;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -30,7 +28,7 @@ function fakeBilletCreationBody(): array
                 ->set('zip_code', $fake->postcode())
         );
 
-    $basic = BasicBillet::make()
+    $basic = Basic::make()
         ->set('order_id', $fake->randomDigit())
         ->set('notification_url', fake()->url())
         ->set('days_due_date', $fake->randomDigit())
@@ -56,7 +54,7 @@ function fakePixCreationBody(): array
         ->set('cpf_cnpj', $fake->cpf(false))
         ->set('phone', $fake->cellphone(false));
 
-    $basic = BasicPix::make()
+    $basic = Basic::make()
         ->set('order_id', $fake->randomDigit())
         ->set('notification_url', fake()->url())
         ->set('days_due_date', $fake->randomDigit())

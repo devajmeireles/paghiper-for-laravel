@@ -2,9 +2,8 @@
 
 namespace DevAjMeireles\PagHiper\Facades;
 
-use DevAjMeireles\PagHiper\Billet;
 use DevAjMeireles\PagHiper\Enums\Cast;
-use DevAjMeireles\PagHiper\Pix;
+use DevAjMeireles\PagHiper\{Billet, Pix};
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -12,8 +11,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static Pix pix(Cast $cast = Cast::Array)
  * @method static void resolveApiUsing(callable $callback)
  * @method static void resolveTokenUsing(callable $callback)
- * @method static void resolveBilletNotificationlUrlUsing(callable $callback)
- * @method static void resolvePixNotificationlUrlUsing(callable $callback)
+ * @method static void resolveBilletNotificationUrlUsing(callable $callback)
+ * @method static void resolvePixNotificationUrlUsing(callable $callback)
  *
  * @see \DevAjMeireles\PagHiper\PagHiper
  */

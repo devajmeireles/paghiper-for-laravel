@@ -4,7 +4,7 @@ namespace DevAjMeireles\PagHiper;
 
 use DevAjMeireles\PagHiper\Actions\Billet\{CancelBillet, CreateBillet, NotificationBillet, StatusBillet};
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\PagHiperBilletNotification;
-use DevAjMeireles\PagHiper\DTO\Objects\{Billet\Basic, Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\{Basic, Item, Payer};
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\Traits\ShareableBaseConstructor;
 use Illuminate\Database\Eloquent\Model;

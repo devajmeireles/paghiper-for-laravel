@@ -1,6 +1,6 @@
 <?php
 
-use DevAjMeireles\PagHiper\PagHiper;
+use DevAjMeireles\PagHiper\Facades\PagHiper;
 use DevAjMeireles\PagHiper\Resolvers\ResolveToken;
 
 it('should be able to resolve token successfully', function () {
