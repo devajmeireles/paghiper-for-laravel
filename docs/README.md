@@ -15,7 +15,7 @@ https://user-images.githubusercontent.com/85418632/211225192-7e5d1116-2f4f-4305-
 
 ## Installation
 
-### Use the template
+### Use the template A
 
 The [Just the Docs Template] provides the simplest, quickest, and easiest way to create a new website that uses the Just the Docs theme. To get started with creating a site, just click "[use the template]"!
 
