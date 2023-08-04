@@ -100,6 +100,7 @@ class User extends Model implements PagHiperModelAbstraction // 👈
     public function pagHiperAddress(): array
     {
         // pix não utiliza endereço, retorne um array vazio
+
         return [];
     }
 };

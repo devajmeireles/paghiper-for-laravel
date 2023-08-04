@@ -9,8 +9,6 @@ Supondo que você possui uma rota nomeada como `paghiper.notification` que aceit
 a rota utilizada, então isso será suficiente:
 
 ```php
-// arquivo: routes/web.php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -31,8 +29,6 @@ De forma auxiliar, você pode injetar uma instância de `\Illuminate\Http\Reques
 manualmente os parâmetros para o método `notification`:
 
 ```php
-// arquivo: routes/web.php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
@@ -50,8 +46,6 @@ De forma especial para o retorno automático, `Paghiper for Laravel` oferece o c
 utilizado irá mapear a resposta da PagHiper para uma classe de objeto contendo muitos métodos úteis:
 
 ```php
-// routes/web.php
-
 use Illuminate\Http\Request;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use Illuminate\Support\Facades\Route;
