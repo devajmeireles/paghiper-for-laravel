@@ -130,9 +130,7 @@ ou para a rota definida via <a href="../../../iniciando/detalhes-tecnicos/">reso
 aplicação, e de preferência que não receba nenhum tratamento especial, por exemplo: middlewares, autenticação, etc.</p>
 <p>Supondo que você possui uma rota nomeada como <code>paghiper.notification</code> que aceita requisições <code>POST</code>, e que essa foi 
 a rota utilizada, então isso será suficiente:</p>
-<pre><code class="language-php">// arquivo: routes/web.php
-
-use Illuminate\Http\Request;
+<pre><code class="language-php">use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 
@@ -147,9 +145,7 @@ Route::post('/payment/notification', function (Request $request) {
 <h2 id="injetando-o-illuminatehttprequest">Injetando o <code>\Illuminate\Http\Request</code></h2>
 <p>De forma auxiliar, você pode injetar uma instância de <code>\Illuminate\Http\Request</code> ao invés de ter que definir 
 manualmente os parâmetros para o método <code>notification</code>:</p>
-<pre><code class="language-php">// arquivo: routes/web.php
-
-use Illuminate\Http\Request;
+<pre><code class="language-php">use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 
@@ -161,9 +157,7 @@ Route::post('/payment/notification', function (Request $request) {
 <h3 id="cast-especial-pixnotification">Cast Especial: <code>PixNotification</code></h3>
 <p>De forma especial para o retorno automático, <code>Paghiper for Laravel</code> oferece o cast <code>PixNotification</code>, que quando
 utilizado irá mapear a resposta da PagHiper para uma classe de objeto contendo muitos métodos úteis:</p>
-<pre><code class="language-php">// routes/web.php
-
-use Illuminate\Http\Request;
+<pre><code class="language-php">use Illuminate\Http\Request;
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 use Illuminate\Support\Facades\Route;
 use DevAjMeireles\PagHiper\Enums\Cast; // 👈

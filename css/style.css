@@ -4,9 +4,14 @@
     padding: .809em;
     margin-bottom: .809em;
     z-index: 200;
-    background-color: #1256a9;
+    background-color: #1256a9 !important;
     text-align: center;
     color: #fcfcfc
+}
+
+.wy-nav-top {
+    background: #1256a9 !important;
+    color: #fff;
 }
 
 .alert{
