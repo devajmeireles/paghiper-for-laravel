@@ -9,6 +9,7 @@ funcionalidades.
 - Versão do PHP:
     - 8.0.2 (ou superior)
     - 8.1.x
+    - 8.2.x
 - Versão do Laravel:
     - 9.x
     - 10.x
