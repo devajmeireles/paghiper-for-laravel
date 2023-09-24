@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^8.0.2|^8.1",
+        "php": "^8.0.2|^8.1|^8.2",
         "guzzlehttp/guzzle": "^7.7",
         "laravel/framework": "^9.0|^10.0"
     },

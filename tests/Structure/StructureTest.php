@@ -1,12 +1,11 @@
 <?php
 
 use DevAjMeireles\PagHiper\Billet;
-use DevAjMeireles\PagHiper\DTO\Objects\Basic as BasicBillet;
+use DevAjMeireles\PagHiper\DTO\Objects\Basic;
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\Address;
 use DevAjMeireles\PagHiper\DTO\Objects\Billet\PagHiperBilletNotification;
 use DevAjMeireles\PagHiper\DTO\Objects\Item;
 use DevAjMeireles\PagHiper\DTO\Objects\Payer;
-use DevAjMeireles\PagHiper\DTO\Objects\Pix\Basic as BasicPix;
 use DevAjMeireles\PagHiper\DTO\Objects\Pix\PagHiperPixNotification;
 use DevAjMeireles\PagHiper\DTO\Objects\Traits\ShareableNotificationObject;
 use DevAjMeireles\PagHiper\Enums\Cast;
@@ -55,8 +54,7 @@ test('makeable trait should only be used in objects')
     ->toOnlyBeUsedIn([
         Address::class,
         Item::class,
-        BasicPix::class,
-        BasicBillet::class,
+        Basic::class,
         Payer::class,
     ]);
 
