@@ -7,13 +7,11 @@ funcionalidades.
 ## PHP & Laravel
 
 - Versão do PHP:
-    - 8.0.2 (ou superior)
-    - 8.1.x
-    - 8.2.x
-    - 8.3.x
+    - 8.0 (ou superior)
 - Versão do Laravel:
     - 9.x
     - 10.x
+    - 11.x
 
 ## Facade
 
