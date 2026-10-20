@@ -124,10 +124,10 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="status">Status</h1>
-<p>Para consultar o status de um Boleto Bancário utilize o método <code>status</code>:</p>
+<p>Para consultar o status de um PIX utilize o método <code>status</code>:</p>
 <pre><code class="language-php">use DevAjMeireles\PagHiper\Facades\PagHiper;
 
-$billet = PagHiper::pix()-&gt;status('HF97T5SH2ZQNLF6Z');
+$pix = PagHiper::pix()-&gt;status('HF97T5SH2ZQNLF6Z');
 </code></pre>
 <h2 id="casts">Casts</h2>
 <p>Você também pode usar os <a href="../../utilidades/casts/">casts</a> disponíveis para transformar a resposta.</p>

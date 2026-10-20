@@ -158,6 +158,17 @@ $pix = PagHiper::pix()
 <li>O método <code>set</code> irá procurar pela propriedade e só definirá o seu valor caso encontre a propriedade na classe que está sendo construída pelo método <code>make</code>.</li>
 <li>O nome das propriedades deve seguir exatamente a <a href="https://dev.paghiper.com/reference/especificacoes-dos-campos-que-devem-ser-enviados-na-requisicao-boleto" target="_blank">convenção de nome das propriedades de boleto bancário da PagHiper</a></li>
 </ol>
+<h2 id="vencimento-em-minutos">Vencimento em Minutos</h2>
+<p>Para definir o vencimento do PIX em minutos utilize a propriedade <code>minutes_due_date</code> do objeto <code>Basic</code>:</p>
+<pre><code class="language-php">use DevAjMeireles\PagHiper\DTO\Objects\Basic;
+
+Basic::make()
+    -&gt;set('order_id', 1433) 
+    -&gt;set('notification_url', route('paghiper.notification')) 
+    -&gt;set('minutes_due_date', 30); // 👈 vence em 30 minutos
+</code></pre>
+<p>A PagHiper ignora <code>minutes_due_date</code> quando <code>days_due_date</code> é diferente de <code>0</code>, por isso, sempre que <code>minutes_due_date</code> 
+for definido, <code>PagHiper for Laravel</code> enviará <code>days_due_date</code> como <code>0</code>.</p>
 <h2 id="usando-modelador-do-laravel">Usando Modelador do Laravel</h2>
 <p>Opcionalmente, você pode usar um modelador do Laravel como <code>Payer</code> do boleto:</p>
 <pre><code class="language-php">use App\Models\User; // 👈
