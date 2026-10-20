@@ -12,7 +12,7 @@ class NotificationBillet
     public const END_POINT = 'transaction/notification/';
 
     /** @throws PagHiperRejectException */
-    public static function execute(string|Request $notification, string $transaction = null): Response
+    public static function execute(string|Request $notification, ?string $transaction = null): Response
     {
         $notificationId = $notification instanceof Request
             ? $notification->input('notification_id')

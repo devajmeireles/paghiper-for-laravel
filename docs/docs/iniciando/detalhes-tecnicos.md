@@ -93,5 +93,5 @@ public function boot(): void
 - Cobertura de Analise de Código (Level 5, 100%), <a href="https://phpstan.org/" target="_blank">PhpStan</a>
 
 <div class="alert alert-warning">
-    Os testes são projetados exclusivamete sob o Laravel 10.
+    Os testes são executados apenas sob o Laravel 11, 12 e 13, com PHP 8.2 a 8.5.
 </div>

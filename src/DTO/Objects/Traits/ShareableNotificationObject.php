@@ -156,7 +156,7 @@ trait ShareableNotificationObject
 
     public function dueDateTime(): Carbon
     {
-        return Carbon::parse($this->notification->get('due_date_time'));
+        return Carbon::parse($this->notification->get('due_datetime'));
     }
 
     public function bankSlip(): array

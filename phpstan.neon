@@ -8,6 +8,9 @@ parameters:
 
     level: 5
 
+    # composer.json allows php ^8.0, but the code needs 8.1 (enums, readonly).
+    phpVersion: 80100
+
     ignoreErrors:
         -
             message: '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::\$id#'

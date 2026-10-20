@@ -1,8 +1,8 @@
 <?php
 
 use DevAjMeireles\PagHiper\Actions\Pix\NotificationPix;
-use DevAjMeireles\PagHiper\DTO\Objects\Pix\PagHiperPixNotification;
 use DevAjMeireles\PagHiper\DTO\Objects\{Item, Payer};
+use DevAjMeireles\PagHiper\DTO\Objects\Pix\PagHiperPixNotification;
 use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\PagHiper;
 use Illuminate\Http\Client\Response;
@@ -321,4 +321,30 @@ it('should be able to consult notification casting to notification dto', functio
         ->toBeInstanceOf(Response::class)
         ->and($notification->status())
         ->toBe("paid");
+});
+
+it('should be able to read due_datetime from notification dto', function () {
+    $transaction = '3IMZI5QXGMI7K40W';
+
+    $result = [
+        "result"           => "success",
+        "response_message" => "notification_id encontrada",
+        "transaction_id"   => $transaction,
+        "order_id"         => "96874",
+        "created_date"     => "2017-07-14 21:21:02",
+        "status"           => "pending",
+        "due_date"         => "2017-07-14",
+        "due_datetime"     => "2017-07-14 21:26:02",
+        "http_code"        => "201",
+    ];
+
+    fakePixResponse(NotificationPix::END_POINT, 'status_request', $result);
+
+    $notification = (new PagHiper())->pix(Cast::PixNotification)
+        ->notification("W6QM6MORZW4KUENC0NU6ERN0AULFUIUROKEU72L6ZQQT4E6521CGT0G3V2JQKDI9", $transaction);
+
+    expect($dueDateTime = $notification->dueDateTime())
+        ->toBeInstanceOf(Carbon::class)
+        ->and($dueDateTime->format('Y-m-d H:i:s'))
+        ->toBe('2017-07-14 21:26:02');
 });

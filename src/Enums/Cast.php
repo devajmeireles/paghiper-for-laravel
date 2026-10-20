@@ -20,11 +20,11 @@ enum Cast: string
     public function response(Response $response, string $index): Response|Collection|array|string
     {
         return (match ($this) {
-            self::Response => fn () => $response,
-            self::Json     => fn () => $this->toJson($response, $index),
-            self::Array    => fn () => $this->toArray($response, $index),
+            self::Response                  => fn () => $response,
+            self::Json                      => fn () => $this->toJson($response, $index),
+            self::Array                     => fn () => $this->toArray($response, $index),
             self::Collection, self::Collect => fn () => $this->toCollect($response, $index),
-            default => throw new UnsupportedCastTypeExcetion($this->name),
+            default                         => throw new UnsupportedCastTypeExcetion($this->name),
         })();
     }
 

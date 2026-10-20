@@ -18,8 +18,15 @@ class CreatePix
     /** @throws PagHiperRejectException|UnallowedEmptyNotificationUrl|WrongModelSetUpException */
     public static function execute(Basic $basic, Payer|Model $payer, array|Item $items): Response
     {
+        $body = (new self())->parse($basic, $payer, $items);
+
+        // PagHiper ignores minutes_due_date unless days_due_date is 0.
+        if ($body['minutes_due_date'] !== null) {
+            $body['days_due_date'] = 0;
+        }
+
         $response = Request::resource('pix')
-            ->execute(self::END_POINT, (new self())->parse($basic, $payer, $items));
+            ->execute(self::END_POINT, $body);
 
         if ($response->json('pix_create_request.result') === 'reject') {
             throw new PagHiperRejectException($response->json('pix_create_request.response_message'));

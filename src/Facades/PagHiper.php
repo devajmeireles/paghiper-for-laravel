@@ -2,8 +2,8 @@
 
 namespace DevAjMeireles\PagHiper\Facades;
 
-use DevAjMeireles\PagHiper\Enums\Cast;
 use DevAjMeireles\PagHiper\{Billet, Pix};
+use DevAjMeireles\PagHiper\Enums\Cast;
 use Illuminate\Support\Facades\Facade;
 
 /**

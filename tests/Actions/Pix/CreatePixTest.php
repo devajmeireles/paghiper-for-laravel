@@ -10,8 +10,9 @@ use DevAjMeireles\PagHiper\Facades\PagHiper as Facade;
 use DevAjMeireles\PagHiper\PagHiper;
 use DevAjMeireles\PagHiper\Resolvers\Pix\ResolvePixNotificationUrl;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Client\Response;
+use Illuminate\Http\Client\{Request, Response};
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Http;
 use Mockery\MockInterface;
 
 $model = new class () extends Model implements PagHiperModelAbstraction {
@@ -227,6 +228,30 @@ it('should be able to create billet with address as optional when model is used'
     expect($pix)
         ->toBeArray()
         ->toBe($result);
+});
+
+it('should be able to send days_due_date as zero when minutes_due_date is set', function () {
+    fakePixResponse(CreatePix::END_POINT, 'pix_create_request', ['result' => 'success']);
+
+    [$basic, $payer, $item] = [...fakePixCreationBody()];
+
+    $basic->set('days_due_date', 5)->set('minutes_due_date', 30);
+
+    (new PagHiper())->pix()->create($basic, $payer, $item);
+
+    Http::assertSent(fn (Request $request) => $request['days_due_date'] === 0 && $request['minutes_due_date'] === 30);
+});
+
+it('should be able to send days_due_date unchanged when minutes_due_date is not set', function () {
+    fakePixResponse(CreatePix::END_POINT, 'pix_create_request', ['result' => 'success']);
+
+    [$basic, $payer, $item] = [...fakePixCreationBody()];
+
+    $basic->set('days_due_date', 5)->set('minutes_due_date', null);
+
+    (new PagHiper())->pix()->create($basic, $payer, $item);
+
+    Http::assertSent(fn (Request $request) => $request['days_due_date'] === 5 && $request['minutes_due_date'] === null);
 });
 
 it('should be able to throw exception due response reject', function () {

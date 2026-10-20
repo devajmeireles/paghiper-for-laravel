@@ -1,11 +1,11 @@
 # Status
 
-Para consultar o status de um Boleto Bancário utilize o método `status`:
+Para consultar o status de um PIX utilize o método `status`:
 
 ```php
 use DevAjMeireles\PagHiper\Facades\PagHiper;
 
-$billet = PagHiper::pix()->status('HF97T5SH2ZQNLF6Z');
+$pix = PagHiper::pix()->status('HF97T5SH2ZQNLF6Z');
 ```
 
 ## Casts
